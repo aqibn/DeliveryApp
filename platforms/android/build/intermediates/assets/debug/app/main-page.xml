@@ -1,0 +1,13 @@
+<Page loaded="loaded">
+  <Page.actionBar>
+  <ActionBar title="Deliveries">
+    <ActionItem android.systemIcon="ic_menu_add" tap="add"  /></ActionBar>
+  </Page.actionBar>
+    <GridLayout>
+        <ListView items="{{ deliveries }}" itemTap="listViewItemTap">
+            <ListView.itemTemplate>
+                <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

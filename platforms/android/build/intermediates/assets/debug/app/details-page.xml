@@ -1,0 +1,11 @@
+<Page navigatedTo="navigatedTo">
+  <Page.actionBar>
+    <ActionBar title="{{ name }}"></ActionBar>
+  </Page.actionBar>
+<StackLayout orientation="vertical">
+  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
+  <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
+  <Button text="Sign Up" tap="register" />
+</StackLayout>
+
+</Page>

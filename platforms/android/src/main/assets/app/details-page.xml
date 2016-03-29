@@ -1,0 +1,20 @@
+<Page navigatedTo="navigatedTo">
+  <Page.actionBar>
+    <ActionBar title="{{ name }}"></ActionBar>
+  </Page.actionBar>
+<StackLayout orientation="vertical">
+  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
+  <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
+  <GridLayout rows="auto" columns="*, *">
+    <Label  text="No Items"  row="0" col="0" />
+    <Label text="TotalWeight" row="0" col="1" />
+  </GridLayout>
+  <Button text="Add Item" tap="add" />
+  <ListView items="{{ items }}" itemTap="listViewItemTap">
+      <ListView.itemTemplate>
+          <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
+      </ListView.itemTemplate>
+  </ListView>
+  <Button text="Done" tap="done" />
+</StackLayout>
+</Page>
