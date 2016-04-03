@@ -9,3 +9,16 @@ TextField {
     border-width: 5;
 
 }
+.div {
+   background-color: white;
+   margin: 4px;
+  }
+#additem {
+  background-color: black;
+}
+.textw {
+  color: white;
+}
+
+.weightbox {
+}

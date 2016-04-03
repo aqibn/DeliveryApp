@@ -1,0 +1,495 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+/* Begin PBXBuildFile section */
+		858B842D18CA22B800AB12DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 858B833A18CA111C00AB12DE /* InfoPlist.strings */; };
+		CD45EE7C18DC2D5800FB50C0 /* app in Resources */ = {isa = PBXBuildFile; fileRef = CD45EE7A18DC2D5800FB50C0 /* app */; };
+		CD62955D1BB2678900AE3A93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD62955C1BB2678900AE3A93 /* main.m */; };
+		E2A7FEC903E141E8AB7FDC20 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7FC6D32B7F4FD3AFCE8933 /* Default-568h@2x.png */; };
+		DE0F01684F454627A4AE125D /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E72DF6997FEB40C0B47A9FDB /* Default-667h@2x.png */; };
+		2D2F90AC34E249E2BE9A8580 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D91E86E013D343B3AA9EDCF8 /* Default-736h@3x.png */; };
+		F40D05255B1B44CDA507EA2B /* Default-Landscape-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60EFAABBDF21460DAA5735D3 /* Default-Landscape-568h@2x.png */; };
+		BF1844F07D9D47309A289A5A /* Default-Landscape-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E766046314154377834C122C /* Default-Landscape-667h@2x.png */; };
+		DC720559AE70426FB146645A /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 292453D08886473BB9A009A5 /* Default-Landscape.png */; };
+		BE95D9FA3BAA4DDFB0F07674 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D1BDAED3EB84868A85F08B6 /* Default-Landscape@2x.png */; };
+		654DF4B59BDB492393575587 /* Default-Landscape@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 059381F57A1242BA96AABB1A /* Default-Landscape@3x.png */; };
+		DEA5344863D548A6B1323F88 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = D41BAEB4EF504B93985E5C8A /* Default-Portrait.png */; };
+		16B32F4580384F9FA89D12FF /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E91657E589D24D1EA1823215 /* Default-Portrait@2x.png */; };
+		A4792DF542024682A088F0EA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3F82AD4FBC4882AB04FD32 /* Default.png */; };
+		54E3FA5512E94713A84E2E53 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F417A8CBE0314D6B9E06D862 /* Default@2x.png */; };
+		121FB019209644EC81300AD4 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = D387669B5B8F431EA758A5F2 /* Icon-Small-50.png */; };
+		BF3681DD14C14703A1735951 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A8D2F27BA41E49EBB1F43EE7 /* Icon-Small-50@2x.png */; };
+		344FB31EDAC146B19BF5CBB5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = FE45ED566AA44C408C262281 /* Icon-Small.png */; };
+		43E279ABFC344966A47AE12D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E0841CCD93243A296BF871D /* Icon-Small@2x.png */; };
+		60B8B6FB14D14BB8BCCEEBD5 /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2F4CFB5FC428479FBAD16830 /* build.xcconfig */; };
+		16DA2BC03F9E4FFB8784DAD9 /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = DAA4DC957386476B90C6C27A /* icon-40.png */; };
+		9E7B6CCB434441FDA791EE87 /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C348345852D44D298F47507 /* icon-40@2x.png */; };
+		A6399AC46FBA4389A6355F44 /* icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD4123853CF4E0A95C6F8D5 /* icon-60.png */; };
+		057738FC38CB437CA6167CD9 /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D0AC23F39D74C77BA249F9C /* icon-60@2x.png */; };
+		EDFF83465FE646C9983EBA1E /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A0557FC8CAD841D3AEBF4C80 /* icon-72.png */; };
+		0494C1D0B2FF4AE2BA149E29 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8671908E14C14EEB8FF204B0 /* icon-72@2x.png */; };
+		C80F868F2CE04DABA2511C70 /* icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = FAFC29991C6C4CD196C48907 /* icon-76.png */; };
+		D16FCF8ED61549838954DE4D /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1134D87FC4F146629222B0E8 /* icon-76@2x.png */; };
+		C8150C2C85554C959A4188C9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD2F4A45F6A140ECADEAEAD5 /* icon.png */; };
+		E30A16A698254ED29F653391 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A775D5A398DD42CE9CAE24EC /* icon@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		85F5BDFC1A9363BE006B9701 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		858B832E18CA111C00AB12DE /* DeliveryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeliveryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		858B833918CA111C00AB12DE /* DeliveryApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DeliveryApp-Info.plist"; sourceTree = "<group>"; };
+		858B833B18CA111C00AB12DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		858B833F18CA111C00AB12DE /* DeliveryApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeliveryApp-Prefix.pch"; sourceTree = "<group>"; };
+		858B843318CA22B800AB12DE /* DeliveryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeliveryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD45EE7A18DC2D5800FB50C0 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
+		CD62955C1BB2678900AE3A93 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = internal/main.m; sourceTree = SOURCE_ROOT; };
+		CDD59A261BB43B5D00EC2671 /* build-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "build-debug.xcconfig"; sourceTree = "<group>"; };
+		CDD59A271BB43B5D00EC2671 /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "build-release.xcconfig"; sourceTree = "<group>"; };
+		CDF4743E1BA4855C0087EA85 /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = build.xcconfig; sourceTree = "<group>"; };
+		F9B8C6A31ACEDEEB00547416 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		0E7FC6D32B7F4FD3AFCE8933 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "DeliveryApp/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
+		E72DF6997FEB40C0B47A9FDB /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-667h@2x.png"; path = "DeliveryApp/Resources/Default-667h@2x.png"; sourceTree = "<group>"; };
+		D91E86E013D343B3AA9EDCF8 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-736h@3x.png"; path = "DeliveryApp/Resources/Default-736h@3x.png"; sourceTree = "<group>"; };
+		60EFAABBDF21460DAA5735D3 /* Default-Landscape-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape-568h@2x.png"; path = "DeliveryApp/Resources/Default-Landscape-568h@2x.png"; sourceTree = "<group>"; };
+		E766046314154377834C122C /* Default-Landscape-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape-667h@2x.png"; path = "DeliveryApp/Resources/Default-Landscape-667h@2x.png"; sourceTree = "<group>"; };
+		292453D08886473BB9A009A5 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "DeliveryApp/Resources/Default-Landscape.png"; sourceTree = "<group>"; };
+		1D1BDAED3EB84868A85F08B6 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "DeliveryApp/Resources/Default-Landscape@2x.png"; sourceTree = "<group>"; };
+		059381F57A1242BA96AABB1A /* Default-Landscape@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@3x.png"; path = "DeliveryApp/Resources/Default-Landscape@3x.png"; sourceTree = "<group>"; };
+		D41BAEB4EF504B93985E5C8A /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait.png"; path = "DeliveryApp/Resources/Default-Portrait.png"; sourceTree = "<group>"; };
+		E91657E589D24D1EA1823215 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x.png"; path = "DeliveryApp/Resources/Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		AA3F82AD4FBC4882AB04FD32 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "DeliveryApp/Resources/Default.png"; sourceTree = "<group>"; };
+		F417A8CBE0314D6B9E06D862 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "DeliveryApp/Resources/Default@2x.png"; sourceTree = "<group>"; };
+		D387669B5B8F431EA758A5F2 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "DeliveryApp/Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
+		A8D2F27BA41E49EBB1F43EE7 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "DeliveryApp/Resources/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		FE45ED566AA44C408C262281 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "DeliveryApp/Resources/Icon-Small.png"; sourceTree = "<group>"; };
+		8E0841CCD93243A296BF871D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "DeliveryApp/Resources/Icon-Small@2x.png"; sourceTree = "<group>"; };
+		2F4CFB5FC428479FBAD16830 /* build.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = build.xcconfig; path = "DeliveryApp/Resources/build.xcconfig"; sourceTree = "<group>"; fileEncoding = 4; };
+		DAA4DC957386476B90C6C27A /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-40.png"; path = "DeliveryApp/Resources/icon-40.png"; sourceTree = "<group>"; };
+		2C348345852D44D298F47507 /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-40@2x.png"; path = "DeliveryApp/Resources/icon-40@2x.png"; sourceTree = "<group>"; };
+		6CD4123853CF4E0A95C6F8D5 /* icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60.png"; path = "DeliveryApp/Resources/icon-60.png"; sourceTree = "<group>"; };
+		1D0AC23F39D74C77BA249F9C /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60@2x.png"; path = "DeliveryApp/Resources/icon-60@2x.png"; sourceTree = "<group>"; };
+		A0557FC8CAD841D3AEBF4C80 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72.png"; path = "DeliveryApp/Resources/icon-72.png"; sourceTree = "<group>"; };
+		8671908E14C14EEB8FF204B0 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72@2x.png"; path = "DeliveryApp/Resources/icon-72@2x.png"; sourceTree = "<group>"; };
+		FAFC29991C6C4CD196C48907 /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-76.png"; path = "DeliveryApp/Resources/icon-76.png"; sourceTree = "<group>"; };
+		1134D87FC4F146629222B0E8 /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-76@2x.png"; path = "DeliveryApp/Resources/icon-76@2x.png"; sourceTree = "<group>"; };
+		BD2F4A45F6A140ECADEAEAD5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = "DeliveryApp/Resources/icon.png"; sourceTree = "<group>"; };
+		A775D5A398DD42CE9CAE24EC /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "DeliveryApp/Resources/icon@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		858B83F418CA22B800AB12DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		858B832518CA111C00AB12DE = {
+			isa = PBXGroup;
+			children = (
+				E070579D1B39A9D000214BF1 /* Resources */,
+				858B833718CA111C00AB12DE /* DeliveryApp */,
+				858B833018CA111C00AB12DE /* Frameworks */,
+				858B832F18CA111C00AB12DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		858B832F18CA111C00AB12DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				858B832E18CA111C00AB12DE /* DeliveryApp.app */,
+				858B843318CA22B800AB12DE /* DeliveryApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		858B833018CA111C00AB12DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		858B833718CA111C00AB12DE /* DeliveryApp */ = {
+			isa = PBXGroup;
+			children = (
+				CD45EE7A18DC2D5800FB50C0 /* app */,
+				F9B8C6A21ACEDEEB00547416 /* LaunchScreen.xib */,
+				858B833818CA111C00AB12DE /* Supporting Files */,
+			);
+			path = DeliveryApp;
+			sourceTree = "<group>";
+		};
+		858B833818CA111C00AB12DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CDF4743E1BA4855C0087EA85 /* build.xcconfig */,
+				CDD59A261BB43B5D00EC2671 /* build-debug.xcconfig */,
+				CDD59A271BB43B5D00EC2671 /* build-release.xcconfig */,
+				858B833918CA111C00AB12DE /* DeliveryApp-Info.plist */,
+				858B833A18CA111C00AB12DE /* InfoPlist.strings */,
+				CD62955C1BB2678900AE3A93 /* main.m */,
+				858B833F18CA111C00AB12DE /* DeliveryApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E070579D1B39A9D000214BF1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0E7FC6D32B7F4FD3AFCE8933 /* Default-568h@2x.png */,
+				E72DF6997FEB40C0B47A9FDB /* Default-667h@2x.png */,
+				D91E86E013D343B3AA9EDCF8 /* Default-736h@3x.png */,
+				60EFAABBDF21460DAA5735D3 /* Default-Landscape-568h@2x.png */,
+				E766046314154377834C122C /* Default-Landscape-667h@2x.png */,
+				292453D08886473BB9A009A5 /* Default-Landscape.png */,
+				1D1BDAED3EB84868A85F08B6 /* Default-Landscape@2x.png */,
+				059381F57A1242BA96AABB1A /* Default-Landscape@3x.png */,
+				D41BAEB4EF504B93985E5C8A /* Default-Portrait.png */,
+				E91657E589D24D1EA1823215 /* Default-Portrait@2x.png */,
+				AA3F82AD4FBC4882AB04FD32 /* Default.png */,
+				F417A8CBE0314D6B9E06D862 /* Default@2x.png */,
+				D387669B5B8F431EA758A5F2 /* Icon-Small-50.png */,
+				A8D2F27BA41E49EBB1F43EE7 /* Icon-Small-50@2x.png */,
+				FE45ED566AA44C408C262281 /* Icon-Small.png */,
+				8E0841CCD93243A296BF871D /* Icon-Small@2x.png */,
+				2F4CFB5FC428479FBAD16830 /* build.xcconfig */,
+				DAA4DC957386476B90C6C27A /* icon-40.png */,
+				2C348345852D44D298F47507 /* icon-40@2x.png */,
+				6CD4123853CF4E0A95C6F8D5 /* icon-60.png */,
+				1D0AC23F39D74C77BA249F9C /* icon-60@2x.png */,
+				A0557FC8CAD841D3AEBF4C80 /* icon-72.png */,
+				8671908E14C14EEB8FF204B0 /* icon-72@2x.png */,
+				FAFC29991C6C4CD196C48907 /* icon-76.png */,
+				1134D87FC4F146629222B0E8 /* icon-76@2x.png */,
+				BD2F4A45F6A140ECADEAEAD5 /* icon.png */,
+				A775D5A398DD42CE9CAE24EC /* icon@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		858B83EF18CA22B800AB12DE /* DeliveryApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 858B843018CA22B800AB12DE /* Build configuration list for PBXNativeTarget "DeliveryApp" */;
+			buildPhases = (
+				C97FD7AC1ADE5369004DB2A4 /* NativeScript PreBuild */,
+				858B83F218CA22B800AB12DE /* Sources */,
+				CD62955B1BB2651D00AE3A93 /* NativeScript PreLink */,
+				858B83F418CA22B800AB12DE /* Frameworks */,
+				858B842C18CA22B800AB12DE /* Resources */,
+				85F5BDFC1A9363BE006B9701 /* Embed Frameworks */,
+				CD3EAD351B05FF060042DBFC /* NativeScript PostBuild */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DeliveryApp;
+			productName = JDBridgeApp;
+			productReference = 858B843318CA22B800AB12DE /* DeliveryApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		858B832618CA111C00AB12DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TNS;
+				LastUpgradeCheck = 500;
+				ORGANIZATIONNAME = Telerik;
+			};
+			buildConfigurationList = 858B832918CA111C00AB12DE /* Build configuration list for PBXProject "DeliveryApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 858B832518CA111C00AB12DE;
+			productRefGroup = 858B832F18CA111C00AB12DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				858B83EF18CA22B800AB12DE /* DeliveryApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		858B842C18CA22B800AB12DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD45EE7C18DC2D5800FB50C0 /* app in Resources */,
+				858B842D18CA22B800AB12DE /* InfoPlist.strings in Resources */,
+				E2A7FEC903E141E8AB7FDC20 /* Default-568h@2x.png in Resources */,
+				DE0F01684F454627A4AE125D /* Default-667h@2x.png in Resources */,
+				2D2F90AC34E249E2BE9A8580 /* Default-736h@3x.png in Resources */,
+				F40D05255B1B44CDA507EA2B /* Default-Landscape-568h@2x.png in Resources */,
+				BF1844F07D9D47309A289A5A /* Default-Landscape-667h@2x.png in Resources */,
+				DC720559AE70426FB146645A /* Default-Landscape.png in Resources */,
+				BE95D9FA3BAA4DDFB0F07674 /* Default-Landscape@2x.png in Resources */,
+				654DF4B59BDB492393575587 /* Default-Landscape@3x.png in Resources */,
+				DEA5344863D548A6B1323F88 /* Default-Portrait.png in Resources */,
+				16B32F4580384F9FA89D12FF /* Default-Portrait@2x.png in Resources */,
+				A4792DF542024682A088F0EA /* Default.png in Resources */,
+				54E3FA5512E94713A84E2E53 /* Default@2x.png in Resources */,
+				121FB019209644EC81300AD4 /* Icon-Small-50.png in Resources */,
+				BF3681DD14C14703A1735951 /* Icon-Small-50@2x.png in Resources */,
+				344FB31EDAC146B19BF5CBB5 /* Icon-Small.png in Resources */,
+				43E279ABFC344966A47AE12D /* Icon-Small@2x.png in Resources */,
+				60B8B6FB14D14BB8BCCEEBD5 /* build.xcconfig in Resources */,
+				16DA2BC03F9E4FFB8784DAD9 /* icon-40.png in Resources */,
+				9E7B6CCB434441FDA791EE87 /* icon-40@2x.png in Resources */,
+				A6399AC46FBA4389A6355F44 /* icon-60.png in Resources */,
+				057738FC38CB437CA6167CD9 /* icon-60@2x.png in Resources */,
+				EDFF83465FE646C9983EBA1E /* icon-72.png in Resources */,
+				0494C1D0B2FF4AE2BA149E29 /* icon-72@2x.png in Resources */,
+				C80F868F2CE04DABA2511C70 /* icon-76.png in Resources */,
+				D16FCF8ED61549838954DE4D /* icon-76@2x.png in Resources */,
+				C8150C2C85554C959A4188C9 /* icon.png in Resources */,
+				E30A16A698254ED29F653391 /* icon@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C97FD7AC1ADE5369004DB2A4 /* NativeScript PreBuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "NativeScript PreBuild";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/internal/nativescript-pre-build\"";
+			showEnvVarsInLog = 0;
+		};
+		CD3EAD351B05FF060042DBFC /* NativeScript PostBuild */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "NativeScript PostBuild";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/internal/nativescript-post-build\"";
+			showEnvVarsInLog = 0;
+		};
+		CD62955B1BB2651D00AE3A93 /* NativeScript PreLink */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "NativeScript PreLink";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$SRCROOT/internal/nativescript-pre-link\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		858B83F218CA22B800AB12DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD62955D1BB2678900AE3A93 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		858B833A18CA111C00AB12DE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				858B833B18CA111C00AB12DE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F9B8C6A21ACEDEEB00547416 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9B8C6A31ACEDEEB00547416 /* en */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		858B835818CA111C00AB12DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		858B835918CA111C00AB12DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+		858B843118CA22B800AB12DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDD59A261BB43B5D00EC2671 /* build-debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_MODULES_AUTOLINK = NO;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DeliveryApp/DeliveryApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/DeliveryApp/DeliveryApp-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = DeliveryApp;
+				VALID_ARCHS = "armv7 arm64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		858B843218CA22B800AB12DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDD59A271BB43B5D00EC2671 /* build-release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = NO;
+				CLANG_MODULES_AUTOLINK = NO;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DeliveryApp/DeliveryApp-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/DeliveryApp/DeliveryApp-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = DeliveryApp;
+				VALID_ARCHS = "armv7 arm64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		858B832918CA111C00AB12DE /* Build configuration list for PBXProject "DeliveryApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				858B835818CA111C00AB12DE /* Debug */,
+				858B835918CA111C00AB12DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		858B843018CA22B800AB12DE /* Build configuration list for PBXNativeTarget "DeliveryApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				858B843118CA22B800AB12DE /* Debug */,
+				858B843218CA22B800AB12DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 858B832618CA111C00AB12DE /* Project object */;
+}

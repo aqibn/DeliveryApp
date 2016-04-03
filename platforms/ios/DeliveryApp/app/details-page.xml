@@ -1,0 +1,25 @@
+<Page navigatedTo="navigatedTo" loaded="loaded">
+  <Page.actionBar>
+    <ActionBar title="{{ name }}"></ActionBar>
+  </Page.actionBar>
+<!-- <StackLayout orientation="vertical"> -->
+  <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
+  <!-- <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" /> -->
+  <GridLayout rows="*,auto" columns="1.5*, *">
+    <ListView items="{{ items }}" itemTap="listViewItemTap" row="0" col="0">
+        <ListView.itemTemplate>
+            <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
+        </ListView.itemTemplate>
+    </ListView>
+    <GridLayout rows="auto,*" columns="*,*" row="0" col="1">
+    <!-- <Button text="Add Item" tap="add"  />
+
+    <Button text="Done" tap="done" /> -->
+    <ListPicker items="{{ listitems }}" selectedIndex="1" row="0" col="0" />
+    <ListPicker items="{{ listitems }}" selectedIndex="2" row="0" col="1" />
+    <TextField hint="Enter Weigth" keyboardType="number" row="1" colspan="2"/>
+
+
+    </GridLayout>
+  </GridLayout>
+</Page>

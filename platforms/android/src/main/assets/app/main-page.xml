@@ -1,4 +1,4 @@
-<Page loaded="loaded">
+<Page loaded="loaded" xmlns="http://schemas.nativescript.org/tns.xsd">
   <Page.actionBar>
   <ActionBar title="Deliveries">
     <ActionItem android.systemIcon="ic_menu_add" tap="add"  /></ActionBar>

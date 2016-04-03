@@ -1,0 +1,44 @@
+extends condition
+block content
+    style.
+        .pdf-title {
+            padding: 12px 0 10px 0;
+            margin: 0;
+        }
+
+        .pdf-columns {
+            display: table;
+            width: 100%;
+        }
+
+        .pdf-column {
+            display: table-cell;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 20px;
+            list-style: none;
+        }
+
+        .pdf-column-header {
+            padding: 6px 0 0 0;
+        }
+
+        .li {
+            background: #FFFFFF;
+            padding: 6px 0;
+        }
+
+        .li:nth-child(even) {
+            background: #f1f1f1;
+        }
+    if (title)
+        h2.pdf-title(style=title.style) #{title.value}
+    if (description)
+        h2.pdf-description #{description}
+    .pdf-columns(style={"font-size": options.fontSize})
+        each item in names ? names: []
+            .pdf-column
+                .pdf-column-header(style=item.style)= item.value
+                .pdf-column-data(style=options.columns.style)
+                    each record in records ? records: []
+                        .pdf-column-data-item= record[columns.indexOf(item.name)]

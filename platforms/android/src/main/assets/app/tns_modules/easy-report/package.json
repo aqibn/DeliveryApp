@@ -1,0 +1,79 @@
+{
+  "_args": [
+    [
+      "easy-report",
+      "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp"
+    ]
+  ],
+  "_from": "easy-report@latest",
+  "_id": "easy-report@0.4.3",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/easy-report",
+  "_npmUser": {
+    "email": "andriy.ermolenko@gmail.com",
+    "name": "invercity"
+  },
+  "_npmVersion": "1.4.23",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "easy-report",
+    "raw": "easy-report",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/easy-report/-/easy-report-0.4.3.tgz",
+  "_shasum": "aa64319f35335f284e21835e6c8c3c246219ec1d",
+  "_shrinkwrap": null,
+  "_spec": "easy-report",
+  "_where": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp",
+  "author": {
+    "email": "andriy.ermolenko@gmail.com",
+    "name": "Andriy Ermolenko"
+  },
+  "bugs": {
+    "url": "https://github.com/invercity/easy-report/issues"
+  },
+  "dependencies": {
+    "async": "^1.4.0",
+    "html-docx-js": "^0.2.2",
+    "html-pdf": "^1.1.0",
+    "jade": "^1.9.2",
+    "shortid": "^2.2.1",
+    "underscore": "^1.8.2"
+  },
+  "description": "Library for generating reports from different source types",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "aa64319f35335f284e21835e6c8c3c246219ec1d",
+    "tarball": "https://registry.npmjs.org/easy-report/-/easy-report-0.4.3.tgz"
+  },
+  "gitHead": "92e56a1fd98e6f07d31d5c91149eda9981d3b4b3",
+  "homepage": "https://github.com/invercity/easy-report",
+  "license": "MIT",
+  "main": "./lib.js",
+  "maintainers": [
+    {
+      "name": "invercity",
+      "email": "andriy.ermolenko@gmail.com"
+    }
+  ],
+  "name": "easy-report",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/invercity/easy-report.git"
+  },
+  "scripts": {
+    "clean": "rm -rf ./*.pdf ./*.png ./*.jpeg ./*.docx",
+    "test": "rm -rf ./*.pdf ./*.png ./*.jpeg ./*.docx && node test/main"
+  },
+  "version": "0.4.3"
+}

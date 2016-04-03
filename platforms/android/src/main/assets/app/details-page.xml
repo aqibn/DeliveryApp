@@ -1,20 +1,48 @@
-<Page navigatedTo="navigatedTo">
+<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
   <Page.actionBar>
     <ActionBar title="{{ name }}"></ActionBar>
   </Page.actionBar>
-<StackLayout orientation="vertical">
-  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
-  <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
-  <GridLayout rows="auto" columns="*, *">
-    <Label  text="No Items"  row="0" col="0" />
-    <Label text="TotalWeight" row="0" col="1" />
+<!-- <StackLayout orientation="vertical"> -->
+  <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
+  <!-- <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" /> -->
+  <GridLayout rows="auto,*" columns="2*, *">
+    <StackLayout orienation="vertical" row="1" col="0">
+      <StackLayout orientation="horizontal">
+      <Label text="Weight" horizontalAlignment="center" verticalAlignment="center"/>
+      <Label text="Quality" horizontalAlignment="center" verticalAlignment="center"/>
+      <Label text="Size" horizontalAlignment="center" verticalAlignment="center"/>
+    </StackLayout>
+    <ListView items="{{ items }}" itemTap="listViewItemTap"  cssClass="div">
+        <ListView.itemTemplate>
+            <StackLayout orientation="horizontal">
+            <Label text="{{ weight }}" horizontalAlignment="center" verticalAlignment="center"/>
+            <Label text="{{ quality }}" horizontalAlignment="center" verticalAlignment="center"/>
+            <Label text="{{ size }}" horizontalAlignment="center" verticalAlignment="center"/>
+
+          </StackLayout>
+        </ListView.itemTemplate>
+    </ListView>
+  </StackLayout>
+    <GridLayout rows="auto,auto,auto,*" columns="*,*" row="1" col="1"  cssClass="div">
+    <!-- <Button text="Add Item" tap="add"  />
+
+    <Button text="Done" tap="done" /> -->
+    <StackLayout row="1" col="0">
+    <Label text="Quality" verticalAlignment="center" horizontalAlignment="center"/>
+    <ListPicker items="{{ listitemsquality }}" selectedIndex="{{ selectedQualityIndex }}"  />
+    </StackLayout>
+    <StackLayout row="1" col="1">
+      <Label text="Size" verticalAlignment="center" horizontalAlignment="center"/>
+    <ListPicker items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
+    </StackLayout>
+    <StackLayout orientation="horizontal" row="0" colspan="2" cssClass="weightbox">
+    <TextField id="weight" text="{{ weight }}" hint="Enter Weight" keyboardType="number"  verticalAlignment="center" horizontalAlignment="center"/>
+    </StackLayout>
+    <Label text="No Items Selected" row="2" colspan="2"/>
+    <Button row="3" colspan="2" text="Add" tap="addItem"/>
+    </GridLayout>
+    <GridLayout rows="auto" row="0" col="1" id="additem">
+    <Label text="Add Item"  cssClass="textw" />
   </GridLayout>
-  <Button text="Add Item" tap="add" />
-  <ListView items="{{ items }}" itemTap="listViewItemTap">
-      <ListView.itemTemplate>
-          <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
-      </ListView.itemTemplate>
-  </ListView>
-  <Button text="Done" tap="done" />
-</StackLayout>
+  </GridLayout>
 </Page>

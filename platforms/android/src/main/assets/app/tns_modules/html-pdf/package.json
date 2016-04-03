@@ -1,0 +1,95 @@
+{
+  "_args": [
+    [
+      "html-pdf@^1.1.0",
+      "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/node_modules/easy-report"
+    ]
+  ],
+  "_from": "html-pdf@>=1.1.0 <2.0.0",
+  "_id": "html-pdf@1.5.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/html-pdf",
+  "_nodeVersion": "4.2.3",
+  "_npmUser": {
+    "email": "marc.brookman@gmail.com",
+    "name": "marcbachmann"
+  },
+  "_npmVersion": "3.5.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "html-pdf",
+    "raw": "html-pdf@^1.1.0",
+    "rawSpec": "^1.1.0",
+    "scope": null,
+    "spec": ">=1.1.0 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/easy-report"
+  ],
+  "_resolved": "https://registry.npmjs.org/html-pdf/-/html-pdf-1.5.0.tgz",
+  "_shasum": "135d54817a98b927ff1eca9f29cfdf0279aa8045",
+  "_shrinkwrap": null,
+  "_spec": "html-pdf@^1.1.0",
+  "_where": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/node_modules/easy-report",
+  "author": {
+    "name": "Marc Bachmann"
+  },
+  "bin": {
+    "html-pdf": "bin/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/marcbachmann/node-html-pdf/issues"
+  },
+  "dependencies": {
+    "phantomjs": "^1.9.19"
+  },
+  "description": "HTML to PDF converter that uses phantomjs",
+  "devDependencies": {
+    "coffee-script": "^1.7.1",
+    "standard": "^5.1.1",
+    "tap-spec": "^2.2.0",
+    "tape": "^3.4.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dist": {
+    "shasum": "135d54817a98b927ff1eca9f29cfdf0279aa8045",
+    "tarball": "https://registry.npmjs.org/html-pdf/-/html-pdf-1.5.0.tgz"
+  },
+  "gitHead": "3ae925d210191dc1ad332162ee699d580cc6bfee",
+  "homepage": "https://github.com/marcbachmann/node-html-pdf",
+  "keywords": [
+    "html",
+    "nodejs",
+    "pdf",
+    "phantom",
+    "phantomjs"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "maintainers": [
+    {
+      "name": "marcbachmann",
+      "email": "marc.brookman@gmail.com"
+    }
+  ],
+  "name": "html-pdf",
+  "optionalDependencies": {
+    "phantomjs": "^1.9.19"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/marcbachmann/node-html-pdf.git"
+  },
+  "scripts": {
+    "build": "coffee --compile --output lib/ src/",
+    "exectest": "coffee test/index.coffee -n",
+    "standard": "standard bin/index.js",
+    "test": "npm run standard && npm run build  && npm run exectest"
+  },
+  "version": "1.5.0"
+}

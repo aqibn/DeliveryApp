@@ -1,0 +1,11 @@
+Label {
+    margin: 10;
+    horizontal-align: left;
+    vertical-align: center;
+    border-width: 5;
+
+}
+TextField {
+    border-width: 5;
+
+}

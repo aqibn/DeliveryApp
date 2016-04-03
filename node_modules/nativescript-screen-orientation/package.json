@@ -1,0 +1,55 @@
+{
+  "name": "nativescript-screen-orientation",
+  "version": "1.0.2",
+  "description": "A plugin to force change the orientation of a page programmatically in NativeScript. Supports both Android and iOS.",
+  "main": "screen-orientation.js",
+  "nativescript": {
+    "platforms": {
+      "ios": "1.5.0",
+      "android": "1.5.0"
+    }
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VideoSpike/nativescript-screen-orientation.git"
+  },
+  "keywords": [
+    "nativescript",
+    "orientation-change",
+    "force-orientation",
+    "lock-orientation"
+  ],
+  "author": {
+    "name": "Batheja Sumeet",
+    "email": "sumeet@videospike.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VideoSpike/nativescript-screen-orientation/issues"
+  },
+  "homepage": "https://github.com/VideoSpike/nativescript-screen-orientation",
+  "gitHead": "6e39893facf3b481381b1d5432a9bd7027ba1996",
+  "_id": "nativescript-screen-orientation@1.0.2",
+  "_shasum": "08ed7affa437b0e483d5ea0746c668bbbe101b52",
+  "_from": "nativescript-screen-orientation@latest",
+  "_npmVersion": "2.14.7",
+  "_nodeVersion": "4.2.3",
+  "_npmUser": {
+    "name": "bathejasumeet",
+    "email": "sumeet@videospike.com"
+  },
+  "dist": {
+    "shasum": "08ed7affa437b0e483d5ea0746c668bbbe101b52",
+    "tarball": "https://registry.npmjs.org/nativescript-screen-orientation/-/nativescript-screen-orientation-1.0.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "bathejasumeet",
+      "email": "sumeet@videospike.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-screen-orientation/-/nativescript-screen-orientation-1.0.2.tgz",
+  "readme": "ERROR: No README data found!"
+}
