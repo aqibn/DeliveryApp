@@ -20,16 +20,18 @@ exports.loaded = function(args) {
     page.bindingContext = pageData;
 };
 
+
+exports.add = function(args) {
+  frames.topmost().navigate({
+        moduleName: "delivery-page"
+});
+}
+
 exports.listViewItemTap = function(args) {
   var itemIndex = args.index;
   console.log(JSON.stringify(pageData.deliveries.getItem(itemIndex)));
   frames.topmost().navigate({
-        moduleName: "details-page",
+        moduleName: "delivery-page",
         context: pageData.deliveries.getItem(itemIndex)
     });
-}
-function pageNavigatedTo(args) {
-    console.log("Navigaged");
-    var page = args.object;
-    page.bindingContext = page.navigationContext;
 }

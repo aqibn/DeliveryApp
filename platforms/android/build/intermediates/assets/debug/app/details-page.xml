@@ -5,32 +5,70 @@
 <!-- <StackLayout orientation="vertical"> -->
   <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
   <!-- <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" /> -->
-  <GridLayout rows="auto,*" columns="2*, *">
-    <ListView items="{{ items }}" itemTap="listViewItemTap" row="1" col="0" cssClass="div">
+  <GridLayout rows="*,auto" columns="*, *">
+
+    <GridLayout rows="auto,3*" row="0" col="1">
+
+      <StackLayout row="0" orientation="horizontal">
+      <Label text="Weight" horizontalAlignment="center" verticalAlignment="center"/>
+      <Label text="Quality" horizontalAlignment="center" verticalAlignment="center"/>
+      <Label text="Size" horizontalAlignment="center" verticalAlignment="center"/>
+      </StackLayout>
+
+    <ListView items="{{ lot.items }}" itemTap="listViewItemTap" row="1" cssClass="div">
         <ListView.itemTemplate>
-            <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
-        </ListView.itemTemplate>
-    </ListView>
-    <GridLayout rows="auto,auto,auto,auto" columns="*,*" row="1" col="1"  cssClass="div">
+            <GridLayout columns="*,*,*">
+            <Label text="{{ weight }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
+
+          </GridLayout>
+  </ListView.itemTemplate>
+  </ListView>
+
+</GridLayout>
+
+  <StackLayout cssClass="div" row="1" col="1">
+  <GridLayout   rows="*,*,*,*,*" columns="*,*,*,auto">
+  <Label row="0" col="0" colspan="2" text="Weight (Kgs)" />
+  <Label row="0" col="2"  text="{{ weight }}" colspan="2" horizontalAlignment="right" verticalAlignment="center"/>
+
+  <Button row="1" col="0" text="1" tap="addDigit"/>
+  <Button row="1" col="1" text="2" tap="addDigit"/>
+  <Button row="1" col="2" text="3" tap="addDigit"/>
+  <!-- <Button row="1" col="3" text="1"/> -->
+  <Button row="2" col="0" text="4" tap="addDigit"/>
+  <Button row="2" col="1" text="5" tap="addDigit"/>
+  <Button row="2" col="2" text="6" tap="addDigit"/>
+  <!-- <Button row="2" col="3" text="1"/> -->
+  <Button row="3" col="0" text="7" tap="addDigit"/>
+  <Button row="3" col="1" text="8" tap="addDigit"/>
+  <Button row="3" col="2" text="9" tap="addDigit"/>
+  <!-- <Button row="3" col="3" text="1"/> -->
+  <Button row="4" col="0" text="." tap="addDigit"/>
+  <Button row="4" col="1" text="0" tap="addDigit"/>
+  <!-- <Button row="4" col="2" text="C"/> -->
+  <Button row="1" col="3" rowspan="3" text="C" style="background-color: orange;"/>
+  <Button row="4" col="2" colspan="2" text="Add" style="background-color: green;"/>
+  </GridLayout>
+</StackLayout>
+    <GridLayout rows="auto,auto,auto,*" columns="*,*" rowspan="2" col="0"  cssClass="div">
     <!-- <Button text="Add Item" tap="add"  />
 
     <Button text="Done" tap="done" /> -->
     <StackLayout row="1" col="0">
     <Label text="Quality" verticalAlignment="center" horizontalAlignment="center"/>
-    <ListPicker items="{{ listitems }}" selectedIndex="1"  />
+    <ListPicker items="{{ listitemsquality }}" selectedIndex="{{ selectedQualityIndex }}"  />
     </StackLayout>
     <StackLayout row="1" col="1">
-      <Label text="Quatity" verticalAlignment="center" horizontalAlignment="center"/>
-    <ListPicker items="{{ listitems }}" selectedIndex="2"  />
+      <Label text="Size" verticalAlignment="center" horizontalAlignment="center"/>
+    <ListPicker items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
     </StackLayout>
-    <StackLayout orientation="horizontal" row="0" colspan="2" cssClass="weightbox">
-    <TextField hint="Enter Weight" keyboardType="number"  verticalAlignment="center" horizontalAlignment="center"/>
-    </StackLayout>
-    <Label text="No Items Selected" row="2" colspan="2"/>
-    <Button row="3" colspan="2" text="Add"/>
+
+    <!-- <Label text="No Items Selected" row="0" colspan="2"/> -->
+    <Button row="3" colspan="2" text="Add" tap="addItem"/>
     </GridLayout>
-    <GridLayout rows="auto" row="0" col="1" id="additem">
+    <!-- <GridLayout rows="auto" row="0" col="0" id="additem">
     <Label text="Add Item"  cssClass="textw" />
-  </GridLayout>
+  </GridLayout> -->
+
   </GridLayout>
 </Page>

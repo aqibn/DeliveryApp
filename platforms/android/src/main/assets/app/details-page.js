@@ -6,18 +6,10 @@ var viewModule = require("ui/core/view");
 var page;
 
 
+var dotPressed;
 
 var pageData = new Observable({
-    items: new ObservableArray([
-        { quality: "eggs",
-          weight: 10,
-          size: "sizea"},
-          { quality: "eggs",
-              weight: 10,
-              size: "sizea"}
 
-
-    ]),
     listitemsquality: new ObservableArray(
       ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]),
     listitemssize: new ObservableArray(
@@ -25,11 +17,18 @@ var pageData = new Observable({
     name: "",
     selectedQualityIndex: 2,
     selectedSizeIndex: 2,
-    weight: 0
+    weight: 0,
+    weightString: "",
+    lot: {
+      size: "",
+      quality: "",
+      items: new ObservableArray([{weight: 10},{weight: 10},{weight: 10},{weight: 10}])
+    }
 });
 //
 exports.loaded = function(args) {
     page = args.object;
+    dotPressed=false;
     orientationModule.setCurrentOrientation("landscape",function() {
         console.log("landscape orientation set");
       });
@@ -56,10 +55,10 @@ exports.addItem = function(args) {
   }
 
   // Dismiss the keyboard
-  page.getViewById("weight").dismissSoftInput();
+  // page.getViewById("weight").dismissSoftInput();
   var squality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
   var ssize = pageData.listitemsquality.getItem(pageData.selectedSizeIndex);
-  alert(squality);
+  // alert(squality);
   pageData.items.push(
     {quality: squality,
     weight: Number(pageData.weight),
@@ -69,6 +68,29 @@ exports.addItem = function(args) {
   pageData.set("weight", 0);
 }
 
+
+exports.addDigit = function(args) {
+  console.log("Add digit");
+  var btn = args.object;
+  if(btn.text === ".") {
+    console.log("Dot Pressed");
+
+    if (dotPressed) {
+      return;
+    } else {
+      pageData.weightString = (pageData.weightString)+(btn.text);
+      dotPressed = true;
+      return;
+  }
+}
+  // console.log(weight);
+  pageData.weightString = (pageData.weightString)+(btn.text);
+  pageData.weight = Number(pageData.weightString);
+  // weight = weight.concat(btn.text);
+  // var a = "a" + "b";
+
+  console.log(pageData.weightString);
+}
 // exports.navigatedTo = function(args) {
 //   orientationModule.setCurrentOrientation("landscape",function() {
 //     console.log("landscape orientation set");

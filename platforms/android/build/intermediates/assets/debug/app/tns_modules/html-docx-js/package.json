@@ -1,0 +1,103 @@
+{
+  "_args": [
+    [
+      "html-docx-js@^0.2.2",
+      "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/node_modules/easy-report"
+    ]
+  ],
+  "_from": "html-docx-js@>=0.2.2 <0.3.0",
+  "_id": "html-docx-js@0.2.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/html-docx-js",
+  "_nodeVersion": "0.10.12",
+  "_npmUser": {
+    "email": "mail@anowak.net",
+    "name": "anowak"
+  },
+  "_npmVersion": "2.10.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "html-docx-js",
+    "raw": "html-docx-js@^0.2.2",
+    "rawSpec": "^0.2.2",
+    "scope": null,
+    "spec": ">=0.2.2 <0.3.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/easy-report"
+  ],
+  "_resolved": "https://registry.npmjs.org/html-docx-js/-/html-docx-js-0.2.2.tgz",
+  "_shasum": "461660b81f0ece1c3cd37180a470474e7e665736",
+  "_shrinkwrap": null,
+  "_spec": "html-docx-js@^0.2.2",
+  "_where": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/node_modules/easy-report",
+  "author": {
+    "email": "artur.nowak@evidenceprime.com",
+    "name": "Artur Nowak"
+  },
+  "browserify": {
+    "transform": [
+      "brfs",
+      "coffeeify"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/evidenceprime/html-docx-js/issues"
+  },
+  "dependencies": {
+    "jszip": "^2.3.0",
+    "lodash.escape": "^3.0.0",
+    "lodash.merge": "^3.2.0"
+  },
+  "description": "Converts HTML documents to DOCX in the browser",
+  "devDependencies": {
+    "brfs": "^1.1.2",
+    "browserify": "^4.2.0",
+    "chai": "^1.9.1",
+    "coffeeify": "^0.6.0",
+    "del": "^1.2.0",
+    "gulp": "^3.8.5",
+    "gulp-coffee": "^2.3.1",
+    "gulp-lodash-template": "^0.1.0",
+    "gulp-mocha": "^0.4.1",
+    "gulp-mocha-phantomjs": "^0.3.0",
+    "gulp-notify": "^1.4.0",
+    "gulp-util": "^2.2.19",
+    "jstify": "^0.9.0",
+    "mocha": "^1.20.1",
+    "pretty-hrtime": "^0.2.1",
+    "sinon": "^1.10.2",
+    "sinon-chai": "^2.5.0",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^0.10.2"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "461660b81f0ece1c3cd37180a470474e7e665736",
+    "tarball": "https://registry.npmjs.org/html-docx-js/-/html-docx-js-0.2.2.tgz"
+  },
+  "gitHead": "747cce265021b9b4bed3da8a2b40eea82b807128",
+  "homepage": "https://github.com/evidenceprime/html-docx-js#readme",
+  "license": "MIT",
+  "main": "build/api.js",
+  "maintainers": [
+    {
+      "name": "anowak",
+      "email": "mail@anowak.net"
+    }
+  ],
+  "name": "html-docx-js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/evidenceprime/html-docx-js.git"
+  },
+  "scripts": {
+    "prepublish": "gulp clean; gulp build-node",
+    "test": "gulp test-node"
+  },
+  "version": "0.2.2"
+}

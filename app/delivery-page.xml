@@ -1,0 +1,33 @@
+<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
+  <Page.actionBar>
+    <ActionBar title="{{ name }}"></ActionBar>
+  </Page.actionBar>
+<GridLayout rows="auto,auto,auto,2*,*">
+<StackLayout row="0" orientation="vertical" cssClass="div">
+  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
+  <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
+</StackLayout>
+<StackLayout  cssClass="div" row="4" orientation="horizontal">
+<Label text="Delivery Summary"/>
+</StackLayout>
+<GridLayout cssClass="divB" columns="3*,*" row="1" orientation="horizontal">
+<Label col="0"  text="Lots" verticalAlignment="center" horizontalAlignment="Left"/>
+<button text="Add Lot" tap="add" col="1"/>
+</GridLayout>
+
+<GridLayout row="2" columns="*,*,*">
+<Label text="Total weight" col="0" horizontalAlignment="center" verticalAlignment="center" />
+<Label text="Quality" col="1" horizontalAlignment="center" verticalAlignment="center" />
+<Label text="Size" col="2" horizontalAlignment="center" verticalAlignment="center" />
+</GridLayout>
+<ListView row="3" items="{{ items }}" itemTap="listViewItemTap" cssClass="div">
+    <ListView.itemTemplate>
+        <GridLayout columns="*,*,*">
+        <Label text="{{ weight }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ quality }}" col="1" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ size }}" col="2" horizontalAlignment="center" verticalAlignment="center" />
+      </GridLayout>
+</ListView.itemTemplate>
+</ListView>
+</GridLayout>
+</Page>
