@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/usr/local/Cellar/android-sdk/24.4.1_1/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
-        <dex dex="/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/pre-dexed/debug/support-annotations-23.2.1_be29bbd49f7270cccaeecc1f5df54d90f886d9c7.jar" />
-    </item>
-    <item
         jar="/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/libs/nativescript.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="72b585c3baffa7cb9fbecc8dd37cd89a127f17f5">
         <dex dex="/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/pre-dexed/debug/nativescript_57726776a9e7239897a7063bd014fd924e3bcba1.jar" />
+    </item>
+    <item
+        jar="/usr/local/Cellar/android-sdk/24.4.1_1/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/pre-dexed/debug/support-annotations-23.2.1_be29bbd49f7270cccaeecc1f5df54d90f886d9c7.jar" />
     </item>
 
 </items>

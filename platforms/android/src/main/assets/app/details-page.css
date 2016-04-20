@@ -22,3 +22,10 @@ TextField {
 
 .weightbox {
 }
+
+#summary {
+  font-size: 20;
+  font-weight: bold;
+  font-family: cursive;
+  color: black;
+}

@@ -22,8 +22,11 @@ var pageData = new Observable({
     lot: {
       size: "",
       quality: "",
-      items: new ObservableArray([{weight: 10},{weight: 10},{weight: 10},{weight: 10}])
-    }
+      items: new ObservableArray()
+      // new ObservableArray([{weight: 10},{weight: 10},{weight: 10},{weight: 10}])
+    },
+    numItems: 0,
+    totalWeight:0
 });
 //
 exports.loaded = function(args) {
@@ -56,16 +59,19 @@ exports.addItem = function(args) {
 
   // Dismiss the keyboard
   // page.getViewById("weight").dismissSoftInput();
-  var squality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
-  var ssize = pageData.listitemsquality.getItem(pageData.selectedSizeIndex);
+  // var squality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
+  // var ssize = pageData.listitemsquality.getItem(pageData.selectedSizeIndex);
   // alert(squality);
-  pageData.items.push(
-    {quality: squality,
-    weight: Number(pageData.weight),
-    size: ssize});
+  pageData.lot.items.unshift({weight: pageData.weight,
+                          id: pageData.numItems});
+  // push({weight: pageData.weight,
+  //                         id: pageData.numItems});
 
+  pageData.totalWeight += pageData.weight;
+  pageData.numItems += 1;
   // Empty the input field
-  pageData.set("weight", 0);
+  pageData.weightString = "";
+  pageData.weight = 0;
 }
 
 
@@ -90,6 +96,26 @@ exports.addDigit = function(args) {
   // var a = "a" + "b";
 
   console.log(pageData.weightString);
+}
+
+exports.clear = function (args) {
+pageData.weightString = "";
+pageData.weight = 0;
+
+}
+
+exports.listViewItemTap = function(args) {
+  var tappedItemIndex = args.index;
+  var tappedItemView = args.view;
+  var item = args.view.bindingContext;
+  var index = pageData.lot.items.indexOf(item);
+  console.log(item.id);
+  console.log(index);
+  pageData.lot.items.splice(index,1);
+  pageData.numItems -= 1;
+
+
+
 }
 // exports.navigatedTo = function(args) {
 //   orientationModule.setCurrentOrientation("landscape",function() {
