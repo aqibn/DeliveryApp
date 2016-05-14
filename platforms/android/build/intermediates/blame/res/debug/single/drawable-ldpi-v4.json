@@ -6,5 +6,13 @@
     {
         "merged": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_delete.png",
         "source": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_delete.png"
+    },
+    {
+        "merged": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_edit.png",
+        "source": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_edit.png"
+    },
+    {
+        "merged": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_add.png",
+        "source": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_add.png"
     }
 ]

@@ -1,6 +1,12 @@
-<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
+<Page unloaded="pageUnloaded" navigatedTo="navigatedTo" navigatedFrom="onNavigatingFrom" loaded="loaded" style="background-color: gray;">
   <Page.actionBar>
-    <ActionBar title="{{ name }}"></ActionBar>
+    <ActionBar title="{{ name }}">
+      <ActionBar.actionItems>
+        <ActionItem text="Cancel" tap="goBack"/>
+        <ActionItem text="Done" tap="saveBack"/>
+
+      </ActionBar.actionItems>
+  </ActionBar>
   </Page.actionBar>
 <!-- <StackLayout orientation="vertical"> -->
   <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
@@ -65,12 +71,20 @@
 
     <Button text="Done" tap="done" /> -->
     <StackLayout row="1" col="0" cssClass="div">
-    <Label text="Quality" verticalAlignment="center" horizontalAlignment="center"/>
+      <GridLayout columns="auto,*,auto">
+      <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
+      <Label text="Quality" verticalAlignment="center" horizontalAlignment="center" col="1"/>
+      <!-- <Image src="res://ic_menu_edit" col="2"  /> -->
+      </GridLayout>
     <ListPicker items="{{ listitemsquality }}" selectedIndex="{{ selectedQualityIndex }}"  />
     </StackLayout>
     <StackLayout row="1" col="1" cssClass="div">
-      <Label text="Size" verticalAlignment="center" horizontalAlignment="center"/>
-    <ListPicker items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
+    <GridLayout columns="auto,*,auto">
+    <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
+    <Label text="Size" verticalAlignment="center" horizontalAlignment="center" col="1"/>
+    <!-- <Image src="res://ic_menu_edit" col="2"  tap="addSize"/> -->
+    </GridLayout>
+    <ListPicker id="sizelistpicker" items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
     </StackLayout>
 
     <!-- <Label text="No Items Selected" row="0" colspan="2"/> -->

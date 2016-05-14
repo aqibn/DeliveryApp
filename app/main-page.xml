@@ -1,12 +1,33 @@
-<Page loaded="loaded" xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd">
   <Page.actionBar>
   <ActionBar title="Deliveries">
-    <ActionItem android.systemIcon="ic_menu_add" tap="add"  /></ActionBar>
+    <ActionBar.actionItems>
+      <ActionItem text="Save" tap="saveFile"/>
+
+    </ActionBar.actionItems>
+  </ActionBar>
   </Page.actionBar>
-    <GridLayout>
-        <ListView items="{{ deliveries }}" itemTap="listViewItemTap">
+    <GridLayout rows="auto,auto,*">
+        <GridLayout row="0" columns="*,*">
+        <Button col="0" text="Add New Delivery" tap="add"/>
+        <Button col="1" text="Settings" tap="showSettings"/>
+
+        </GridLayout>
+        <GridLayout row="1" columns="*,*,*,*">
+          <Label text="Customer Name" col="0" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Delivery Date" col="1" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Createdy By" col="2" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Total Weight" col="3" horizontalAlignment="center" verticalAlignment="center"/>
+
+        </GridLayout>
+        <ListView row="2" items="{{ deliveries }}" itemTap="listViewItemTap">
             <ListView.itemTemplate>
-                <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
+                <GridLayout columns="*,*,*,*">
+                <Label text="{{ deliveryCustomerName }}" col="0" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryDate }}" col="1" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryCreatedBy }}" col="2" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryTotalWeight }}" col="3" horizontalAlignment="center" verticalAlignment="center"/>
+              </GridLayout>
             </ListView.itemTemplate>
         </ListView>
     </GridLayout>

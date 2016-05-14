@@ -1,6 +1,11 @@
 <Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
   <Page.actionBar>
-    <ActionBar title="{{ name }}"></ActionBar>
+    <ActionBar title="{{ name }}">
+      <ActionItem text="Print" tap="Print"/>
+      <ActionItem text="Cancel" tap="goBack"/>
+
+<ActionItem text="Done" tap="saveDelivery"/>
+</ActionBar>
   </Page.actionBar>
 <GridLayout rows="auto,auto,auto,2*,*">
 <StackLayout row="0" orientation="vertical" cssClass="div">
@@ -9,23 +14,30 @@
 </StackLayout>
 <StackLayout  cssClass="div" row="4" orientation="horizontal">
 <Label text="Delivery Summary"/>
+<Label text="{{ tap }}" tap="tapped"/>
 </StackLayout>
 <GridLayout cssClass="divB" columns="3*,*" row="1" orientation="horizontal">
 <Label col="0"  text="Lots" verticalAlignment="center" horizontalAlignment="Left"/>
 <button text="Add Lot" tap="add" col="1"/>
 </GridLayout>
 
-<GridLayout row="2" columns="*,*,*">
+<GridLayout row="2" columns="*,*,*,*,auto">
 <Label text="Total weight" col="0" horizontalAlignment="center" verticalAlignment="center" />
-<Label text="Quality" col="1" horizontalAlignment="center" verticalAlignment="center" />
-<Label text="Size" col="2" horizontalAlignment="center" verticalAlignment="center" />
+<Label text="Num Items" col="1" horizontalAlignment="center" verticalAlignment="center" />
+<Label text="Quality" col="2" horizontalAlignment="center" verticalAlignment="center" />
+<Label text="Size" col="3" horizontalAlignment="center" verticalAlignment="center" />
+<Image src="res://ic_menu_delete" col="4" ios:visibility="collapsed" style="opacity: 0;" />
+
+
 </GridLayout>
-<ListView row="3" items="{{ items }}" itemTap="listViewItemTap" cssClass="div">
+<ListView row="3" items="{{ lots }}" itemTap="listViewItemTap" cssClass="div">
     <ListView.itemTemplate>
-        <GridLayout columns="*,*,*">
-        <Label text="{{ weight }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
-        <Label text="{{ quality }}" col="1" horizontalAlignment="center" verticalAlignment="center" />
-        <Label text="{{ size }}" col="2" horizontalAlignment="center" verticalAlignment="center" />
+        <GridLayout columns="*,*,*,*,auto">
+        <Label text="{{ lotTotalWeight }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotNumItems }}" col="1" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotQuality }}" col="2" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotSize }}" col="3" horizontalAlignment="center" verticalAlignment="center" />
+        <Image src="res://ic_menu_delete" col="4" ios:visibility="collapsed"  tap="deleteListItem" />
       </GridLayout>
 </ListView.itemTemplate>
 </ListView>

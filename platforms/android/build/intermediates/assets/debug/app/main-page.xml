@@ -1,12 +1,20 @@
-<Page loaded="loaded" xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd">
   <Page.actionBar>
   <ActionBar title="Deliveries">
-    <ActionItem android.systemIcon="ic_menu_add" tap="add"  /></ActionBar>
+  </ActionBar>
   </Page.actionBar>
-    <GridLayout>
-        <ListView items="{{ deliveries }}" itemTap="listViewItemTap">
+    <GridLayout rows="auto,*">
+        <GridLayout row="0" columns="*,*">
+        <Button col="0" text="Add New Delivery" tap="add"/>
+        <Button col="1" text="Settings" tap="showSettings"/>
+
+        </GridLayout>
+        <ListView row="1" items="{{ deliveries }}" itemTap="listViewItemTap">
             <ListView.itemTemplate>
-                <Label text="{{ name }}" horizontalAlignment="left" verticalAlignment="center"/>
+                <Label text="{{ deliveryTotalWeight }}" horizontalAlignment="left" verticalAlignment="center"/>
+                <!-- <Label text="{{ deliveryCustomerName }}" horizontalAlignment="left" verticalAlignment="center"/> -->
+                <!-- <Label text="{{ deliveryDate }}" horizontalAlignment="left" verticalAlignment="center"/> -->
+
             </ListView.itemTemplate>
         </ListView>
     </GridLayout>
