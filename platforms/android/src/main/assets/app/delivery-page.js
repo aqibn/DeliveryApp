@@ -4,6 +4,7 @@ var ObservableArray = require("data/observable-array").ObservableArray;
 var orientationModule = require('nativescript-screen-orientation');
 var viewModule = require("ui/core/view");
 var frames = require("ui/frame");
+var moment = require("moment");
 
 var Sqlite = require("nativescript-sqlite");
 // var deliveryViewModel = require("./delivery-view-model").createViewModel;
@@ -85,7 +86,9 @@ exports.navigatedTo = function(args) {
     });
 
   } else if (newpage.navigationContext.update === "new delivery") {
-    pageData.deliveryDate = new Date();
+    pageData.deliveryDate = moment().format('MMMM Do YYYY, h');
+
+    // pageData.deliveryDate = new Date();
     pageData.customerName = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
@@ -146,7 +149,8 @@ exports.saveDelivery = function(args) {
     });
     return;
   }
-  pageData.deliveryDate = new Date();
+  // pageData.deliveryDate = new Date();
+  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
 
   console.log("data: ",pageData.deliveryDate );
   frames.topmost().navigate( {

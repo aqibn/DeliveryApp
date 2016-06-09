@@ -4,6 +4,7 @@ var ObservableArray = require("data/observable-array").ObservableArray;
 var orientationModule = require('nativescript-screen-orientation');
 var viewModule = require("ui/core/view");
 var frames = require("ui/frame");
+var moment = require("moment");
 
 var Sqlite = require("nativescript-sqlite");
 // var deliveryViewModel = require("./delivery-view-model").createViewModel;
@@ -85,7 +86,9 @@ exports.navigatedTo = function(args) {
     });
 
   } else if (newpage.navigationContext.update === "new delivery") {
-    pageData.deliveryDate = new Date();
+    pageData.deliveryDate = moment().format('MMMM Do YYYY, h a');
+
+    // pageData.deliveryDate = new Date();
     pageData.customerName = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
@@ -106,8 +109,10 @@ exports.listViewItemTap = function(args) {
   var index = args.index;
   console.log(index);
   var lot = pageData.lots.getItem(index);
-  pageData.totalWeight -= lot.totalWeight;
+  // console.log("Summary Weight: ", pageData.totalWeight);
+  // console.log("Lot weight", lot.lotTotalWeight);
 
+  pageData.totalWeight -= lot.lotTotalWeight;
   pageData.lots.splice(index,1);
   frames.topmost().navigate({
         moduleName: "details-page",

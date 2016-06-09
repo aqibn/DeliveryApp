@@ -105,14 +105,16 @@ exports.addItem = function(args) {
   // var squality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
   // var ssize = pageData.listitemsquality.getItem(pageData.selectedSizeIndex);
   // alert(squality);
-  pageData.lot.items.unshift({weight: pageData.weight,
+  var w = Number(pageData.weight.toFixed(2));
+  pageData.lot.items.unshift({weight: w,
                           itemid: pageData.numItems});
   // push({weight: pageData.weight,
   //                         id: pageData.numItems});
 
-  pageData.totalWeight += pageData.weight;
+  pageData.totalWeight += w;
   pageData.numItems += 1;
   // Empty the input field
+  pageData.totalWeight = Number(pageData.totalWeight.toFixed(2));
   pageData.weightString = "";
   pageData.weight = 0;
   dotPressed = false;
@@ -137,6 +139,7 @@ exports.addDigit = function(args) {
   // console.log(weight);
   pageData.weightString = (pageData.weightString)+(btn.text);
   pageData.weight = Number(pageData.weightString);
+
   // weight = weight.concat(btn.text);
   // var a = "a" + "b";
 
