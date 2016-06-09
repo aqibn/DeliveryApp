@@ -1,0 +1,66 @@
+{
+  "name": "nativescript-sqlite",
+  "version": "1.0.8",
+  "description": "A sqlite NativeScript module for Android and iOS",
+  "main": "sqlite.js",
+  "nativescript": {
+    "platforms": {
+      "android": "1.4.0",
+      "ios": "1.4.0"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanaela/nativescript-sqlite.git"
+  },
+  "keywords": [
+    "NativeScript",
+    "SQL",
+    "SQLite",
+    "Database",
+    "DB",
+    "iOS",
+    "Android",
+    "JavaScript"
+  ],
+  "author": {
+    "name": "Nathanael Anderson",
+    "email": "nathan@master-technology.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/nathanaela/nativescript-sqlite/blob/master/LICENSE"
+  },
+  "bugs": {
+    "url": "https://github.com/nathanaela/nativescript-sqlite/issues"
+  },
+  "homepage": "https://github.com/nathanaela/nativescript-sqlite",
+  "gitHead": "255d68098a05173c937cdcae5518e5da4fcf0088",
+  "_id": "nativescript-sqlite@1.0.8",
+  "scripts": {},
+  "_shasum": "b8c4c9219913534221533894dba149b78a033434",
+  "_from": "nativescript-sqlite@latest",
+  "_npmVersion": "2.8.3",
+  "_nodeVersion": "4.2.1",
+  "_npmUser": {
+    "name": "nathanaela",
+    "email": "nathan@master-technology.com"
+  },
+  "dist": {
+    "shasum": "b8c4c9219913534221533894dba149b78a033434",
+    "tarball": "https://registry.npmjs.org/nativescript-sqlite/-/nativescript-sqlite-1.0.8.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "nathanaela",
+      "email": "nathanael.anderson@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/nativescript-sqlite-1.0.8.tgz_1455681117347_0.3041514144279063"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-sqlite/-/nativescript-sqlite-1.0.8.tgz",
+  "readme": "ERROR: No README data found!"
+}

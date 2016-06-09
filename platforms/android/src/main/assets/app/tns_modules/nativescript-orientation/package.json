@@ -1,0 +1,66 @@
+{
+  "name": "nativescript-orientation",
+  "version": "1.0.3",
+  "description": "A NativeScript plugin to deal with Declarative UI and Screen Orientation",
+  "main": "orientation.js",
+  "nativescript": {
+    "platforms": {
+      "android": "1.7.0",
+      "ios": "1.7.0"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanaela/nativescript-orientation.git"
+  },
+  "dependencies": {
+    "nativescript-globalevents": "^1.1.0"
+  },
+  "keywords": [
+    "NativeScript",
+    "orientation",
+    "landscape",
+    "ios",
+    "android"
+  ],
+  "author": {
+    "name": "Nathanael Anderson",
+    "email": "nathan@master-technology.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/nathanaela/nativescript-orientation/blob/master/LICENSE"
+  },
+  "bugs": {
+    "url": "https://github.com/nathanaela/nativescript-orientation/issues"
+  },
+  "homepage": "https://github.com/nathanaela/nativescript-orientation",
+  "gitHead": "e510864b820522a20d61bacc7d6f659dbd54c677",
+  "_id": "nativescript-orientation@1.0.3",
+  "scripts": {},
+  "_shasum": "d939e65dd4c16995055517a7ff215e564e07a33d",
+  "_from": "nativescript-orientation@latest",
+  "_npmVersion": "3.7.4",
+  "_nodeVersion": "4.3.1",
+  "_npmUser": {
+    "name": "nathanaela",
+    "email": "nathan@master-technology.com"
+  },
+  "dist": {
+    "shasum": "d939e65dd4c16995055517a7ff215e564e07a33d",
+    "tarball": "https://registry.npmjs.org/nativescript-orientation/-/nativescript-orientation-1.0.3.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "nathanaela",
+      "email": "nathan@master-technology.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/nativescript-orientation-1.0.3.tgz_1459655924098_0.7557044078130275"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-orientation/-/nativescript-orientation-1.0.3.tgz",
+  "readme": "ERROR: No README data found!"
+}

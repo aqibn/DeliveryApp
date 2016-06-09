@@ -1,0 +1,17 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+      showingModally="onShowingModally"
+      shownModally="onShownModally"
+      navigatingTo="onNavigatingTo"
+      loaded="onLoaded"
+      navigatedTo="onNavigatedTo"
+      navigatingFrom="onNavigatingFrom"
+      navigatedFrom="onNavigatedFrom"
+      unloaded="onUnloaded"
+      backgroundColor="gray">
+  <StackLayout >
+    <TextField hint="username" id="username" text="username"/>
+    <TextField hint="password" id="password" text="password" secure="true"/>
+    <Button text="Login" tap="onLoginButtonTap"/>
+    <Button text="Show Dialog" tap="onShowDialogButtonTap"/>
+  </StackLayout>
+</Page>

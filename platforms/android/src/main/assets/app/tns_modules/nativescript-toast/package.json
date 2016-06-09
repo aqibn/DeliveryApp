@@ -1,0 +1,56 @@
+{
+  "name": "nativescript-toast",
+  "version": "1.2.0",
+  "description": "A NativeScript Toast Plugin for Android.",
+  "main": "toast.js",
+  "nativescript": {
+    "platforms": {
+      "android": "1.3.0",
+      "ios": "1.3.0"
+    }
+  },
+  "keywords": [
+    "NativeScript",
+    "Toast",
+    "Notification",
+    "Android"
+  ],
+  "author": {
+    "name": "Tobias Hennig",
+    "email": "tobias.hennig1@gmail.com",
+    "url": "https://github.com/TobiasHennig"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobiasHennig/nativescript-toast.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TobiasHennig/nativescript-toast/issues"
+  },
+  "license": "MIT",
+  "gitHead": "1e408d2a3fdf78098a4847a32b1e3fec1e4992bf",
+  "homepage": "https://github.com/TobiasHennig/nativescript-toast#readme",
+  "_id": "nativescript-toast@1.2.0",
+  "scripts": {},
+  "_shasum": "cbedb82117c0c32204efb22ec7d83e52b5687d87",
+  "_from": "nativescript-toast@latest",
+  "_npmVersion": "2.11.3",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "tobiashennig",
+    "email": "tobias.hennig1@gmail.com"
+  },
+  "dist": {
+    "shasum": "cbedb82117c0c32204efb22ec7d83e52b5687d87",
+    "tarball": "https://registry.npmjs.org/nativescript-toast/-/nativescript-toast-1.2.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "tobiashennig",
+      "email": "tobias.hennig1@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-toast/-/nativescript-toast-1.2.0.tgz",
+  "readme": "ERROR: No README data found!"
+}

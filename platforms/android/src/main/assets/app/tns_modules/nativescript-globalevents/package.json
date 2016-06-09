@@ -1,0 +1,62 @@
+{
+  "name": "nativescript-globalevents",
+  "version": "1.1.0",
+  "description": "A NativeScript plugin to deal with Global page events",
+  "main": "globalevents.js",
+  "nativescript": {
+    "platforms": {
+      "android": "1.7.0",
+      "ios": "1.7.0"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathanaela/nativescript-globalevents.git"
+  },
+  "keywords": [
+    "NativeScript",
+    "page events",
+    "global events",
+    "ios",
+    "android"
+  ],
+  "author": {
+    "name": "Nathanael Anderson",
+    "email": "nathan@master-technology.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/nathanaela/nativescript-globalevents/blob/master/LICENSE"
+  },
+  "bugs": {
+    "url": "https://github.com/nathanaela/nativescript-globalevents/issues"
+  },
+  "homepage": "https://github.com/nathanaela/nativescript-globalevents",
+  "gitHead": "e7ef95315ef18f1770c58decc36bd6f091921a42",
+  "_id": "nativescript-globalevents@1.1.0",
+  "scripts": {},
+  "_shasum": "df844c23d0c5d1653bbe9114020477f423913c1d",
+  "_from": "nativescript-globalevents@>=1.1.0 <2.0.0",
+  "_npmVersion": "3.7.4",
+  "_nodeVersion": "4.3.1",
+  "_npmUser": {
+    "name": "nathanaela",
+    "email": "nathan@master-technology.com"
+  },
+  "dist": {
+    "shasum": "df844c23d0c5d1653bbe9114020477f423913c1d",
+    "tarball": "https://registry.npmjs.org/nativescript-globalevents/-/nativescript-globalevents-1.1.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "nathanaela",
+      "email": "nathan@master-technology.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/nativescript-globalevents-1.1.0.tgz_1459652290479_0.6163704658392817"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-globalevents/-/nativescript-globalevents-1.1.0.tgz"
+}

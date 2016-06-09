@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "easy-report": "^0.4.3",
+    "nativescript-orientation": "^1.0.3",
     "nativescript-screen-orientation": "^1.0.2",
+    "nativescript-sqlite": "^1.0.8",
+    "nativescript-toast": "^1.2.0",
     "tns-core-modules": "1.7.1"
   }
 }

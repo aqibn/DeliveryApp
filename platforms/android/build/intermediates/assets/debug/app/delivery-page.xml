@@ -2,6 +2,8 @@
   <Page.actionBar>
     <ActionBar title="{{ name }}">
       <ActionItem text="Print" tap="Print"/>
+      <ActionItem text="Cancel" tap="goBack"/>
+
 <ActionItem text="Done" tap="saveDelivery"/>
 </ActionBar>
   </Page.actionBar>
@@ -12,7 +14,7 @@
 </StackLayout>
 <StackLayout  cssClass="div" row="4" orientation="horizontal">
 <Label text="Delivery Summary"/>
-<Label text="{{ tap }}" tap="tapped"/>
+<Label text="{{ totalWeight }}" tap="tapped"/>
 </StackLayout>
 <GridLayout cssClass="divB" columns="3*,*" row="1" orientation="horizontal">
 <Label col="0"  text="Lots" verticalAlignment="center" horizontalAlignment="Left"/>

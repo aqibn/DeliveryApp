@@ -4,11 +4,14 @@ var ObservableArray = require("data/observable-array").ObservableArray;
 var orientationModule = require('nativescript-screen-orientation');
 var viewModule = require("ui/core/view");
 var frames = require("ui/frame");
+
+var Sqlite = require("nativescript-sqlite");
+// var deliveryViewModel = require("./delivery-view-model").createViewModel;
 var dialogs = require("ui/dialogs");
 var page;
 
 
-
+var deliveryViewModel;
 var pageData = new Observable({
     lots: new ObservableArray(),
     tap: 0,
@@ -32,7 +35,9 @@ exports.loaded = function(args) {
 exports.add = function(args) {
   frames.topmost().navigate({
         moduleName: "details-page",
-        context: {status: "newLot"}
+        context: {status: "newLot",
+                  deliveryViewModel: deliveryViewModel
+                }
 });
 }
 exports.pageLoad = function (){
@@ -47,6 +52,7 @@ exports.navigatedTo = function(args) {
     var newpage = args.object;
     // console.log(page.navigationContext);
     if (newpage.navigationContext !== undefined) {
+      deliveryViewModel = newpage.navigationContext.deliveryViewModel
       if (newpage.navigationContext.update === "new lot") {
       console.log("new lot");
       console.log(newpage.navigationContext.lot.size);
@@ -59,7 +65,7 @@ exports.navigatedTo = function(args) {
                           lotNumItems: newLot.numItems,
                           items: newLot.items
                         });
-
+    pageData.totalWeight += newLot.totalWeight;
   } else if (newpage.navigationContext.update === "edit delivery") {
     console.log("edit delivery");
     pageData.lots = new ObservableArray();
@@ -72,25 +78,27 @@ exports.navigatedTo = function(args) {
     pageData.createdBy = delivery.deliveryCreatedBy;
     pageData.deliveryDate = delivery.deliveryDate;
     pageData.totalWeight = delivery.deliveryTotalWeight;
+    pageData.deliveryID = delivery.deliveryID;
     delivery.deliveryLots.forEach(function(data, index, a) {
       console.log(data);
       pageData.lots.push(data);
     });
 
-  }
+  } else if (newpage.navigationContext.update === "new delivery") {
+    pageData.deliveryDate = new Date();
+    pageData.customerName = "";
+    pageData.createdBy = "";
+    pageData.totalWeight = 0;
+    pageData.deliveryDate = "";
+    pageData.deliveryID = 0;
+    pageData.lots = new ObservableArray();
 
-} else {
-pageData.deliveryDate = new Date();
-pageData.customerName = "";
-pageData.createdBy = "";
-pageData.totalWeight = 0;
-pageData.deliveryDate = "";
-pageData.lots = new ObservableArray();
-
-console.log(pageData.deliveryDate);
+    console.log(pageData.deliveryDate);
 }
     // pageData = page.navigationContext.update;
     // page.bindingContext = pageData;
+
+}
 
 }
 
@@ -98,11 +106,16 @@ exports.listViewItemTap = function(args) {
   var index = args.index;
   console.log(index);
   var lot = pageData.lots.getItem(index);
+  // console.log("Summary Weight: ", pageData.totalWeight);
+  // console.log("Lot weight", lot.lotTotalWeight);
+
+  pageData.totalWeight -= lot.lotTotalWeight;
   pageData.lots.splice(index,1);
   frames.topmost().navigate({
         moduleName: "details-page",
         context: {status: "old_lot",
-                  s_lot: lot
+                  s_lot: lot,
+                  deliveryViewModel: deliveryViewModel
       }
 });
 }
@@ -141,6 +154,7 @@ exports.saveDelivery = function(args) {
     context: {
       update: "new delivery",
       delivery: {
+        deliveryID : pageData.deliveryID,
         lots: pageData.lots,
         customerName: pageData.customerName,
         createdBy: pageData.createdBy,
