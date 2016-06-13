@@ -1,12 +1,13 @@
 <Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
   <Page.actionBar>
     <ActionBar title="{{ name }}">
-      <ActionItem text="Print" tap="Print"/>
+      <ActionItem text="Print" tap="print"/>
       <ActionItem text="Cancel" tap="goBack"/>
 
 <ActionItem text="Done" tap="saveDelivery"/>
 </ActionBar>
   </Page.actionBar>
+ <WebView id="myWebView" />
 <GridLayout rows="auto,auto,auto,2*,*">
 <StackLayout row="0" orientation="vertical" cssClass="div">
   <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />

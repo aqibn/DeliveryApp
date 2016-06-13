@@ -1,0 +1,52 @@
+{
+  "name": "nativescript-screenshot",
+  "version": "0.0.2",
+  "description": "A plugin for iOS and Android that allows you to get NativeScript view as image.",
+  "main": "index.js",
+  "nativescript": {
+    "id": "org.nativescript.screenshot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enchev/nativescript-screenshot.git"
+  },
+  "keywords": [
+    "NativeScript",
+    "screenshot",
+    "image"
+  ],
+  "author": {
+    "name": "Vladimir Enchev",
+    "email": "vladimir.enchev@gmail.com",
+    "url": "https://github.com/enchev"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/enchev/nativescript-screenshot/issues"
+  },
+  "homepage": "https://github.com/enchev/nativescript-screenshot",
+  "gitHead": "cc4cc1ee4cf2e2c0fe168e5f4d2aa4e4e98f5610",
+  "_id": "nativescript-screenshot@0.0.2",
+  "scripts": {},
+  "_shasum": "bb1674f04d8240d4b555f44fceee27ee4da4f1fa",
+  "_from": "nativescript-screenshot@latest",
+  "_npmVersion": "2.5.1",
+  "_nodeVersion": "0.12.0",
+  "_npmUser": {
+    "name": "enchev",
+    "email": "vladimir.enchev@gmail.com"
+  },
+  "dist": {
+    "shasum": "bb1674f04d8240d4b555f44fceee27ee4da4f1fa",
+    "tarball": "https://registry.npmjs.org/nativescript-screenshot/-/nativescript-screenshot-0.0.2.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "enchev",
+      "email": "vladimir.enchev@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/nativescript-screenshot/-/nativescript-screenshot-0.0.2.tgz",
+  "readme": "ERROR: No README data found!"
+}

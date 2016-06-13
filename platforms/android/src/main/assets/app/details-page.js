@@ -56,6 +56,8 @@ exports.loaded = function(args) {
           // database = db;
           db.resultType(Sqlite.RESULTSASOBJECT);
           deliveryViewModel = createViewModel(db);
+          pageData.listitemssize = new ObservableArray();
+          pageData.listitemsquality = new ObservableArray();
           deliveryViewModel.loadQualities(pageData.listitemsquality);
           deliveryViewModel.loadSizes(pageData.listitemssize);
           page.bindingContext = pageData;
@@ -239,7 +241,7 @@ exports.saveBack = function(args) {
       if(newpage.navigationContext.status === "old_lot") {
         console.log("old lot");
         var newLot = newpage.navigationContext.s_lot;
-        old_lot = newLot;
+        pageData.old_lot = newLot;
         pageData.totalWeight = newLot.lotTotalWeight;
         pageData.numItems = newLot.lotNumItems;
         pageData.selectedSizeIndex = pageData.listitemssize.indexOf(newLot.lotSize);
@@ -271,12 +273,16 @@ exports.saveBack = function(args) {
 }
 
 exports.goBack = function(args) {
+
+  if (pageData.old_lot !== null) {
+
+
   var cancledLot = {
-    totalWeight: old_lot.lotTotalWeight,
-    numItems: old_lot.lotNumItems,
-    size: old_lot.lotSize,
-    quality: old_lot.lotQuality,
-    items: old_lot.items
+    totalWeight: pageData.old_lot.lotTotalWeight,
+    numItems: pageData.old_lot.lotNumItems,
+    size: pageData.old_lot.lotSize,
+    quality: pageData.old_lot.lotQuality,
+    items: pageData.old_lot.items
 };
 
   frames.topmost().navigate({
@@ -286,6 +292,11 @@ exports.goBack = function(args) {
           lot: cancledLot
         }
 });
+  } else {
+    frames.topmost().navigate({
+          moduleName: "delivery-page"
+        });
+  }
 }
 // exports.navigatedTo = function(args) {
 //   orientationModule.setCurrentOrientation("landscape",function() {

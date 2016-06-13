@@ -1,0 +1,14 @@
+<Page loaded="loaded">
+  <ActionBar title="Invoice">
+    <ActionItem text="Print" tap="print"/>
+    <ActionItem text="Print Final" tap="final"/>
+
+</ActionBar>
+
+        <!-- <ScrollView> -->
+          <StackLayout loaded="stackLoaded">
+          <WebView src="~/invoice.html" loaded="webViewLoaded"/>
+
+        </StackLayout>
+      <!-- </ScrollView> -->
+</Page>
