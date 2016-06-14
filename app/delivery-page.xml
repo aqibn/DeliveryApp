@@ -1,4 +1,4 @@
-<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" >
+<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" xmlns:dd="nativescript-drop-down">
   <Page.actionBar>
     <ActionBar title="{{ name }}">
       <ActionItem text="Print" tap="print"/>
@@ -10,7 +10,13 @@
  <WebView id="myWebView" />
 <GridLayout rows="auto,auto,auto,2*,*">
 <StackLayout row="0" orientation="vertical" cssClass="div">
-  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
+  <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
+    <GridLayout columns="*,2*"><Label text="Customer: " col="0"/>  <dd:DropDown items="{{ customers }}" selectedIndex="{{ customerIndex }}" col="1" />
+    </GridLayout>
+<GridLayout columns="*,2*"><Label text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
+</GridLayout>
+
+
   <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
 </StackLayout>
 <StackLayout  cssClass="div" row="4" orientation="horizontal">

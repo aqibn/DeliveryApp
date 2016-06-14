@@ -9,7 +9,10 @@ var pageModule = require('ui/page');
 var fs = require("file-system");
 var socialShare = require("nativescript-social-share");
 var application = require('application');
+var Sqlite = require("nativescript-sqlite");
+var createViewModel = require("./delivery-view-model").createViewModel;
 
+var dotPressed;
 var webViewModule = require("ui/web-view");
 
 var Sqlite = require("nativescript-sqlite");
@@ -23,12 +26,13 @@ var pageData = new Observable({
     tap: 0,
     customerName: "",
     createdBy: "",
+    itemType: "",
     name: "Delivery-Page",
     totalWeight: 0,
     deliveryDate: "",
-    customers: new ObservableArray(["Aqib","Aqsa","Laghari"]),
+    customers: new ObservableArray(),
     customerIndex:0,
-    itemTypes: new ObservableArray(["Rolls","Sheets"]),
+    itemTypes: new ObservableArray(),
     itemIndex: 0
 });
 //
@@ -39,10 +43,27 @@ exports.tapped = function(args) {
 exports.loaded = function(args) {
     page = args.object;
     // pageData.lots = new ObservableArray();
-    if (application.android) {
-        application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
+    if (!Sqlite.exists("populated.db")) {
+        console.log("ads");
+        Sqlite.copyDatabase("populated.db");
     }
-    page.bindingContext = pageData;
+    (new Sqlite("populated.db")).then(db => {
+        // database = db;
+        db.resultType(Sqlite.RESULTSASOBJECT);
+        deliveryViewModel = createViewModel(db);
+        pageData.customers = new ObservableArray();
+        pageData.itemTypes = new ObservableArray();
+
+        deliveryViewModel.loadCustomers(pageData.customers);
+        deliveryViewModel.loadItemTypes(pageData.itemTypes);
+        pageData.customerIndex  = 0;
+        pageData.itemIndex = 0;
+        if (application.android) {
+            application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
+        }
+        page.bindingContext = pageData;
+      });
+
 };
 
 function backEvent(args) {
@@ -68,8 +89,8 @@ exports.navigatedTo = function(args) {
     var newpage = args.object;
     // console.log(page.navigationContext);
     if (newpage.navigationContext !== undefined) {
-      deliveryViewModel = newpage.navigationContext.deliveryViewModel;
-      
+      // deliveryViewModel = newpage.navigationContext.deliveryViewModel;
+
       if (newpage.navigationContext.update === "new lot") {
       console.log("new lot");
       console.log(newpage.navigationContext.lot.size);
@@ -100,6 +121,7 @@ exports.navigatedTo = function(args) {
     pageData.deliveryDate = "";
     var delivery = newpage.navigationContext.delivery;
     pageData.customerName = delivery.deliveryCustomerName;
+    pageData.itemType = delivery.deliveryItem;
     pageData.createdBy = delivery.deliveryCreatedBy;
     pageData.deliveryDate = delivery.deliveryDate;
     pageData.totalWeight = delivery.deliveryTotalWeight;
@@ -114,6 +136,7 @@ exports.navigatedTo = function(args) {
 
     // pageData.deliveryDate = new Date();
     pageData.customerName = "";
+    pageData.itemType = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
     pageData.deliveryDate = "";

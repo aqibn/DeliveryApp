@@ -81,8 +81,8 @@ function createViewModel(database) {
     if (sDelivery.deliveryID == 0) {
       console.log("New Delivery");
       database.execSQL("INSERT into deliveries (customername, " +
-      "createdby, date) VALUES(?,?,?)",
-      [sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate]).then(id => {
+      "createdby, date, itemtype) VALUES(?,?,?,?)",
+      [sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
         console.log("Update INSERT RESULT", id);
         sDelivery.deliveryID = id;
         delivery.saveLot(sDelivery);
@@ -92,7 +92,8 @@ function createViewModel(database) {
           deliveryCustomerName: sDelivery.customerName,
           deliveryCreatedBy: sDelivery.createdBy,
           deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots
+          deliveryLots: sDelivery.lots,
+          deliveryItem: sDelivery.itemType
         });
       }, error => {
         console.log("Update ERROR", error);
@@ -100,8 +101,8 @@ function createViewModel(database) {
 
     } else {
       database.execSQL("REPLACE into deliveries (deliveryid,customername, " +
-      "createdby, date) VALUES(?,?,?,?)",
-      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate]).then(id => {
+      "createdby, date,itemtype) VALUES(?,?,?,?,?)",
+      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
         console.log("Update REPLACE RESULT", id);
         delivery.saveLot(sDelivery);
         deliveries.push({
@@ -110,7 +111,8 @@ function createViewModel(database) {
           deliveryCustomerName: sDelivery.customerName,
           deliveryCreatedBy: sDelivery.createdBy,
           deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots
+          deliveryLots: sDelivery.lots,
+          deliveryItem: sDelivery.itemType
         });
       }, error => {
         console.log("Update ERROR", error);
@@ -128,6 +130,25 @@ function createViewModel(database) {
 
   delivery.addQuality = function(qualityType) {
     database.execSQL("INSERT into qualitytypes (type) VALUES(?)",[qualityType]).then(id => {
+      console.log("INSERT Success",id);
+      toastSuccessAdded.show();
+    }, error => {
+      toastAddFailed.show();
+      console.log("INSEERT failed",error);
+    });
+  }
+
+  delivery.addCustomer = function(customer) {
+    database.execSQL("INSERT into customers (name) VALUES(?)",[customer]).then(id => {
+      console.log("INSERT Success",id);
+      toastSuccessAdded.show();
+    }, error => {
+      toastAddFailed.show();
+      console.log("INSEERT failed",error);
+    });
+  }
+  delivery.addItemType = function(itemType) {
+    database.execSQL("INSERT into itemtpyes (type) VALUES(?)",[itemType]).then(id => {
       console.log("INSERT Success",id);
       toastSuccessAdded.show();
     }, error => {
@@ -156,6 +177,25 @@ function createViewModel(database) {
     });
   }
 
+  delivery.deleteCustomer = function(customer) {
+    database.execSQL("delete from customers where name=?",[customer]).then(id => {
+      console.log("Delete Success",id);
+      toastSuccessDeleted.show();
+    }, error => {
+      toastDeleteFailed.show();
+      console.log("delete failed",error);
+    });
+  }
+
+  delivery.deleteItemType = function(itemType) {
+    database.execSQL("delete from itemtypes where type=?",[itemType]).then(id => {
+      console.log("Delete Success",id);
+      toastSuccessDeleted.show();
+    }, error => {
+      toastDeleteFailed.show();
+      console.log("delete failed",error);
+    });
+  }
   delivery.deleteSize = function(sizeType) {
     database.execSQL("delete from sizetypes where type=?",[sizeType]).then(id => {
       console.log("Delete Success",id);
@@ -170,6 +210,20 @@ function createViewModel(database) {
     database.each("SELECT * FROM sizetypes", function(err,size){
       console.log("RESULT", JSON.stringify(size));
       listitemssize.push(size.type);
+    });
+  }
+
+  delivery.loadCustomers = function(listcustomers) {
+    database.each("SELECT * FROM customers", function(err,customer){
+      console.log("RESULT", JSON.stringify(customer));
+      listcustomers.push(customer.name);
+    });
+  }
+
+  delivery.loadItemTypes = function(listitemtypes) {
+    database.each("SELECT * FROM itemtypes", function(err,itemtype){
+      console.log("RESULT", JSON.stringify(itemtype));
+      listitemtypes.push(itemtype.type);
     });
   }
 
@@ -189,7 +243,8 @@ function createViewModel(database) {
         deliveryTotalWeight: 0,
         deliveryCustomerName: row.customername,
         deliveryCreatedBy: row.createdby,
-        deliveryDate: row.date
+        deliveryDate: row.date,
+        deliveryItem: row.itemtype
       };
       new_delivery.deliveryLots = new ObservableArray();
       database.each("SELECT * FROM lots where deliveryid=?",[row.deliveryid],function(err,lot) {

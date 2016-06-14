@@ -136,6 +136,25 @@ function createViewModel(database) {
     });
   }
 
+  delivery.addCustomer = function(customer) {
+    database.execSQL("INSERT into customers (name) VALUES(?)",[customer]).then(id => {
+      console.log("INSERT Success",id);
+      toastSuccessAdded.show();
+    }, error => {
+      toastAddFailed.show();
+      console.log("INSEERT failed",error);
+    });
+  }
+  delivery.addItemType = function(itemType) {
+    database.execSQL("INSERT into itemtpyes (type) VALUES(?)",[itemType]).then(id => {
+      console.log("INSERT Success",id);
+      toastSuccessAdded.show();
+    }, error => {
+      toastAddFailed.show();
+      console.log("INSEERT failed",error);
+    });
+  }
+
   delivery.addSize = function(sizeType,sizeWeight) {
     database.execSQL("INSERT into sizetypes (type, weight) VALUES(?,?)",[sizeType,sizeWeight]).then(id => {
       console.log("INSERT Success",id);
@@ -156,6 +175,25 @@ function createViewModel(database) {
     });
   }
 
+  delivery.deleteCustomer = function(customer) {
+    database.execSQL("delete from customers where name=?",[customer]).then(id => {
+      console.log("Delete Success",id);
+      toastSuccessDeleted.show();
+    }, error => {
+      toastDeleteFailed.show();
+      console.log("delete failed",error);
+    });
+  }
+
+  delivery.deleteItemType = function(itemType) {
+    database.execSQL("delete from itemtypes where type=?",[itemType]).then(id => {
+      console.log("Delete Success",id);
+      toastSuccessDeleted.show();
+    }, error => {
+      toastDeleteFailed.show();
+      console.log("delete failed",error);
+    });
+  }
   delivery.deleteSize = function(sizeType) {
     database.execSQL("delete from sizetypes where type=?",[sizeType]).then(id => {
       console.log("Delete Success",id);
@@ -170,6 +208,20 @@ function createViewModel(database) {
     database.each("SELECT * FROM sizetypes", function(err,size){
       console.log("RESULT", JSON.stringify(size));
       listitemssize.push(size.type);
+    });
+  }
+
+  delivery.loadCustomers = function(listcustomers) {
+    database.each("SELECT * FROM customers", function(err,customer){
+      console.log("RESULT", JSON.stringify(customer));
+      listcustomers.push(customer.name);
+    });
+  }
+
+  delivery.loadItemTypes = function(listitemtypes) {
+    database.each("SELECT * FROM itemtypes", function(err,itemtype){
+      console.log("RESULT", JSON.stringify(itemtype));
+      listitemtypes.push(itemtype.type);
     });
   }
 
