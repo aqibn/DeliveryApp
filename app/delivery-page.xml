@@ -1,4 +1,4 @@
-<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;">
+<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" >
   <Page.actionBar>
     <ActionBar title="{{ name }}">
       <ActionItem text="Print" tap="print"/>

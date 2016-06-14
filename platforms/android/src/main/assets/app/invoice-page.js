@@ -3,6 +3,7 @@ var plugin = require("nativescript-screenshot");
 var socialShare = require("nativescript-social-share");
 var app = require("application");
 var fs = require("file-system");
+var frames = require("ui/frame");
 
 var webView;
 var page;
@@ -19,6 +20,11 @@ page = args.object;
 // page.bindingContext = source;
 }
 
+exports.back = function(args) {
+  frames.topmost().navigate({
+        moduleName: "delivery-page"
+      });
+}
 exports.stackLoaded = function(args) {
 console.log("Loaded");
 stackLayout = args.object;

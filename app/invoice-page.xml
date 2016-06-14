@@ -1,7 +1,7 @@
 <Page loaded="loaded">
   <ActionBar title="Invoice">
     <ActionItem text="Print" tap="print"/>
-    <ActionItem text="Print Final" tap="final"/>
+    <ActionItem text="Done" tap="back"/>
 
 </ActionBar>
 

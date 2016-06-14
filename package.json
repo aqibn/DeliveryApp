@@ -11,6 +11,7 @@
   "dependencies": {
     "easy-report": "^0.4.3",
     "moment": "^2.13.0",
+    "nativescript-drop-down": "^1.2.5",
     "nativescript-orientation": "^1.0.3",
     "nativescript-screen-orientation": "^1.0.2",
     "nativescript-screenshot": "0.0.2",

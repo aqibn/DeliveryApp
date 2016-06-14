@@ -8,6 +8,7 @@ var moment = require("moment");
 var pageModule = require('ui/page');
 var fs = require("file-system");
 var socialShare = require("nativescript-social-share");
+var application = require('application');
 
 var webViewModule = require("ui/web-view");
 
@@ -24,7 +25,11 @@ var pageData = new Observable({
     createdBy: "",
     name: "Delivery-Page",
     totalWeight: 0,
-    deliveryDate: ""
+    deliveryDate: "",
+    customers: new ObservableArray(["Aqib","Aqsa","Laghari"]),
+    customerIndex:0,
+    itemTypes: new ObservableArray(["Rolls","Sheets"]),
+    itemIndex: 0
 });
 //
 
@@ -34,9 +39,15 @@ exports.tapped = function(args) {
 exports.loaded = function(args) {
     page = args.object;
     // pageData.lots = new ObservableArray();
-
+    if (application.android) {
+        application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
+    }
     page.bindingContext = pageData;
 };
+
+function backEvent(args) {
+  args.cancel = true;
+}
 exports.add = function(args) {
   frames.topmost().navigate({
         moduleName: "details-page",
@@ -57,7 +68,8 @@ exports.navigatedTo = function(args) {
     var newpage = args.object;
     // console.log(page.navigationContext);
     if (newpage.navigationContext !== undefined) {
-      deliveryViewModel = newpage.navigationContext.deliveryViewModel
+      deliveryViewModel = newpage.navigationContext.deliveryViewModel;
+      
       if (newpage.navigationContext.update === "new lot") {
       console.log("new lot");
       console.log(newpage.navigationContext.lot.size);
@@ -71,6 +83,14 @@ exports.navigatedTo = function(args) {
                           items: newLot.items
                         });
     pageData.totalWeight += newLot.totalWeight;
+    if (newpage.navigationContext.addnew) {
+      frames.topmost().navigate({
+            moduleName: "details-page",
+            context: {status: "newLot",
+                      deliveryViewModel: deliveryViewModel
+                    }
+    });
+    }
   } else if (newpage.navigationContext.update === "edit delivery") {
     console.log("edit delivery");
     pageData.lots = new ObservableArray();
@@ -183,8 +203,32 @@ exports.print = function(args) {
 //     pageWeb.content = webView;
 //     return pageWeb;
 //   };
-var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style> /*.invoice-box{ max-width:800px; margin:auto; padding:30px; border:1px solid #eee; box-shadow:0 0 10px rgba(0, 0, 0, .15); font-size:16px; line-height:24px; font-family:Helvetica Neue, Helvetica, Helvetica, Arial, sans-serif; color:#555; }*/ .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{ padding:5px; vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{ padding-bottom:20px; } .invoice-box table tr.top table td.title{ font-size:45px; line-height:45px; color:#333; } .invoice-box table tr.information table td{ padding-bottom:40px; } .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; } .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(2){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
-+'</head> <body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="2"> <table> <tr> <td class="title"> <h2 style="width:100%; max-width:300px;">Pak Plast</h2></td> <td> Invoice #: 123<br> Created: January 1, 2015<br> Due: February 1, 2015 </td> </tr> </table> </td> </tr> <tr class="information"> <td colspan="2"> <table> <tr> <td> Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore </td> <td> Acme Corp.<br> John Doe<br> john@example.com </td> </tr> </table> </td> </tr> <tr class="heading"> <td> Item Type </td> <td>  </td> </tr> <tr class="details"> <td> Rolls </td> <td >  </td> </tr> <tr class="heading"> <td> Quality </td> <td> Size </td><td> Weight </td> </tr> <tr class="item"> <td> Website design </td><td> -300.00 </td> <td> -300.00 </td> </tr> <tr class="item"> <td> Hosting (3 months) </td> <td> -300.00 </td><td> -75.00 </td> </tr> <tr class="item last"> <td> Domain name (1 year) </td> <td> -300.00 </td><td> -10.00 </td> </tr> <tr class="total"> <td></td> <td> Total: -385.00 </td> </tr> </table> </div> </body> </html>'
+var invoiceNum = 100;
+var deliveryDate = pageData.deliveryDate;
+var printDate = moment().format('MM-DD-YYYY, h a');
+var company = "Customer";
+var customerName = pageData.customerName;
+var itemType = "Rolls";
+var dispatchItems = "";
+var totalItems = 0;
+var totalWeight = 0;
+for (var count=0; count<pageData.lots.length;count++) {
+  var data = pageData.lots.getItem(count);
+  console.log(data);
+  var con = '<tr class="item"> <td> '+data.lotQuality+'</td><td> '+data.lotSize+'</td> <td align="right"> '+data.lotNumItems+'</td><td align="right">'+data.lotTotalWeight+'</td> </tr>';
+  // dispatchItems.concat(con);
+  totalItems += data.lotNumItems;
+  totalWeight += data.lotTotalWeight;
+  dispatchItems = dispatchItems + con;
+}
+console.log("dispatch items", dispatchItems);
+var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
++'</head> <body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 style="width:100%; max-width:300px;">Pak Plast</h2><h4>PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4></td> <td> Invoice #:'+invoiceNum
++'<br> Printed:'+ printDate+'<br> Due: '+deliveryDate+'</td> </tr> </table> </td> </tr> <tr class="information"> <td colspan="4"> <table> <tr> <td> Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore </td> <td> '+company
++'<br> '+customerName+'<br></td> </tr> </table> </td> </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> '+itemType
++'</td> <td >  </td> </tr> <tr class="heading"> <td colspan="4"align="center"> Dispatch Summary </td>  </tr><tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
++dispatchItems+'<tr class="item"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table> </div> </body> </html>';
+// console.log(invoiceHtml);
 var documents = fs.knownFolders.currentApp();
 var file = documents.getFile("invoice.html");
 file.writeText(invoiceHtml)

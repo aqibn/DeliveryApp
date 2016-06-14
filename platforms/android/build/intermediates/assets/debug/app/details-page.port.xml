@@ -4,7 +4,7 @@
       <ActionBar.actionItems>
         <ActionItem text="Cancel" tap="goBack"/>
         <ActionItem text="Done" tap="saveBack"/>
-
+        <ActionItem text="Save and Add New" tap="addNew"/>
       </ActionBar.actionItems>
   </ActionBar>
   </Page.actionBar>

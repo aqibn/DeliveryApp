@@ -44,7 +44,7 @@ exports.loaded = function(args) {
     pageData.lot.items = new ObservableArray();
     console.log(application.getOrientation());
     var orientation = application.getOrientation();
-
+    pageData.old_lot = null;
     orientationModule.setCurrentOrientation(orientation,function() {
         console.log(" orientation set");
       });
@@ -69,13 +69,13 @@ exports.loaded = function(args) {
     pageData.weight = 0;
     pageData.status = "";
     dotPressed = false;
-    if (application.android) {
-        application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
-    }
+    // if (application.android) {
+    //     application.android.on(application.AndroidApplication.activityBackPressedEvent, backEventa);
+    // }
 };
-function backEvent(args) {
-  args.cancel = true;
-}
+// function backEventa(args) {
+//   args.cancel = true;
+// }
 exports.pageLoad = function (){
   // orientationModule.setCurrentOrientation("landscape",function() {
   //   console.log("landscape orientation set");
@@ -176,6 +176,31 @@ exports.deleteListItem = function(args) {
   pageData.lot.items.splice(index,1);
   pageData.numItems -= 1;
   pageData.totalWeight -= item.weight;
+  pageData.totalWeight = Number(pageData.totalWeight.toFixed(2));
+}
+
+exports.addNew = function(args) {
+  if(pageData.numItems == 0) {
+    dialogsModule.alert({
+        message: "You have not added any items to this lot",
+        okButtonText: "OK"
+    });
+    return;
+  }
+  lot.quality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
+  lot.size = pageData.listitemssize.getItem(pageData.selectedSizeIndex);
+  lot.totalWeight = pageData.totalWeight;
+  lot.numItems = pageData.numItems;
+  pageData.status = "save";
+  frames.topmost().navigate( {
+    moduleName: "delivery-page",
+    context: {
+      update: "new lot",
+      lot: lot,
+      addnew: true
+    }
+  });
+
 }
 
 exports.saveBack = function(args) {
@@ -195,7 +220,8 @@ exports.saveBack = function(args) {
     moduleName: "delivery-page",
     context: {
       update: "new lot",
-      lot: lot
+      lot: lot,
+      addnew: false
     }
   });
 }
