@@ -34,6 +34,7 @@ exports.final = function(args) {
 }
 
 exports.print = function(args){
+
   img = new image.Image();
   var imageSource = plugin.getImage(webView);
   img.imageSource = imageSource;

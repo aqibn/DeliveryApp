@@ -43,6 +43,9 @@ exports.tapped = function(args) {
 exports.loaded = function(args) {
     page = args.object;
     // pageData.lots = new ObservableArray();
+    // var stack = viewModule.getViewById(page,"stack");
+    // var autoCompleteTextView = new android.widget.AutoCompleteTextView(page.android);
+    // stack.addChild(autoCompleteTextView);
     if (!Sqlite.exists("populated.db")) {
         console.log("ads");
         Sqlite.copyDatabase("populated.db");
@@ -56,7 +59,7 @@ exports.loaded = function(args) {
 
         deliveryViewModel.loadCustomers(pageData.customers);
         deliveryViewModel.loadItemTypes(pageData.itemTypes);
-        pageData.customerIndex  = 0;
+        // pageData.customerIndex  = 0;
         pageData.itemIndex = 0;
         if (application.android) {
             application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
@@ -130,6 +133,8 @@ exports.navigatedTo = function(args) {
       console.log(data);
       pageData.lots.push(data);
     });
+  pageData.itemIndex = pageData.itemTypes.indexOf(delivery.deliveryItem);
+  // pageData.customerIndex = pageData.customers.indexOf(delivery.CustomernName);
 
   } else if (newpage.navigationContext.update === "new delivery") {
     pageData.deliveryDate = moment().format('MMMM Do YYYY, h');
@@ -210,7 +215,8 @@ exports.saveDelivery = function(args) {
         customerName: pageData.customerName,
         createdBy: pageData.createdBy,
         totalWeight: pageData.totalWeight,
-        deliveryDate: pageData.deliveryDate
+        deliveryDate: pageData.deliveryDate,
+        itemType: pageData.itemTypes.getItem(pageData.itemIndex)
 
       }
     }
@@ -226,12 +232,12 @@ exports.print = function(args) {
 //     pageWeb.content = webView;
 //     return pageWeb;
 //   };
-var invoiceNum = 100;
+var invoiceNum = pageData.deliveryID;
 var deliveryDate = pageData.deliveryDate;
 var printDate = moment().format('MM-DD-YYYY, h a');
 var company = "Customer";
 var customerName = pageData.customerName;
-var itemType = "Rolls";
+var itemType = pageData.itemTypes.getItem(pageData.itemIndex);
 var dispatchItems = "";
 var totalItems = 0;
 var totalWeight = 0;
@@ -245,25 +251,67 @@ for (var count=0; count<pageData.lots.length;count++) {
   dispatchItems = dispatchItems + con;
 }
 console.log("dispatch items", dispatchItems);
-var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
-+'</head> <body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 style="width:100%; max-width:300px;">Pak Plast</h2><h4>PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4></td> <td> Invoice #:'+invoiceNum
-+'<br> Printed:'+ printDate+'<br> Due: '+deliveryDate+'</td> </tr> </table> </td> </tr> <tr class="information"> <td colspan="4"> <table> <tr> <td> Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore </td> <td> '+company
-+'<br> '+customerName+'<br></td> </tr> </table> </td> </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> '+itemType
-+'</td> <td >  </td> </tr> <tr class="heading"> <td colspan="4"align="center"> Dispatch Summary </td>  </tr><tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
-+dispatchItems+'<tr class="item"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table> </div> </body> </html>';
-// console.log(invoiceHtml);
-var documents = fs.knownFolders.currentApp();
-var file = documents.getFile("invoice.html");
-file.writeText(invoiceHtml)
-    .then(function () {
-        //// Succeeded writing to the file.
-        frames.topmost().navigate({
-              moduleName: "invoice-page"
 
-            });
-    }, function (error) {
-        //// Failed to write to the file.
-    });
+dialogsModule.action("Print", "Cancel", ["Summary","Details"]
+).then(function(result){
+if (result === "Summary") {
+  var invoiceNum = pageData.deliveryID;
+  var deliveryDate = pageData.deliveryDate;
+  var printDate = moment().format('MM-DD-YYYY, h a');
+  var company = "Customer";
+  var customerName = pageData.customerName;
+  var itemType = pageData.itemTypes.getItem(pageData.itemIndex);
+  var dispatchItems = "";
+  var dispatchDetails = "";
+  var totalItems = 0;
+  var totalWeight = 0;
+  for (var count=0; count<pageData.lots.length;count++) {
+    var data = pageData.lots.getItem(count);
+    console.log(data);
+    var con = '<tr class="item"> <td> '+data.lotQuality+'</td><td> '+data.lotSize+'</td> <td align="right"> '+data.lotNumItems+'</td><td align="right">'+data.lotTotalWeight+'</td> </tr>';
+    // dispatchItems.concat(con);
+    totalItems += data.lotNumItems;
+    totalWeight += data.lotTotalWeight;
+    dispatchItems = dispatchItems + con;
+  }
+  console.log("dispatch items", dispatchItems);
+  var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
+  +'</head> <body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 style="width:100%; max-width:300px;">Pak Plast</h2><h4>PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4></td> <td> Invoice #:'+invoiceNum
+  +'<br> Printed:'+ printDate+'<br> Due: '+deliveryDate+'</td> </tr> </table> </td> </tr> <tr class="information"> <td colspan="4"> <table> <tr> <td> Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore </td> <td> '+company
+  +'<br> '+customerName+'<br></td> </tr> </table> </td> </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> '+itemType
+  +'</td> <td >  </td> </tr> <tr class="heading"> <td colspan="4"align="center"> Dispatch Summary </td>  </tr><tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
+  +dispatchItems+'<tr class="item"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table> </div> </body> </html>';
+  // console.log(invoiceHtml);
+  var documents = fs.knownFolders.currentApp();
+  var file = documents.getFile("invoice.html");
+  file.writeText(invoiceHtml)
+      .then(function () {
+          //// Succeeded writing to the file.
+          frames.topmost().navigate({
+                moduleName: "invoice-page"
+
+              });
+      }, function (error) {
+          //// Failed to write to the file.
+      });
+
+} else if (result === "Details") {
+console.log(result);
+var items = "";
+for (var count = 0; count<pageData.lots.length; count++) {
+    var lot = pageData.lots.getItem(count);
+    items = items + "Quality: "+lot.lotQuality + "Size: " + lot.lotSize + " \n";
+    for (var i = 0; i < lot.items.length; i++) {
+    var it = lot.items.getIndex(i);
+    items = items + it.weight + "\n";
+
+    }
+}
+dispatchDetails = "Item: " + JSON.stringify(itemType) + "\n" + items;
+console.log(items);
+socialShare.shareText(dispatchDetails);
+}
+});
 
 
  }

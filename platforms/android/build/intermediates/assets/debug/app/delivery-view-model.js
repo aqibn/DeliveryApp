@@ -81,8 +81,8 @@ function createViewModel(database) {
     if (sDelivery.deliveryID == 0) {
       console.log("New Delivery");
       database.execSQL("INSERT into deliveries (customername, " +
-      "createdby, date) VALUES(?,?,?)",
-      [sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate]).then(id => {
+      "createdby, date, itemtype) VALUES(?,?,?,?)",
+      [sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
         console.log("Update INSERT RESULT", id);
         sDelivery.deliveryID = id;
         delivery.saveLot(sDelivery);
@@ -92,7 +92,8 @@ function createViewModel(database) {
           deliveryCustomerName: sDelivery.customerName,
           deliveryCreatedBy: sDelivery.createdBy,
           deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots
+          deliveryLots: sDelivery.lots,
+          deliveryItem: sDelivery.itemType
         });
       }, error => {
         console.log("Update ERROR", error);
@@ -100,8 +101,8 @@ function createViewModel(database) {
 
     } else {
       database.execSQL("REPLACE into deliveries (deliveryid,customername, " +
-      "createdby, date) VALUES(?,?,?,?)",
-      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate]).then(id => {
+      "createdby, date,itemtype) VALUES(?,?,?,?,?)",
+      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
         console.log("Update REPLACE RESULT", id);
         delivery.saveLot(sDelivery);
         deliveries.push({
@@ -110,7 +111,8 @@ function createViewModel(database) {
           deliveryCustomerName: sDelivery.customerName,
           deliveryCreatedBy: sDelivery.createdBy,
           deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots
+          deliveryLots: sDelivery.lots,
+          deliveryItem: sDelivery.itemType
         });
       }, error => {
         console.log("Update ERROR", error);
@@ -146,7 +148,7 @@ function createViewModel(database) {
     });
   }
   delivery.addItemType = function(itemType) {
-    database.execSQL("INSERT into itemtpyes (type) VALUES(?)",[itemType]).then(id => {
+    database.execSQL("INSERT into itemtypes (type) VALUES(?)",[itemType]).then(id => {
       console.log("INSERT Success",id);
       toastSuccessAdded.show();
     }, error => {
@@ -241,7 +243,8 @@ function createViewModel(database) {
         deliveryTotalWeight: 0,
         deliveryCustomerName: row.customername,
         deliveryCreatedBy: row.createdby,
-        deliveryDate: row.date
+        deliveryDate: row.date,
+        deliveryItem: row.itemtype
       };
       new_delivery.deliveryLots = new ObservableArray();
       database.each("SELECT * FROM lots where deliveryid=?",[row.deliveryid],function(err,lot) {

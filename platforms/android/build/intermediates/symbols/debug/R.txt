@@ -452,8 +452,9 @@ int drawable ic_menu_add 0x7f02004b
 int drawable ic_menu_delete 0x7f02004c
 int drawable ic_menu_edit 0x7f02004d
 int drawable icon 0x7f02004e
-int drawable notification_template_icon_bg 0x7f020050
-int drawable splashscreen 0x7f02004f
+int drawable logo 0x7f02004f
+int drawable notification_template_icon_bg 0x7f020051
+int drawable splashscreen 0x7f020050
 int id action0 0x7f0b0050
 int id action_bar 0x7f0b0041
 int id action_bar_activity_content 0x7f0b0000

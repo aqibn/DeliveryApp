@@ -2,13 +2,5 @@
     {
         "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-nodpi-v4/splashscreen.9.png",
         "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-nodpi/splashscreen.9.png"
-    },
-    {
-        "merged": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-nodpi-v4/splashscreen.9.png",
-        "source": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-nodpi/splashscreen.9.png"
-    },
-    {
-        "merged": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-nodpi-v4/splashscreen.9.png",
-        "source": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-nodpi/splashscreen.9.png"
     }
 ]

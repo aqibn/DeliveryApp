@@ -54,7 +54,7 @@ exports.deleteListItem = function(args) {
 
 
 exports.showSettings = function(args) {
-  dialogsModule.action("Settings", "Cancel", ["Add New Size", "Delete Size","Add New Quality", "Delete Quality"]).then(function(result){
+  dialogsModule.action("Settings", "Cancel", ["Add New Size", "Delete Size","Add New Quality", "Delete Quality","Add Item Type", "Delete Item Type"]).then(function(result){
     console.log(result);
     if (result === "Add New Size") {
     var sizeName;
@@ -118,7 +118,7 @@ exports.showSettings = function(args) {
   dialogsModule.prompt({
     title: "Add Quality",
     message: "Enter Quality Name",
-    cancelButtonText: "Cancel text",
+    cancelButtonText: "Cancel",
     okButtonText: "Confirm",
 
     inputType: dialogsModule.inputType.text
@@ -131,6 +131,36 @@ exports.showSettings = function(args) {
 
   }
   });
+} else if (result === "Add Item Type") {
+  dialogsModule.prompt({
+    title: "Add Item Type",
+    message: "Enter Item Name",
+    cancelButtonText: "Cancel",
+    okButtonText: "Confirm",
+
+    inputType: dialogsModule.inputType.text
+
+  }).then(function(r) {
+    if (r.result) {
+    deliveryViewModel.addItemType(r.text);
+    console.log(r.text);
+
+
+  }
+  });
+} else if (result === "Delete Item Type") {
+  var listItemTypes = new Array();
+  deliveryViewModel.loadItemTypes(listItemTypes);
+  dialogsModule.action({
+  message: "Delete Item  ",
+  cancelButtonText: "Cancel",
+  actions: listItemTypes
+}).then(function (result) {
+  if (result !== "Cancel") {
+  deliveryViewModel.deleteItemType(result);
+}
+  console.log("Dialog result: " + result)
+});
 }
   });
 }

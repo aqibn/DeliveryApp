@@ -8,15 +8,12 @@
 </ActionBar>
   </Page.actionBar>
  <WebView id="myWebView" />
-<GridLayout rows="auto,auto,auto,2*,*">
-<StackLayout row="0" orientation="vertical" cssClass="div">
-  <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
-    <GridLayout columns="*,2*"><Label text="Customer: " col="0"/>  <dd:DropDown items="{{ customers }}" selectedIndex="{{ customerIndex }}" col="1" />
-    </GridLayout>
-<GridLayout columns="*,2*"><Label text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
-</GridLayout>
-
-
+<GridLayout rows="auto,auto,auto,2*,*" id="gridView">
+<StackLayout row="0" orientation="vertical" cssClass="div" id="stack">
+  <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
+   <dd:DropDown items="{{ customers }}" selectedIndex="{{ customerIndex }}"  />
+  <GridLayout columns="*,2*"><Label text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
+  </GridLayout>
   <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
 </StackLayout>
 <StackLayout  cssClass="div" row="4" orientation="horizontal">
@@ -29,21 +26,21 @@
 </GridLayout>
 
 <GridLayout row="2" columns="*,*,*,*,auto">
-<Label text="Total weight" col="0" horizontalAlignment="center" verticalAlignment="center" />
-<Label text="Num Items" col="1" horizontalAlignment="center" verticalAlignment="center" />
-<Label text="Quality" col="2" horizontalAlignment="center" verticalAlignment="center" />
-<Label text="Size" col="3" horizontalAlignment="center" verticalAlignment="center" />
-<Image src="res://ic_menu_delete" col="4" ios:visibility="collapsed" style="opacity: 0;" />
+  <Label text="Quality" col="0" horizontalAlignment="center" verticalAlignment="center" />
+  <Label text="Size" col="1" horizontalAlignment="center" verticalAlignment="center" />
+  <Label text="Num Items" col="2" horizontalAlignment="center" verticalAlignment="center" />
+  <Label text="Total weight" col="3" horizontalAlignment="center" verticalAlignment="center" />
+  <Image src="res://ic_menu_delete" col="4" ios:visibility="collapsed" style="opacity: 0;" />
 
 
 </GridLayout>
 <ListView row="3" items="{{ lots }}" itemTap="listViewItemTap" cssClass="div">
     <ListView.itemTemplate>
         <GridLayout columns="*,*,*,*,auto">
-        <Label text="{{ lotTotalWeight }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
-        <Label text="{{ lotNumItems }}" col="1" horizontalAlignment="center" verticalAlignment="center" />
-        <Label text="{{ lotQuality }}" col="2" horizontalAlignment="center" verticalAlignment="center" />
-        <Label text="{{ lotSize }}" col="3" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotQuality }}" col="0" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotSize }}" col="1" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotNumItems }}" col="2" horizontalAlignment="center" verticalAlignment="center" />
+        <Label text="{{ lotTotalWeight }}" col="3" horizontalAlignment="center" verticalAlignment="center" />
         <Image src="res://ic_menu_delete" col="4" ios:visibility="collapsed"  tap="deleteListItem" />
       </GridLayout>
 </ListView.itemTemplate>

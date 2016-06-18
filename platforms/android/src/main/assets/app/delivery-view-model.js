@@ -148,7 +148,7 @@ function createViewModel(database) {
     });
   }
   delivery.addItemType = function(itemType) {
-    database.execSQL("INSERT into itemtpyes (type) VALUES(?)",[itemType]).then(id => {
+    database.execSQL("INSERT into itemtypes (type) VALUES(?)",[itemType]).then(id => {
       console.log("INSERT Success",id);
       toastSuccessAdded.show();
     }, error => {

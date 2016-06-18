@@ -44,8 +44,10 @@
 
   <StackLayout cssClass="div" row="2" col="0">
   <GridLayout   rows="*,*,*,*,*" columns="*,*,*,auto">
-  <Label row="0" col="0" colspan="2" text="Weight (Kgs)" />
-  <Label row="0" col="2"  text="{{ weight }}" colspan="2" horizontalAlignment="right" verticalAlignment="center"/>
+  <Label row="0" col="0" colspan="2" text="Weight (Kgs)" style="font-size: 30px;
+    font-weight: bold;"/>
+  <Label row="0" col="2"  text="{{ weight }}" colspan="2" horizontalAlignment="right" verticalAlignment="center" style="font-size: 40px;
+    font-weight: bold;"/>
 
   <Button row="1" col="0" text="1" tap="addDigit"/>
   <Button row="1" col="1" text="2" tap="addDigit"/>
@@ -95,7 +97,8 @@
     <ListView items="{{ lot.items }}" itemTap="listViewItemTap" row="3" colspan="2" cssClass="div">
         <ListView.itemTemplate>
             <GridLayout columns="*,auto">
-            <Label text="{{ weight }}" col="0" horizontalAlignment="left" verticalAlignment="center" />
+            <Label text="{{ weight }}" col="0" horizontalAlignment="left" verticalAlignment="center" style="font-size: 30px;
+              font-weight: bold;"/>
             <Image src="res://ic_menu_delete" col="1" ios:visibility="collapsed"  tap="deleteListItem" />
           </GridLayout>
   </ListView.itemTemplate>

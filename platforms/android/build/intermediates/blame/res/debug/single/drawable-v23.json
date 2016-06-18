@@ -1,13 +1,5 @@
 [
     {
-        "merged": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
-        "source": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable-v23/abc_control_background_material.xml"
-    },
-    {
-        "merged": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
-        "source": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable-v23/abc_control_background_material.xml"
-    },
-    {
         "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-v23/abc_control_background_material.xml",
         "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/drawable-v23/abc_control_background_material.xml"
     }

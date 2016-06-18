@@ -1,29 +1,5 @@
 [
     {
-        "outputFile": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/values-h320dp-v13/values-h320dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 57,
-                    "endOffset": 108
-                },
-                "from": {
-                    "file": "/Users/aqibnisar/Desktop/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-h320dp-v13/values-h320dp-v13.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 57,
-                        "endOffset": 108
-                    }
-                }
-            }
-        ]
-    },
-    {
         "outputFile": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/values-h320dp-v13/values-h320dp-v13.xml",
         "map": [
             {
@@ -36,30 +12,6 @@
                 },
                 "from": {
                     "file": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-h320dp-v13/values-h320dp-v13.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 57,
-                        "endOffset": 108
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/values-h320dp-v13/values-h320dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 57,
-                    "endOffset": 108
-                },
-                "from": {
-                    "file": "/Users/aqibnisar/Dropbox/stockcountapp/DeliveryApp/platforms/android/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res/values-h320dp-v13/values-h320dp-v13.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
