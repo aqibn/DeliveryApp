@@ -86,6 +86,21 @@ exports.pageLoad = function (){
 exports.goBack = function() {
 
 }
+
+exports.creatingView = function(args) {
+    console.log("creatingView");
+    var list1 = new java.util.ArrayList();
+    list1.add("android");
+    list1.add("iOS");
+
+    var nativeView = new android.widget.AutoCompleteTextView(args.context);
+    var adapter = new android.widget.ArrayAdapter(args.context,android.R.layout.simple_list_item_1,list1)
+    // nativeView.setSingleLine(true);
+    // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
+    // nativeView.setText("");
+    nativeView.setAdapter(adapter);
+    args.view = nativeView;
+}
 exports.navigatedTo = function(args) {
 
     console.log("navigatedto");

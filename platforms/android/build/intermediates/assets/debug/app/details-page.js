@@ -76,6 +76,14 @@ exports.loaded = function(args) {
 // function backEventa(args) {
 //   args.cancel = true;
 // }
+exports.creatingView = function(args) {
+    console.log("creatingView");
+    var nativeView = new android.widget.AutoCompleteTextView(args.context);
+    // nativeView.setSingleLine(true);
+    // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
+    nativeView.setText("Native");
+    args.view = nativeView;
+}
 exports.pageLoad = function (){
   // orientationModule.setCurrentOrientation("landscape",function() {
   //   console.log("landscape orientation set");

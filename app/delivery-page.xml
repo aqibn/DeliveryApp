@@ -11,7 +11,7 @@
 <GridLayout rows="auto,auto,auto,2*,*" id="gridView">
 <StackLayout row="0" orientation="vertical" cssClass="div" id="stack">
   <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" />
-   <dd:DropDown items="{{ customers }}" selectedIndex="{{ customerIndex }}"  />
+  <Placeholder creatingView="creatingView"/>
   <GridLayout columns="*,2*"><Label text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
   </GridLayout>
   <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" />
