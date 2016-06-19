@@ -1,3 +1,3 @@
 var application = require("application");
 application.cssFile = "./app.css";
-application.start({ moduleName: "login"});
+application.start({ moduleName: "login/login"});
