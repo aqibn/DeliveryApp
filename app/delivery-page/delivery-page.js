@@ -109,6 +109,7 @@ exports.creatingView = function(args) {
     nativeView.setAdapter(adapter);
     args.view = nativeView;
 }
+
 exports.navigatedTo = function(args) {
 
     console.log("navigatedto");
@@ -238,6 +239,7 @@ exports.saveDelivery = function(args) {
   }
   // pageData.deliveryDate = new Date();
   pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+  pageData.customerName = nativeView.getText();
   console.log("customerName:",pageData.customerName);
   console.log("data: ",pageData.deliveryDate );
   frames.topmost().navigate( {
@@ -267,6 +269,7 @@ exports.print = function(args) {
 //     pageWeb.content = webView;
 //     return pageWeb;
 //   };
+pageData.customerName = nativeView.getText();
 var invoiceNum = pageData.deliveryID;
 var deliveryDate = pageData.deliveryDate;
 var printDate = moment().format('MM-DD-YYYY, h a');
