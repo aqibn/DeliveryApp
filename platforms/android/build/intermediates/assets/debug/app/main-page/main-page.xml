@@ -1,0 +1,41 @@
+<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd">
+  <Page.actionBar>
+  <ActionBar title="Deliveries">
+    <ActionBar.actionItems>
+      <!-- <ActionItem text="Save" tap="saveFile"/> -->
+
+    </ActionBar.actionItems>
+  </ActionBar>
+  </Page.actionBar>
+    <GridLayout rows="auto,auto,*">
+        <GridLayout row="0" columns="*,*">
+        <Button col="0" text="Add New Delivery" tap="add"/>
+        <Button col="1" text="Settings" tap="showSettings"/>
+
+        </GridLayout>
+        <GridLayout row="1" columns="*,*,*,2*,*,*,auto">
+          <Label text="Delivery ID" col="0" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Item Type" col="1" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Customer Name" col="2" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Delivery Date" col="3" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Createdy By" col="4" horizontalAlignment="center" verticalAlignment="center"/>
+          <Label text="Total Weight" col="5" horizontalAlignment="center" verticalAlignment="center"/>
+          <Image src="res://ic_menu_delete" col="6" ios:visibility="collapsed" style="opacity: 0;" />
+
+        </GridLayout>
+        <ListView row="2" items="{{ deliveries }}" itemTap="listViewItemTap">
+            <ListView.itemTemplate>
+                <GridLayout columns="*,*,*,2*,*,*,auto">
+                  <Label text="{{ deliveryID }}" col="0" horizontalAlignment="center" verticalAlignment="center"/>
+                  <Label text="{{ deliveryItem }}" col="1" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryCustomerName }}" col="2" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryDate }}" col="3" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryCreatedBy }}" col="4" horizontalAlignment="center" verticalAlignment="center"/>
+                <Label text="{{ deliveryTotalWeight }}" col="5" horizontalAlignment="center" verticalAlignment="center"/>
+                <Image src="res://ic_menu_delete" col="6" ios:visibility="collapsed" tap="deleteListItem" />
+
+              </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </GridLayout>
+</Page>

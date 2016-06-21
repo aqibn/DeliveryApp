@@ -1,0 +1,34 @@
+Label {
+    margin: 1;
+    horizontal-align: left;
+    vertical-align: center;
+    border-width: 5;
+
+}
+TextField {
+    border-width: 5;
+
+}
+.div {
+   background-color: white;
+   margin: 4px;
+   font-size: 30px;
+   font-family: cursive;
+
+  }
+#additem {
+  background-color: black;
+}
+.textw {
+  color: white;
+}
+
+.weightbox {
+}
+
+.summary {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: cursive;
+  color: black;
+}

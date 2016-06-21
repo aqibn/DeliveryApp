@@ -1,0 +1,112 @@
+<Page unloaded="pageUnloaded" navigatedTo="navigatedTo" navigatedFrom="onNavigatingFrom" loaded="loaded" style="background-color: gray;">
+  <Page.actionBar>
+    <ActionBar title="{{ name }}">
+      <ActionBar.actionItems>
+        <ActionItem text="Cancel" tap="goBack"/>
+        <ActionItem text="Done" tap="saveBack"/>
+        <ActionItem text="Save and Add New" tap="addNew"/>
+      </ActionBar.actionItems>
+  </ActionBar>
+  </Page.actionBar>
+<!-- <StackLayout orientation="vertical"> -->
+  <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
+  <!-- <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" /> -->
+  <GridLayout rows="auto,*,*" columns="*">
+  <StackLayout row="0" col="0" cssClass="div" orientation="vertical">
+  <Label id="summary" text="Summary"/>
+  <GridLayout  columns="*,*">
+  <Label text="Number of Items: " col="0" horizontalAlignment="left" verticalAlignment="center" />
+  <Label text="{{ numItems }}" col="1" horizontalAlignment="right" verticalAlignment="center" />
+  </GridLayout>
+  <GridLayout  columns="*,*,auto">
+  <Label text="Total Weight: " col="0" horizontalAlignment="left" verticalAlignment="center" />
+  <Label text="{{ totalWeight }}" col="1" horizontalAlignment="right" verticalAlignment="center" />
+  <Label text="Kgs" col="2" horizontalAlignment="left" verticalAlignment="center" />
+
+  </GridLayout>
+  </StackLayout>
+    <!-- <GridLayout rows="auto,3*" row="0" col="1"> -->
+
+      <!-- <StackLayout row="0" orientation="horizontal">
+      <Label text="Weight" horizontalAlignment="center" verticalAlignment="center"/>
+      </StackLayout>
+
+    <ListView items="{{ lot.items }}" itemTap="listViewItemTap" row="1" cssClass="div">
+        <ListView.itemTemplate>
+            <GridLayout columns="*,auto">
+            <Label text="{{ weight }}" col="0" horizontalAlignment="left" verticalAlignment="center" />
+            <Image src="res://ic_menu_delete" col="1" ios:visibility="collapsed"  tap="delete" />
+          </GridLayout>
+  </ListView.itemTemplate>
+  </ListView> -->
+
+<!-- </GridLayout> -->
+
+  <StackLayout cssClass="div" row="2" col="0">
+  <GridLayout   rows="*,*,*,*,*" columns="*,*,*,auto">
+  <Label row="0" col="0" colspan="2" text="Weight (Kgs)" style="font-size: 30px;
+    font-weight: bold;"/>
+  <Label row="0" col="2"  text="{{ weight }}" colspan="2" horizontalAlignment="right" verticalAlignment="center" style="font-size: 40px;
+    font-weight: bold;"/>
+
+  <Button row="1" col="0" text="1" tap="addDigit"/>
+  <Button row="1" col="1" text="2" tap="addDigit"/>
+  <Button row="1" col="2" text="3" tap="addDigit"/>
+  <!-- <Button row="1" col="3" text="1"/> -->
+  <Button row="2" col="0" text="4" tap="addDigit"/>
+  <Button row="2" col="1" text="5" tap="addDigit"/>
+  <Button row="2" col="2" text="6" tap="addDigit"/>
+  <!-- <Button row="2" col="3" text="1"/> -->
+  <Button row="3" col="0" text="7" tap="addDigit"/>
+  <Button row="3" col="1" text="8" tap="addDigit"/>
+  <Button row="3" col="2" text="9" tap="addDigit"/>
+  <!-- <Button row="3" col="3" text="1"/> -->
+  <Button row="4" col="0" text="." tap="addDigit"/>
+  <Button row="4" col="1" text="0" tap="addDigit"/>
+  <!-- <Button row="4" col="2" text="C"/> -->
+  <Button row="1" col="3" rowspan="3" text="C" tap="clear" style="background-color: orange;"/>
+  <Button row="4" col="2" colspan="2" text="Add" tap="addItem" style="background-color: green;"/>
+  </GridLayout>
+</StackLayout>
+    <GridLayout rows="auto,auto,auto,*" columns="*,*" row="1"  col="0"  >
+    <!-- <Button text="Add Item" tap="add"  />
+
+    <Button text="Done" tap="done" /> -->
+    <StackLayout row="1" col="0" cssClass="div">
+      <GridLayout columns="auto,*,auto">
+      <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
+      <Label text="Quality" verticalAlignment="center" horizontalAlignment="center" col="1"/>
+      <!-- <Image src="res://ic_menu_edit" col="2"  /> -->
+      </GridLayout>
+    <ListPicker items="{{ listitemsquality }}" selectedIndex="{{ selectedQualityIndex }}"  />
+    </StackLayout>
+    <StackLayout row="1" col="1" cssClass="div">
+    <GridLayout columns="auto,*,auto">
+    <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
+    <Label text="Size" verticalAlignment="center" horizontalAlignment="center" col="1"/>
+    <!-- <Image src="res://ic_menu_edit" col="2"  tap="addSize"/> -->
+    </GridLayout>
+    <ListPicker id="sizelistpicker" items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
+    </StackLayout>
+
+    <!-- <Label text="No Items Selected" row="0" colspan="2"/> -->
+    <!-- <Button row="3" colspan="2" text="Add" tap="addItem"/> -->
+    <StackLayout row="2" orientation="horizontal">
+    <Label text="Weight" horizontalAlignment="center" verticalAlignment="center"/>
+    </StackLayout>
+    <ListView items="{{ lot.items }}" itemTap="listViewItemTap" row="3" colspan="2" cssClass="div">
+        <ListView.itemTemplate>
+            <GridLayout columns="*,auto">
+            <Label text="{{ weight }}" col="0" horizontalAlignment="left" verticalAlignment="center" style="font-size: 30px;
+              font-weight: bold;"/>
+            <Image src="res://ic_menu_delete" col="1" ios:visibility="collapsed"  tap="deleteListItem" />
+          </GridLayout>
+  </ListView.itemTemplate>
+  </ListView>
+    </GridLayout>
+    <!-- <GridLayout rows="auto" row="0" col="0" id="additem">
+    <Label text="Add Item"  cssClass="textw" />
+  </GridLayout> -->
+
+  </GridLayout>
+</Page>

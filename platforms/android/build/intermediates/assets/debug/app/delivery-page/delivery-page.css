@@ -1,0 +1,27 @@
+.div {
+   background-color: white;
+   margin: 2px;
+  }
+
+  #title {
+    background-color: black;
+    color: white;
+  }
+
+  .divB {
+    background-color: black;
+    color: white;
+    margin: 2px;
+  }
+
+  Label {
+      margin: 5;
+      horizontal-align: left;
+      vertical-align: center;
+      border-width: 5;
+
+  }
+  TextField {
+      border-width: 5;
+
+  }
