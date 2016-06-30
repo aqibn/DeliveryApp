@@ -76,7 +76,7 @@ function createViewModel(database) {
 
   }
 
-  delivery.saveDelivery = function(sDelivery,deliveries) {
+  delivery.saveDelivery = function(sDelivery) {
 
     if (sDelivery.deliveryID == 0) {
       console.log("New Delivery");
@@ -86,15 +86,15 @@ function createViewModel(database) {
         console.log("Update INSERT RESULT", id);
         sDelivery.deliveryID = id;
         delivery.saveLot(sDelivery);
-        deliveries.push({
-          deliveryID: sDelivery.deliveryID,
-          deliveryTotalWeight: sDelivery.totalWeight,
-          deliveryCustomerName: sDelivery.customerName,
-          deliveryCreatedBy: sDelivery.createdBy,
-          deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots,
-          deliveryItem: sDelivery.itemType
-        });
+        // deliveries.push({
+        //   deliveryID: sDelivery.deliveryID,
+        //   deliveryTotalWeight: sDelivery.totalWeight,
+        //   deliveryCustomerName: sDelivery.customerName,
+        //   deliveryCreatedBy: sDelivery.createdBy,
+        //   deliveryDate: sDelivery.deliveryDate,
+        //   deliveryLots: sDelivery.lots,
+        //   deliveryItem: sDelivery.itemType
+        // });
       }, error => {
         console.log("Update ERROR", error);
       });
@@ -105,15 +105,15 @@ function createViewModel(database) {
       [sDelivery.deliveryID,sDelivery.customerName, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
         console.log("Update REPLACE RESULT", id);
         delivery.saveLot(sDelivery);
-        deliveries.push({
-          deliveryID: sDelivery.deliveryID,
-          deliveryTotalWeight: sDelivery.totalWeight,
-          deliveryCustomerName: sDelivery.customerName,
-          deliveryCreatedBy: sDelivery.createdBy,
-          deliveryDate: sDelivery.deliveryDate,
-          deliveryLots: sDelivery.lots,
-          deliveryItem: sDelivery.itemType
-        });
+        // deliveries.push({
+        //   deliveryID: sDelivery.deliveryID,
+        //   deliveryTotalWeight: sDelivery.totalWeight,
+        //   deliveryCustomerName: sDelivery.customerName,
+        //   deliveryCreatedBy: sDelivery.createdBy,
+        //   deliveryDate: sDelivery.deliveryDate,
+        //   deliveryLots: sDelivery.lots,
+        //   deliveryItem: sDelivery.itemType
+        // });
       }, error => {
         console.log("Update ERROR", error);
       });
@@ -128,10 +128,22 @@ function createViewModel(database) {
   var toastDeleteFailed = Toast.makeText("Failed to Delete")
 
 
-  delivery.addQuality = function(qualityType) {
-    database.execSQL("INSERT into qualitytypes (type) VALUES(?)",[qualityType]).then(id => {
+  delivery.deleteAll = function(table, cb) {
+      database.execSQL("DELETE FROM "+table).then(function(id, error){
+      console.log("Delete Success",id);
+    //   toastSuccessDeleted.show();
+   
+        cb();
+    
+    //   toastDeleteFailed.show();
+     
+     
+    });
+  }
+  delivery.addQuality = function(quality) {
+    database.execSQL("INSERT into qualitytypes (name, _id) VALUES(?,?)",[quality.name,quality._id]).then(id => {
       console.log("INSERT Success",id);
-      toastSuccessAdded.show();
+    //   toastSuccessAdded.show();
     }, error => {
       toastAddFailed.show();
       console.log("INSEERT failed",error);
@@ -141,26 +153,26 @@ function createViewModel(database) {
   delivery.addCustomer = function(customer) {
     database.execSQL("INSERT into customers (name) VALUES(?)",[customer]).then(id => {
       console.log("INSERT Success",id);
-      toastSuccessAdded.show();
+    //   toastSuccessAdded.show();
     }, error => {
       toastAddFailed.show();
       console.log("INSEERT failed",error);
     });
   }
   delivery.addItemType = function(itemType) {
-    database.execSQL("INSERT into itemtypes (type) VALUES(?)",[itemType]).then(id => {
+    database.execSQL("INSERT into itemtypes (name, _id) VALUES(?,?)",[itemType.name, itemType._id]).then(id => {
       console.log("INSERT Success",id);
-      toastSuccessAdded.show();
+    //   toastSuccessAdded.show();
     }, error => {
       toastAddFailed.show();
       console.log("INSEERT failed",error);
     });
   }
 
-  delivery.addSize = function(sizeType,sizeWeight) {
-    database.execSQL("INSERT into sizetypes (type, weight) VALUES(?,?)",[sizeType,sizeWeight]).then(id => {
+  delivery.addSize = function(size) {
+    database.execSQL("INSERT into sizetypes (name, _id) VALUES(?,?)",[size.name,size._id]).then(id => {
       console.log("INSERT Success",id);
-      toastSuccessAdded.show();
+    //   toastSuccessAdded.show();
     }, error => {
       toastAddFailed.show();
       console.log("INSEERT failed",error);
@@ -168,7 +180,7 @@ function createViewModel(database) {
   }
 
   delivery.deleteQuality = function(qualityType) {
-    database.execSQL("delete from qualitytypes where type=?",[qualityType]).then(id => {
+    database.execSQL("delete from qualitytypes where name=?",[qualityType]).then(id => {
       console.log("Delete Success",id);
       toastSuccessDeleted.show();
     }, error => {
@@ -209,28 +221,33 @@ function createViewModel(database) {
   delivery.loadSizes = function(listitemssize) {
     database.each("SELECT * FROM sizetypes", function(err,size){
       console.log("RESULT", JSON.stringify(size));
-      listitemssize.push(size.type);
+      listitemssize.push(size);
     });
   }
 
   delivery.loadCustomers = function(listcustomers) {
     database.each("SELECT * FROM customers", function(err,customer){
       console.log("RESULT", JSON.stringify(customer));
-      listcustomers.push(customer.name);
+      listcustomers.push(customer);
     });
   }
 
-  delivery.loadItemTypes = function(listitemtypes) {
+  delivery.loadItemTypes = function(listitemtypes, object) {
     database.each("SELECT * FROM itemtypes", function(err,itemtype){
       console.log("RESULT", JSON.stringify(itemtype));
-      listitemtypes.push(itemtype.type);
+      if (object) {
+        listitemtypes.push(itemtype);
+      } else {
+        listitemtypes.push(itemtype.name);
+ 
+      }
     });
   }
 
   delivery.loadQualities = function(listitemsquality) {
     database.each("SELECT * FROM qualitytypes", function(err,quality){
       console.log("RESULT", JSON.stringify(quality));
-      listitemsquality.push(quality.type);
+      listitemsquality.push(quality);
     });
   }
 
@@ -262,9 +279,10 @@ function createViewModel(database) {
         database.each("SELECT * FROM items where deliveryid=? AND lotid=?",[lot.deliveryid,lot.lotid],function(err,item){
 
           console.log("RESULT", JSON.stringify(item));
+          var w = Number(item.weight.toFixed(2));
           var new_item = {
             itemID: item.itemid,
-            weight: item.weight
+            weight: w
           };
           new_lot.lotTotalWeight += new_item.weight;
           new_lot.lotNumItems += 1;

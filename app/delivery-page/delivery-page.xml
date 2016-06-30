@@ -1,4 +1,4 @@
-<Page navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" xmlns:dd="nativescript-drop-down">
+<Page navigatingFrom="onNavigatingFrom" navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" xmlns:dd="nativescript-drop-down">
   <Page.actionBar>
     <ActionBar title="{{ name }}">
       <ActionItem text="Print" tap="print"/>

@@ -1,0 +1,32 @@
+<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd"  style="background-color: gray;">
+  <Page.actionBar>
+  <ActionBar title="{{ settingType }}">
+        <ActionItem text="Done" tap="goBack"/>
+
+      <!-- <ActionItem text="Save" tap="saveFile"/> -->
+
+  </ActionBar>
+  </Page.actionBar>
+    <GridLayout rows="auto,auto,3*">
+        <GridLayout row="0" columns="*,*">
+        <Button col="0" text="Add" tap="addItem"/>
+        </GridLayout>
+        <GridLayout row="2"  rows="auto,*" columns="*,*,*,2*,*,*,auto" cssClass="list">
+         
+          <ListView row="1" colspan="7" items="{{ items }}" itemTap="listViewItemTap" class="listview">
+              <ListView.itemTemplate>
+
+
+                  <GridLayout rows="auto,auto,auto" columns="*,auto,auto,auto">
+                  <Label text="{{ name }}" row="0" col="0" horizontalAlignment="left" verticalAlignment="center" fontSize="20px"/>
+                 
+
+                  <Image src="res://ic_menu_delete" col="3" row="1" ios:visibility="collapsed" tap="deleteListItem" />
+                </GridLayout>
+              </ListView.itemTemplate>
+          </ListView>
+        </GridLayout>
+
+        
+    </GridLayout>
+</Page>

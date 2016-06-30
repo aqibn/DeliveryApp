@@ -4,12 +4,12 @@
         "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_add.png"
     },
     {
-        "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_edit.png",
-        "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_edit.png"
-    },
-    {
         "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon.png",
         "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/icon.png"
+    },
+    {
+        "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_edit.png",
+        "source": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/src/main/res/drawable-ldpi/ic_menu_edit.png"
     },
     {
         "merged": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp/platforms/android/build/intermediates/res/merged/debug/drawable-ldpi-v4/ic_menu_delete.png",

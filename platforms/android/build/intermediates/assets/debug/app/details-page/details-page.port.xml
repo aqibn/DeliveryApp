@@ -11,9 +11,9 @@
 <!-- <StackLayout orientation="vertical"> -->
   <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
   <!-- <TextField text="{{ createdBy }}" id="cbName" hint="Created By"  autocorrect="false" autocapitalizationType="none" /> -->
-  <GridLayout rows="auto,*,*" columns="*">
+  <GridLayout rows="auto,*,2*" columns="*">
   <StackLayout row="0" col="0" cssClass="div" orientation="vertical">
-  <Label id="summary" text="Summary"/>
+  <Label cssClass="summary" text="Summary"/>
   <GridLayout  columns="*,*">
   <Label text="Number of Items: " col="0" horizontalAlignment="left" verticalAlignment="center" />
   <Label text="{{ numItems }}" col="1" horizontalAlignment="right" verticalAlignment="center" />
@@ -24,6 +24,13 @@
   <Label text="Kgs" col="2" horizontalAlignment="left" verticalAlignment="center" />
 
   </GridLayout>
+  <GridLayout columns="auto,*">
+  <Label text="Size: " col="0" horizontalAlignment="left" verticalAlignment="center" />
+  <Placeholder col="1" creatingView="creatingViewSize" />
+</GridLayout>
+<GridLayout columns="auto,*">
+<Label text="Quality: " col="0" horizontalAlignment="left" verticalAlignment="center" />
+<Placeholder col="1" creatingView="creatingViewQuality" /></GridLayout>
   </StackLayout>
     <!-- <GridLayout rows="auto,3*" row="0" col="1"> -->
 
@@ -72,27 +79,12 @@
     <!-- <Button text="Add Item" tap="add"  />
 
     <Button text="Done" tap="done" /> -->
-    <StackLayout row="1" col="0" cssClass="div">
-      <GridLayout columns="auto,*,auto">
-      <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
-      <Label text="Quality" verticalAlignment="center" horizontalAlignment="center" col="1"/>
-      <!-- <Image src="res://ic_menu_edit" col="2"  /> -->
-      </GridLayout>
-    <ListPicker items="{{ listitemsquality }}" selectedIndex="{{ selectedQualityIndex }}"  />
-    </StackLayout>
-    <StackLayout row="1" col="1" cssClass="div">
-    <GridLayout columns="auto,*,auto">
-    <!-- <Image src="res://ic_menu_add" col="0"  style="opacity: 0;"/> -->
-    <Label text="Size" verticalAlignment="center" horizontalAlignment="center" col="1"/>
-    <!-- <Image src="res://ic_menu_edit" col="2"  tap="addSize"/> -->
-    </GridLayout>
-    <ListPicker id="sizelistpicker" items="{{ listitemssize }}" selectedIndex="{{ selectedSizeIndex }}"  />
-    </StackLayout>
+
 
     <!-- <Label text="No Items Selected" row="0" colspan="2"/> -->
     <!-- <Button row="3" colspan="2" text="Add" tap="addItem"/> -->
     <StackLayout row="2" orientation="horizontal">
-    <Label text="Weight" horizontalAlignment="center" verticalAlignment="center"/>
+    <Label text="Items" horizontalAlignment="center" verticalAlignment="center"  cssClass="summary"/>
     </StackLayout>
     <ListView items="{{ lot.items }}" itemTap="listViewItemTap" row="3" colspan="2" cssClass="div">
         <ListView.itemTemplate>

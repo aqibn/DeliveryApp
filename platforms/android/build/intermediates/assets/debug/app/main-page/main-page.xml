@@ -1,41 +1,55 @@
-<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd"  style="background-color: gray;">
   <Page.actionBar>
-  <ActionBar title="Deliveries">
-    <ActionBar.actionItems>
+  <ActionBar title="Deliveries" >
+        <ActionItem text="{{ user.userName }}" tap="showUserSettings"/>
+        <ActionItem text="Logout" tap="logout"/>
+
       <!-- <ActionItem text="Save" tap="saveFile"/> -->
 
-    </ActionBar.actionItems>
   </ActionBar>
   </Page.actionBar>
-    <GridLayout rows="auto,auto,*">
+    <GridLayout rows="auto,auto,auto,3*">
         <GridLayout row="0" columns="*,*">
         <Button col="0" text="Add New Delivery" tap="add"/>
         <Button col="1" text="Settings" tap="showSettings"/>
 
         </GridLayout>
-        <GridLayout row="1" columns="*,*,*,2*,*,*,auto">
-          <Label text="Delivery ID" col="0" horizontalAlignment="center" verticalAlignment="center"/>
+        <GridLayout row="3"  rows="auto,*" columns="*,*,*,2*,*,*,auto" cssClass="list">
+          <Label text="Recent Deliveries" fontSize="25" col="0" colspan="7" horizontalAlignment="left" verticalAlignment="center"/>
+          <!-- <Label text="Delivery ID" col="0" horizontalAlignment="center" verticalAlignment="center"/>
           <Label text="Item Type" col="1" horizontalAlignment="center" verticalAlignment="center"/>
           <Label text="Customer Name" col="2" horizontalAlignment="center" verticalAlignment="center"/>
           <Label text="Delivery Date" col="3" horizontalAlignment="center" verticalAlignment="center"/>
           <Label text="Createdy By" col="4" horizontalAlignment="center" verticalAlignment="center"/>
           <Label text="Total Weight" col="5" horizontalAlignment="center" verticalAlignment="center"/>
-          <Image src="res://ic_menu_delete" col="6" ios:visibility="collapsed" style="opacity: 0;" />
+          <Image src="res://ic_menu_delete" col="6" ios:visibility="collapsed" style="opacity: 0;" /> -->
+          <ListView row="1" colspan="7" items="{{ deliveries }}" itemTap="listViewItemTap" class="listview">
+              <ListView.itemTemplate>
+
+
+                  <GridLayout rows="auto,auto,auto" columns="*,auto,auto,auto">
+                  <Label text="{{ deliveryCustomerName }}" row="0" col="0" horizontalAlignment="left" verticalAlignment="center" fontSize="20px"/>
+                  <Label text="{{ deliveryItem }}" row="1"  col="0" cssClass="it" horizontalAlignment="left" verticalAlignment="center" />
+                  <Label text="{{ deliveryDate }}" col="0" row="2" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
+
+                  <!-- <Label text="{{ deliveryID }}"  row="1" col="0" horizontalAlignment="center" verticalAlignment="center"/> -->
+                  <!-- <Label text="{{ deliveryCreatedBy }}" col="4" row="1" horizontalAlignment="center" verticalAlignment="center"/> -->
+                  <Label text="{{ deliveryTotalWeight }}"  cssClass="box" col="1" row="0" rowspan="3"  fontSize="25px" horizontalAlignment="center" verticalAlignment="center"/>
+                  <Label text="Kgs" col="2" row="1" horizontalAlignment="center" verticalAlignment="center"/>
+
+                  <Image src="res://ic_menu_delete" col="3" row="1" ios:visibility="collapsed" tap="deleteListItem" />
+                </GridLayout>
+              </ListView.itemTemplate>
+          </ListView>
+        </GridLayout>
+
+        <GridLayout row="2" columns="*,*,*,*">
+
+        <Button col="0" text="Quality" tap="showSettingsPage"/>
+        <Button col="1" text="Size" tap="showSettingsPage"/>
+        <Button col="2" text="Item" tap="showSettingsPage"/>
+        <Button col="3" text="Customer" tap="showSettingsPage"/>
 
         </GridLayout>
-        <ListView row="2" items="{{ deliveries }}" itemTap="listViewItemTap">
-            <ListView.itemTemplate>
-                <GridLayout columns="*,*,*,2*,*,*,auto">
-                  <Label text="{{ deliveryID }}" col="0" horizontalAlignment="center" verticalAlignment="center"/>
-                  <Label text="{{ deliveryItem }}" col="1" horizontalAlignment="center" verticalAlignment="center"/>
-                <Label text="{{ deliveryCustomerName }}" col="2" horizontalAlignment="center" verticalAlignment="center"/>
-                <Label text="{{ deliveryDate }}" col="3" horizontalAlignment="center" verticalAlignment="center"/>
-                <Label text="{{ deliveryCreatedBy }}" col="4" horizontalAlignment="center" verticalAlignment="center"/>
-                <Label text="{{ deliveryTotalWeight }}" col="5" horizontalAlignment="center" verticalAlignment="center"/>
-                <Image src="res://ic_menu_delete" col="6" ios:visibility="collapsed" tap="deleteListItem" />
-
-              </GridLayout>
-            </ListView.itemTemplate>
-        </ListView>
     </GridLayout>
 </Page>

@@ -46,22 +46,22 @@ exports.loaded = function(args) {
     // var stack = viewModule.getViewById(page,"stack");
     // var autoCompleteTextView = new android.widget.AutoCompleteTextView(page.android);
     // stack.addChild(autoCompleteTextView);
-    if (!Sqlite.exists("populated.db")) {
-        console.log("ads");
-        Sqlite.copyDatabase("populated.db");
-    }
-    (new Sqlite("populated.db")).then(db => {
+    // if (!Sqlite.exists("populated.db")) {
+    //     console.log("ads");
+    //     Sqlite.copyDatabase("populated.db");
+    // }
+    // (new Sqlite("populated.db")).then(db => {
         // database = db;
-        db.resultType(Sqlite.RESULTSASOBJECT);
-        deliveryViewModel = createViewModel(db);
+        // db.resultType(Sqlite.RESULTSASOBJECT);
+        // global.deliveryViewModel = createViewModel(db);
         pageData.customers = new ObservableArray();
         pageData.itemTypes = new ObservableArray();
-        deliveryViewModel.loadCustomers(pageData.customers);
-        deliveryViewModel.loadItemTypes(pageData.itemTypes);
-        pageData.itemIndex = pageData.itemTypes.indexOf(pageData.itemType);
+        global.deliveryViewModel.loadCustomers(pageData.customers);
+        global.deliveryViewModel.loadItemTypes(pageData.itemTypes);
+        pageData.itemIndex = pageData.itemTypes.indexOf(pageData.itemType, false);
         console.log("index", pageData.itemIndex);
         pageData.customers.forEach(function(data){
-          list1.add(data);
+          list1.add(data.name);
           console.log(data);
 
         });
@@ -70,7 +70,7 @@ exports.loaded = function(args) {
             application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
         }
         page.bindingContext = pageData;
-      });
+    //   });
 
 };
 
@@ -109,6 +109,7 @@ exports.creatingView = function(args) {
     nativeView.setAdapter(adapter);
     args.view = nativeView;
 }
+
 exports.navigatedTo = function(args) {
 
     console.log("navigatedto");
@@ -130,6 +131,8 @@ exports.navigatedTo = function(args) {
                           items: newLot.items
                         });
     pageData.totalWeight += newLot.totalWeight;
+    saveDelivery(); 
+
     if (newpage.navigationContext.addnew) {
       pageData.customerName = nativeView.getText();
 
@@ -222,12 +225,31 @@ exports.deleteListItem = function(args) {
 
 exports.goBack = function(args) {
   pageData.customerName = nativeView.getText();
-
+  
   pageData.customerName = "";
   frames.topmost().navigate({
         moduleName: "main-page/main-page",
 });
 }
+
+var saveDelivery = function() {
+  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+  pageData.customerName = nativeView.getText();
+//   console.log("customerName:",pageData.customerName);
+//   console.log("data: ",pageData.deliveryDate );
+  var delivery = {
+        deliveryID : pageData.deliveryID,
+        lots: pageData.lots,
+        customerName: pageData.customerName,
+        createdBy: pageData.createdBy,
+        totalWeight: pageData.totalWeight,
+        deliveryDate: pageData.deliveryDate,
+        itemType: pageData.itemTypes.getItem(pageData.itemIndex)
+    };
+    
+   global.deliveryViewModel.saveDelivery(delivery);
+}
+
 exports.saveDelivery = function(args) {
   if(pageData.lots.length == 0) {
     dialogsModule.alert({
@@ -237,9 +259,22 @@ exports.saveDelivery = function(args) {
     return;
   }
   // pageData.deliveryDate = new Date();
-  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
-  console.log("customerName:",pageData.customerName);
-  console.log("data: ",pageData.deliveryDate );
+//   pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+//   pageData.customerName = nativeView.getText();
+// //   console.log("customerName:",pageData.customerName);
+// //   console.log("data: ",pageData.deliveryDate );
+//   var delivery = {
+//         deliveryID : pageData.deliveryID,
+//         lots: pageData.lots,
+//         customerName: pageData.customerName,
+//         createdBy: pageData.createdBy,
+//         totalWeight: pageData.totalWeight,
+//         deliveryDate: pageData.deliveryDate,
+//         itemType: pageData.itemTypes.getItem(pageData.itemIndex)
+//     };
+    
+//    global.deliveryViewModel.saveDelivery(delivery);
+    saveDelivery(); 
   frames.topmost().navigate( {
     moduleName: "main-page/main-page",
     context: {
@@ -267,6 +302,7 @@ exports.print = function(args) {
 //     pageWeb.content = webView;
 //     return pageWeb;
 //   };
+pageData.customerName = nativeView.getText();
 var invoiceNum = pageData.deliveryID;
 var deliveryDate = pageData.deliveryDate;
 var printDate = moment().format('MM-DD-YYYY, h a');
@@ -361,6 +397,6 @@ socialShare.shareText(dispatchDetails);
  }
 
 exports.onNavigatingFrom = function(args){
-  // console.log("navigatingfrom");
+  console.log("navigatingfrom");
   // orientationModule.orientationCleanup();
 }

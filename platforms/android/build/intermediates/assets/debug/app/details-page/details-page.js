@@ -18,16 +18,23 @@ var lot =  {
 
   // new ObservableArray([{weight: 10},{weight: 10},{weight: 10},{weight: 10}])
 };
-var sizeArray =   ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
-var qualityArray = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+// var sizeArray =   ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+// var qualityArray = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
+var listSize;
+var nativeViewSize;
+var adapterSize;
+var listQuality;
+var nativeViewQuality;
+var adapterQuality;
+
 var pageData = new Observable({
 
     listitemsquality: new ObservableArray(),
     listitemssize: new ObservableArray(),
     name: "New Lot",
     lot: lot,
-    selectedQualityIndex: 0,
-    selectedSizeIndex: 0,
+    selectedQuality: "",
+    selectedSize: "",
     weight: 0,
     weightString: "",
     numItems: 0,
@@ -37,7 +44,7 @@ var pageData = new Observable({
 });
 //
 
-var deliveryViewModel;
+// var deliveryViewModel;
 
 exports.loaded = function(args) {
     page = args.object;
@@ -48,21 +55,27 @@ exports.loaded = function(args) {
     orientationModule.setCurrentOrientation(orientation,function() {
         console.log(" orientation set");
       });
-      if (!Sqlite.exists("populated.db")) {
-          console.log("ads");
-          Sqlite.copyDatabase("populated.db");
-      }
-      (new Sqlite("populated.db")).then(db => {
+    //   if (!Sqlite.exists("populated.db")) {
+    //       console.log("ads");
+    //       Sqlite.copyDatabase("populated.db");
+    //   }
+    //   (new Sqlite("populated.db")).then(db => {
           // database = db;
-          db.resultType(Sqlite.RESULTSASOBJECT);
-          deliveryViewModel = createViewModel(db);
+        //   db.resultType(Sqlite.RESULTSASOBJECT);
+        //   global.deliveryViewModel = createViewModel(db);
           pageData.listitemssize = new ObservableArray();
           pageData.listitemsquality = new ObservableArray();
-          deliveryViewModel.loadQualities(pageData.listitemsquality);
-          deliveryViewModel.loadSizes(pageData.listitemssize);
+          global.deliveryViewModel.loadQualities(pageData.listitemsquality);
+          global.deliveryViewModel.loadSizes(pageData.listitemssize);
+          pageData.listitemssize.forEach(function(data){
+            listSize.add(data.name);
+          });
+          pageData.listitemsquality.forEach(function(data) {
+            listQuality.add(data.name);
+          });
           page.bindingContext = pageData;
 
-        });
+        // });
     pageData.totalWeight = 0;
     pageData.numItems = 0;
     pageData.weightString = "";
@@ -73,17 +86,38 @@ exports.loaded = function(args) {
     //     application.android.on(application.AndroidApplication.activityBackPressedEvent, backEventa);
     // }
 };
+
+exports.creatingViewSize = function(args) {
+    console.log("creatingView");
+
+
+    listSize = new java.util.ArrayList();
+    nativeViewSize = new android.widget.AutoCompleteTextView(args.context);
+    adapterSize = new android.widget.ArrayAdapter(args.context,android.R.layout.simple_list_item_1,listSize)
+    // nativeView.setSingleLine(true);
+    // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
+    nativeViewSize.setText(pageData.selectedSize);
+    nativeViewSize.setAdapter(adapterSize);
+    args.view = nativeViewSize;
+}
+
+exports.creatingViewQuality = function(args) {
+    console.log("creatingView");
+
+
+    listQuality = new java.util.ArrayList();
+    nativeViewQuality = new android.widget.AutoCompleteTextView(args.context);
+    adapterQuality = new android.widget.ArrayAdapter(args.context,android.R.layout.simple_list_item_1,listQuality)
+    // nativeView.setSingleLine(true);
+    // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
+    nativeViewQuality.setText(pageData.selectedQuality);
+    nativeViewQuality.setAdapter(adapterQuality);
+    args.view = nativeViewQuality;
+}
 // function backEventa(args) {
 //   args.cancel = true;
 // }
-exports.creatingView = function(args) {
-    console.log("creatingView");
-    var nativeView = new android.widget.AutoCompleteTextView(args.context);
-    // nativeView.setSingleLine(true);
-    // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
-    nativeView.setText("Native");
-    args.view = nativeView;
-}
+
 exports.pageLoad = function (){
   // orientationModule.setCurrentOrientation("landscape",function() {
   //   console.log("landscape orientation set");
@@ -195,10 +229,12 @@ exports.addNew = function(args) {
     });
     return;
   }
-  lot.quality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
-  lot.size = pageData.listitemssize.getItem(pageData.selectedSizeIndex);
+  lot.quality = nativeViewQuality.getText();
+  lot.size = nativeViewSize.getText();
   lot.totalWeight = pageData.totalWeight;
   lot.numItems = pageData.numItems;
+  pageData.selectedSize = "";
+  pageData.selectedQuality = "";
   pageData.status = "save";
   frames.topmost().navigate( {
     moduleName: "delivery-page/delivery-page",
@@ -219,10 +255,12 @@ exports.saveBack = function(args) {
     });
     return;
   }
-  lot.quality = pageData.listitemsquality.getItem(pageData.selectedQualityIndex);
-  lot.size = pageData.listitemssize.getItem(pageData.selectedSizeIndex);
+  lot.quality = nativeViewQuality.getText();
+  lot.size = nativeViewSize.getText();
   lot.totalWeight = pageData.totalWeight;
   lot.numItems = pageData.numItems;
+  pageData.selectedSize = "";
+  pageData.selectedQuality = "";
   pageData.status = "save";
   frames.topmost().navigate( {
     moduleName: "delivery-page/delivery-page",
@@ -278,10 +316,10 @@ exports.saveBack = function(args) {
         pageData.old_lot = newLot;
         pageData.totalWeight = newLot.lotTotalWeight;
         pageData.numItems = newLot.lotNumItems;
-        pageData.selectedSizeIndex = pageData.listitemssize.indexOf(newLot.lotSize);
-        pageData.selectedQualityIndex = pageData.listitemsquality.indexOf(newLot.lotQuality);
-
-
+        pageData.selectedSize= newLot.lotSize;
+        pageData.selectedQuality = newLot.lotQuality;
+        nativeViewSize.setText(pageData.selectedSize);
+        nativeViewQuality.setText(pageData.selectedQuality);
 
         newLot.items.forEach(function(data, index, a) {
           console.log(data);
@@ -307,7 +345,8 @@ exports.saveBack = function(args) {
 }
 
 exports.goBack = function(args) {
-
+  pageData.selectedSize = "";
+  pageData.selectedQuality = ""; 
   if (pageData.old_lot !== null) {
 
 

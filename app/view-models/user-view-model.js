@@ -29,11 +29,47 @@ function User(info) {
             return response.json();
         })
         .then(function(data) {
-          console.log(JSON.stringify(data));
-
+        //   console.log(JSON.stringify(data));
+            viewModel.userData = data;
             config.token = data.accessToken;
+            return data;
         });
     };
+
+    viewModel.logout = function(user) {
+        return fetchModule.fetch(config.apiUrl + "account/logout", {
+            method: "PUT",
+            headers: {
+                "authorization": "Bearer "+global.user.userData.accessToken
+            }
+        })
+        .then(handleErrors)
+        .then(function(response) {
+        viewModel.userData == null;
+        console.log("success");
+        });
+    };
+
+    viewModel.changePassword = function(oldPassword, newPassword) {
+      return fetchModule.fetch(config.apiUrl + "account/changePassword", {
+          method: "PUT",
+          body: JSON.stringify({
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          newConfirmPassword: newPassword
+          }),
+          headers: {
+              "authorization": "Bearer "+viewModel.userData.accessToken,
+              "Content-Type": "application/json"
+
+          }
+      })
+      .then(handleErrors)
+      .then(function(response) {
+      console.log("success", response);
+      });
+    }
+
 
     viewModel.register = function() {
         return fetchModule.fetch(config.apiUrl + "Users", {

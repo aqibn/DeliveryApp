@@ -12,6 +12,9 @@ TextField {
 .div {
    background-color: white;
    margin: 4px;
+   font-size: 30px;
+   font-family: cursive;
+
   }
 #additem {
   background-color: black;
@@ -23,8 +26,8 @@ TextField {
 .weightbox {
 }
 
-#summary {
-  font-size: 20;
+.summary {
+  font-size: 20px;
   font-weight: bold;
   font-family: cursive;
   color: black;

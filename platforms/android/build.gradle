@@ -1,6 +1,6 @@
 /*
 *	Script builds apk in release or debug mode
-*	To run: 
+*	To run:
 *			gradle buildapk -Prelease (release mode)
 *			gradle buildapk (debug mode -> default)
 * 	Options:
@@ -85,7 +85,7 @@ def renameResultApks (variant) {
 
 		name = apkNamePrefix + "-unaligned.apk"
 		output.packageApplication.outputFile = new File(apkDirectory, name);
-	}    
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -95,16 +95,16 @@ def renameResultApks (variant) {
 android {
 	compileSdkVersion compiteCompileSdkVersion()
     buildToolsVersion computeBuildToolsVersion()
-	
+
 	defaultConfig {
 		minSdkVersion 17
 		targetSdkVersion computeTargetSdkVersion()
 	}
-	
+
 	sourceSets.main {
         jniLibs.srcDir "libs/jni"
     }
-	
+
 	signingConfigs {
         release {
             if(project.hasProperty("release")) {
@@ -126,12 +126,12 @@ android {
             signingConfig signingConfigs.release
         }
     }
-	
+
 	applicationVariants.all { variant ->
 		renameResultApks(variant)
 	}
-	
-	
+
+
 	applicationVariants.all { variant ->
 		def variantName = variant.name.capitalize()
 		def compileSourcesTaskName = "compile${variantName}Sources"
@@ -153,9 +153,11 @@ dependencies {
 	if(project.hasProperty("supportVersion")) {
 		suppotVer = supportVersion
 	}
-	
+
     compile "com.android.support:support-v4:$suppotVer"
     compile "com.android.support:appcompat-v7:$suppotVer"
+
+    compile "com.android.support:design:$suppotVer"
 
     // take all jars within the libs dir
 	compile fileTree(dir: "libs", include: ["**/*.jar"])
@@ -165,7 +167,7 @@ dependencies {
 
 	// take all jars within the lib/Android dir
 	compile fileTree(dir: libDir, include: ["**/*.jar"])
-	
+
 	//when gradle has aar support this will be preferred instead of addAarDependencies
 	// compile files("$rootDir/libs/aar") {
         // builtBy 'copyAarDependencies'
@@ -189,7 +191,7 @@ task pluginStructureCheck {
 				&&
 				!fileName.endsWith(".jar")
 			){
-			println "WARNING: The file: " + f + " is depricated, you can read more about what will be the expected plugin structure here: https://www.nativescript.org/blog/migrating-n-android-plugins-from-version-1.7-to-2.0" 
+			println "WARNING: The file: " + f + " is depricated, you can read more about what will be the expected plugin structure here: https://www.nativescript.org/blog/migrating-n-android-plugins-from-version-1.7-to-2.0"
 		}
 	}
 }
@@ -220,7 +222,7 @@ def updateIncludeGradleFile(subFile, dimensionName) {
 							return "dimension \"$newFg\""
 						}
 	igFile.text = newContent
-	
+
 	return dimensionName
 }
 
@@ -228,26 +230,26 @@ task createDefaultIncludeFiles {
 	description "creates default include.gradle files for added plugins IF NECESSARY"
 	println "$configStage createDefaultIncludeFiles"
 	def ft = file(configurationsDir)
-		
+
 	ft.listFiles().each { fl ->
-	
+
 		if(fl.isDirectory()) {
 			def fileName = fl.name
 			def dimensionName = sanatizeDimensionName(fileName)
 			createPluginConfigFile = true
 			def foundIncludeFile = false
-			
+
 			println "\t+found plugins: " + fileName
 			fl.listFiles().each { subFile ->
-			
+
 				if(subFile.name == "include.gradle") {
 					foundIncludeFile = true
 					dimensionName = updateIncludeGradleFile(subFile, dimensionName)
 				}
 			}
-			
+
 			pluginNames.add('"' + dimensionName + '"')
-			
+
 			if(!foundIncludeFile) {
 				createIncludeFile(fl.getAbsolutePath() ,fileName, dimensionName)
 			}
@@ -257,17 +259,17 @@ task createDefaultIncludeFiles {
 
 task createPluginsConfigFile {
 	description "creates product flavor config file based on what plugins are added"
-	
+
 	if(configDir.exists()) {
 		println "$configStage createPluginsConfigFile"
-		
+
 		def flavorsFile = new File("$configurationsDir/include.gradle")
 		flavorsFile.write "" //clear config file
-		
+
 		if(createPluginConfigFile) {
 			println "\t+creating product flavors include.gradle file in $configurationsDir folder..."
 			def flavors = pluginNames.join(",")
-			
+
 			flavorsFile << "android { \n"
 			flavorsFile << "\tflavorDimensions " + flavors + "\n"
 			flavorsFile << "}\n"
@@ -278,7 +280,7 @@ task createPluginsConfigFile {
 task pluginExtend {
 	description "applies additional configuration"
 
-	def pathToAppGradle = "../../app/App_Resources/Android/app.gradle" 
+	def pathToAppGradle = "../../app/App_Resources/Android/app.gradle"
 	def appGradle = file(pathToAppGradle)
 	if(appGradle.exists()) {
 		apply from: pathToAppGradle
@@ -342,24 +344,24 @@ task ensureMetadataOutDir {
 
 task collectAllJars {
 	description "gathers all paths to jar dependencies before building metadata with them"
-	
+
 	def explodedAarDir = project.buildDir.getAbsolutePath() + "/intermediates/exploded-aar/"
 	def sdkPath = android.sdkDirectory.getAbsolutePath();
 	def androidJar = sdkPath + "/platforms/" + android.compileSdkVersion + "/android.jar"
-	
+
 	doFirst {
 		configurations.compile.each { File dependencyFile ->
 			// println "\t+" + dependencyFile.getAbsolutePath()
 			allJarPaths.add(dependencyFile.getAbsolutePath())
 		}
-		
+
 		allJarPaths.add(androidJar);
-		
+
 		def ft = fileTree(dir: explodedAarDir, include: "**/*.jar")
 		ft.each { currentJarFile ->
 			allJarPaths.add(currentJarFile.getAbsolutePath())
 		}
-		
+
 		metadataParams.add("metadata-generator.jar")
 		metadataParams.add("../metadata/output/assets/metadata")
 		for(def i = 0; i < allJarPaths.size(); i++) {
@@ -391,7 +393,7 @@ task collectAllJars {
 
 task buildMetadata (type: JavaExec) {
 	description "builds metadata with provided jar dependencies"
-	
+
 	inputs.files(allJarPaths)
 	inputs.dir("build/intermediates/classes")
 
@@ -404,13 +406,13 @@ task buildMetadata (type: JavaExec) {
 
 		args metadataParams.toArray()
 	}
-	
+
 	doLast {
 		copy {
 			from "metadata/output/assets/metadata"
 			into "src/main/assets/metadata"
 		}
-		
+
 		def files = new File("${buildDir}/intermediates/res").listFiles()
 		def tmpResourceAPK = null
 		for (File f: files) {
@@ -420,24 +422,24 @@ task buildMetadata (type: JavaExec) {
 				break;
 			}
 		}
-		
+
 		def aaptCommand = "${android.getSdkDirectory().getAbsolutePath()}/build-tools/${android.buildToolsVersion}/aapt"
 		if (isWinOs) {
 			aaptCommand += ".exe"
 		}
-		
+
 		def tmpAPKPath = tmpResourceAPK.getPath()
-		
+
 		def removeCmdParams = new ArrayList<String>([aaptCommand, "remove", tmpAPKPath, "assets/metadata/treeNodeStream.dat", "assets/metadata/treeStringsStream.dat", "assets/metadata/treeValueStream.dat"])
-		
+
 		exec {
 			ignoreExitValue true
 			workingDir "metadata/output"
 			commandLine removeCmdParams.toArray()
 		}
-		
+
 		def addCmdParams = new ArrayList<String>([aaptCommand, "add", tmpAPKPath, "assets/metadata/treeNodeStream.dat", "assets/metadata/treeStringsStream.dat", "assets/metadata/treeValueStream.dat"])
-		
+
 		exec {
 			workingDir "metadata/output"
 			commandLine addCmdParams.toArray()
@@ -451,7 +453,7 @@ task deleteExplodedAarFolder (type: Delete) {
 	outputs.upToDateWhen {
 		!buildMetadata.didWork
 	}
-	
+
 	def explodedAarDir = project.buildDir.getAbsolutePath() + "/intermediates/exploded-aar"
 	delete explodedAarDir
 }
@@ -502,7 +504,6 @@ task buildapk {
 	else {
 		dependsOn assembleDebug
 	}
-	
+
 	dependsOn deleteExplodedAarFolder
 }
-

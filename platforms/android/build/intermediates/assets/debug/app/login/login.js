@@ -2,25 +2,33 @@ var frameModule = require("ui/frame");
 var viewModule = require("ui/core/view");
 var UserViewModel = require("../view-models/user-view-model");
 var dialogsModule = require("ui/dialogs");
+var applicationSettings = require("application-settings");
 
 var email;
 
-var user = new UserViewModel({
-  email: "admin@app-delivery.com",
-  password: "Abcd1234"
-});
+
 
 exports.loaded = function(args) {
   var page = args.object;
-  if (page.ios) {
-    var navigationBar = frameModule.topmost().ios.controller.navigationBar;
-    navigationBar.barStyle = UIBarStyle.UIBarStyleBlack;
-}
-  page.bindingContext = user;
+  var stringUser = applicationSettings.getString("user");
+    if (stringUser !== undefined) {
+      console.log(stringUser);
+    var user = JSON.parse(stringUser);
+    global.user.userData = user;
+    frameModule.topmost().navigate({
+      moduleName: "main-page/main-page",
+      context: {
+        status: "login",
+        user: user
+      }
+               });
+  }
+  
+  page.bindingContext = global.user;
 };
 
 exports.signIn = function() {
-  user.login()
+  global.user.login()
      .catch(function(error) {
          console.log(error);
          dialogsModule.alert({
@@ -29,11 +37,24 @@ exports.signIn = function() {
          });
          return Promise.reject();
      })
-     .then(function() {
+     .then(function(data) {
           console.log("Success");
-         frameModule.topmost().navigate({moduleName: "main-page/main-page"});
-     });
+        if(data.role.name === "ADMIN") {
+          console.log("ADMIn");
+          applicationSettings.setString("user", JSON.stringify(data));
+         frameModule.topmost().navigate({
+           moduleName: "main-page/main-page",
+           context: {
+             status: "login",
+             user: data
+           }
+                    });
+       } else {
 
+         console.log("worker");
+       }
+     });
+  // frameModule.topmost().navigate({moduleName: "main-page/main-page"});
 };
 
 exports.register = function() {

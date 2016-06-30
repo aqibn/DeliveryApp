@@ -11,12 +11,8 @@ var socialShare = require("nativescript-social-share");
 var application = require('application');
 var Sqlite = require("nativescript-sqlite");
 var createViewModel = require("../view-models/delivery-view-model").createViewModel;
-
-var dotPressed;
 var webViewModule = require("ui/web-view");
-
 var Sqlite = require("nativescript-sqlite");
-// var deliveryViewModel = require("./delivery-view-model").createViewModel;
 var dialogs = require("ui/dialogs");
 var page;
 var nativeView;
@@ -50,31 +46,31 @@ exports.loaded = function(args) {
     // var stack = viewModule.getViewById(page,"stack");
     // var autoCompleteTextView = new android.widget.AutoCompleteTextView(page.android);
     // stack.addChild(autoCompleteTextView);
-    if (!Sqlite.exists("populated.db")) {
-        console.log("ads");
-        Sqlite.copyDatabase("populated.db");
-    }
-    (new Sqlite("populated.db")).then(db => {
+    // if (!Sqlite.exists("populated.db")) {
+    //     console.log("ads");
+    //     Sqlite.copyDatabase("populated.db");
+    // }
+    // (new Sqlite("populated.db")).then(db => {
         // database = db;
-        db.resultType(Sqlite.RESULTSASOBJECT);
-        deliveryViewModel = createViewModel(db);
+        // db.resultType(Sqlite.RESULTSASOBJECT);
+        // global.deliveryViewModel = createViewModel(db);
         pageData.customers = new ObservableArray();
         pageData.itemTypes = new ObservableArray();
-        deliveryViewModel.loadCustomers(pageData.customers);
-        deliveryViewModel.loadItemTypes(pageData.itemTypes);
+        global.deliveryViewModel.loadCustomers(pageData.customers);
+        global.deliveryViewModel.loadItemTypes(pageData.itemTypes);
+        pageData.itemIndex = pageData.itemTypes.indexOf(pageData.itemType, false);
+        console.log("index", pageData.itemIndex);
         pageData.customers.forEach(function(data){
-          list1.add(data);
+          list1.add(data.name);
           console.log(data);
 
         });
-        // pageData.customerIndex  = 0;
 
-        pageData.itemIndex = 0;
         if (application.android) {
             application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
         }
         page.bindingContext = pageData;
-      });
+    //   });
 
 };
 
@@ -82,6 +78,10 @@ function backEvent(args) {
   args.cancel = true;
 }
 exports.add = function(args) {
+
+  pageData.customerName = nativeView.getText();
+  pageData.itemType = pageData.itemTypes.getItem(pageData.itemIndex);
+
   frames.topmost().navigate({
         moduleName: "details-page/details-page",
         context: {status: "newLot",
@@ -105,10 +105,11 @@ exports.creatingView = function(args) {
     adapter = new android.widget.ArrayAdapter(args.context,android.R.layout.simple_list_item_1,list1)
     // nativeView.setSingleLine(true);
     // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
-    // nativeView.setText("");
+    nativeView.setText(pageData.customerName);
     nativeView.setAdapter(adapter);
     args.view = nativeView;
 }
+
 exports.navigatedTo = function(args) {
 
     console.log("navigatedto");
@@ -130,7 +131,11 @@ exports.navigatedTo = function(args) {
                           items: newLot.items
                         });
     pageData.totalWeight += newLot.totalWeight;
+    saveDelivery(); 
+
     if (newpage.navigationContext.addnew) {
+      pageData.customerName = nativeView.getText();
+
       frames.topmost().navigate({
             moduleName: "details-page/details-page",
             context: {status: "newLot",
@@ -147,6 +152,7 @@ exports.navigatedTo = function(args) {
     pageData.deliveryDate = "";
     var delivery = newpage.navigationContext.delivery;
     pageData.customerName = delivery.deliveryCustomerName;
+    nativeView.setText(pageData.customerName);
     pageData.itemType = delivery.deliveryItem;
     pageData.createdBy = delivery.deliveryCreatedBy;
     pageData.deliveryDate = delivery.deliveryDate;
@@ -160,21 +166,21 @@ exports.navigatedTo = function(args) {
   // pageData.customerIndex = pageData.customers.indexOf(delivery.CustomernName);
 
   } else if (newpage.navigationContext.update === "new delivery") {
-    pageData.deliveryDate = moment().format('MMMM Do YYYY, h');
     console.log("new delivery");
     // pageData.deliveryDate = new Date();
     pageData.customerName = "";
     pageData.itemType = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
-    pageData.deliveryDate = "";
+    pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
     pageData.deliveryID = 0;
     pageData.lots = new ObservableArray();
 
     console.log("Date",pageData.deliveryDate);
 }
 
-    nativeView.setText(pageData.customerName);
+  // nativeView.setText(pageData.customerName);
+
 
 
     // pageData = page.navigationContext.update;
@@ -192,6 +198,8 @@ exports.listViewItemTap = function(args) {
   // console.log("Lot weight", lot.lotTotalWeight);
 
   pageData.totalWeight -= lot.lotTotalWeight;
+  pageData.customerName = nativeView.getText();
+  pageData.itemType = pageData.itemTypes.getItem(pageData.itemIndex);
   pageData.lots.splice(index,1);
   frames.topmost().navigate({
         moduleName: "details-page/details-page",
@@ -216,10 +224,32 @@ exports.deleteListItem = function(args) {
 }
 
 exports.goBack = function(args) {
+  pageData.customerName = nativeView.getText();
+  
+  pageData.customerName = "";
   frames.topmost().navigate({
         moduleName: "main-page/main-page",
 });
 }
+
+var saveDelivery = function() {
+  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+  pageData.customerName = nativeView.getText();
+//   console.log("customerName:",pageData.customerName);
+//   console.log("data: ",pageData.deliveryDate );
+  var delivery = {
+        deliveryID : pageData.deliveryID,
+        lots: pageData.lots,
+        customerName: pageData.customerName,
+        createdBy: pageData.createdBy,
+        totalWeight: pageData.totalWeight,
+        deliveryDate: pageData.deliveryDate,
+        itemType: pageData.itemTypes.getItem(pageData.itemIndex)
+    };
+    
+   global.deliveryViewModel.saveDelivery(delivery);
+}
+
 exports.saveDelivery = function(args) {
   if(pageData.lots.length == 0) {
     dialogsModule.alert({
@@ -229,9 +259,22 @@ exports.saveDelivery = function(args) {
     return;
   }
   // pageData.deliveryDate = new Date();
-  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
-
-  console.log("data: ",pageData.deliveryDate );
+//   pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+//   pageData.customerName = nativeView.getText();
+// //   console.log("customerName:",pageData.customerName);
+// //   console.log("data: ",pageData.deliveryDate );
+//   var delivery = {
+//         deliveryID : pageData.deliveryID,
+//         lots: pageData.lots,
+//         customerName: pageData.customerName,
+//         createdBy: pageData.createdBy,
+//         totalWeight: pageData.totalWeight,
+//         deliveryDate: pageData.deliveryDate,
+//         itemType: pageData.itemTypes.getItem(pageData.itemIndex)
+//     };
+    
+//    global.deliveryViewModel.saveDelivery(delivery);
+    saveDelivery(); 
   frames.topmost().navigate( {
     moduleName: "main-page/main-page",
     context: {
@@ -259,6 +302,7 @@ exports.print = function(args) {
 //     pageWeb.content = webView;
 //     return pageWeb;
 //   };
+pageData.customerName = nativeView.getText();
 var invoiceNum = pageData.deliveryID;
 var deliveryDate = pageData.deliveryDate;
 var printDate = moment().format('MM-DD-YYYY, h a');
@@ -315,6 +359,9 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
   file.writeText(invoiceHtml)
       .then(function () {
           //// Succeeded writing to the file.
+          pageData.customerName = nativeView.getText();
+          pageData.itemType = pageData.itemTypes.getItem(pageData.itemIndex);
+
           frames.topmost().navigate({
                 moduleName: "delivery-page/invoice/invoice-page"
 
@@ -350,6 +397,6 @@ socialShare.shareText(dispatchDetails);
  }
 
 exports.onNavigatingFrom = function(args){
-  // console.log("navigatingfrom");
+  console.log("navigatingfrom");
   // orientationModule.orientationCleanup();
 }
