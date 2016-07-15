@@ -11,6 +11,8 @@ var applicationSettings = require("application-settings");
 var Toast = require("nativescript-toast");
 var toastSuccessAdded = Toast.makeText("Succesfully Added");
 
+// var objectid = require('objectid')
+
 var page;
 var deliveryViewModel;
 
@@ -28,13 +30,52 @@ var handleError = function() {
          return Promise.reject();
 };
 var syncData = function() {
+     
+
+     global.apiModel.getDispatches(1,10).catch(handleError).then(function(data) {
+      var count = data.count; 
+       for (var a = 0; a < count; a++) {
+              var dispatch = data.dispatches[a];
+              console.log("ID: ",dispatch.customer._id);
+              var delivery = {
+                deliveryID: dispatch._id,
+                customerName: dispatch.customer.firstName,
+                customerID: dispatch.customer._id,
+                createdBy: dispatch.createdBy.firstName,
+                deliveryDate: dispatch.createdAt,
+                itemType: dispatch.items[0].item.name,
+                itemID: dispatch.items[0].item._id
+              };
+              delivery.lots = new ObservableArray();
+              for (var i = 0; i<dispatch.items.length; i++) {
+                var lot = dispatch.items[i];
+                // console.log(JSON.stringify(lot));
+                var lotA = {
+                  lotSize: lot.size.name,
+                  sizeID: lot.size._id,
+                  lotQuality: lot.quality.name,
+                  qualityID: lot.quality._id,
+                  items: new ObservableArray()
+                };
+                for (var k = 0; k < lot.weights.length; k++) {
+                  lotA.items.push({weight: lot.weights[k]});
+                }
+                delivery.lots.push(lotA);
+              }
+                global.deliveryViewModel.saveDelivery(delivery);
+               
+          } 
+       pageData.deliveries = new ObservableArray();
+       global.deliveryViewModel.loadDeliveries(pageData.deliveries);   
+     });
+
      global.apiModel.getQualities().catch(handleError).then(function(data) {
      console.log("Succesfull Quality",data);
      var id = global.deliveryViewModel.deleteAll("qualitytypes", function(){
           var count = data.count;
           for (var a = 0; a < count; a++) {
               var quality = data.qualities[a];
-                console.log(quality);
+                // console.log(quality);
                 global.deliveryViewModel.addQuality(quality);
           } 
           
@@ -46,18 +87,27 @@ var syncData = function() {
           var count = data.count;
           for (var a = 0; a < count; a++) {
               var size = data.sizes[a];
-                console.log(size);
+                // console.log(size);
                 global.deliveryViewModel.addSize(size);
           }  
          });
      });
-     
+     global.apiModel.getCustomers().catch(handleError).then(function(data){
+       var id = global.deliveryViewModel.deleteAll("customers", function(){
+       var count = data.count; 
+      for (var a = 0; a < count; a++) {
+              var customer = data.customers[a];
+                // console.log(customer);
+                global.deliveryViewModel.addCustomer(customer);
+          }   
+    });
+     });
      global.apiModel.getItems().catch(handleError).then(function(data){
        var id = global.deliveryViewModel.deleteAll("itemtypes", function(){
        var count = data.count;
           for (var a = 0; a < count; a++) {
               var item = data.items[a];
-                console.log(item);
+                // console.log(item);
                 global.deliveryViewModel.addItemType(item);
           }      
     
@@ -337,8 +387,13 @@ exports.navigatedTo = function(args) {
       console.log("Total Weight: ",newDelivery.totalWeight);
       console.log("customerName: ",newDelivery.customerName);
       console.log("Date: ",newDelivery.deliveryDate);
+      // console.log("CID: ", newDelivery.customerID);
+      // var dispatch = {
+      // _id: newDelivery.deliveryDate,
+      // soNumber: "M",
+      // customer: 
+      // }
       pageData.deliveries = new ObservableArray();
-      
       global.deliveryViewModel.loadDeliveries(pageData.deliveries);
 
     //   deliveryViewModel.saveDelivery(newDelivery,pageData.deliveries);

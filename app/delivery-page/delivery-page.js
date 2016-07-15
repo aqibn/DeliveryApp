@@ -19,6 +19,9 @@ var nativeView;
 var adapter;
 var list1;
 var deliveryViewModel;
+var mongoid = require('mongoid-js');
+           
+
 var pageData = new Observable({
     lots: new ObservableArray(),
     tap: 0,
@@ -56,6 +59,9 @@ exports.loaded = function(args) {
         // global.deliveryViewModel = createViewModel(db);
         pageData.customers = new ObservableArray();
         pageData.itemTypes = new ObservableArray();
+        pageData.itemTypesObject = new ObservableArray();
+        global.deliveryViewModel.loadItemTypes(pageData.itemTypesObject,true);
+
         global.deliveryViewModel.loadCustomers(pageData.customers);
         global.deliveryViewModel.loadItemTypes(pageData.itemTypes);
         pageData.itemIndex = pageData.itemTypes.indexOf(pageData.itemType, false);
@@ -128,7 +134,9 @@ exports.navigatedTo = function(args) {
                           lotQuality: newLot.quality,
                           lotSize: newLot.size,
                           lotNumItems: newLot.numItems,
-                          items: newLot.items
+                          items: newLot.items,
+                          qualityID: newLot.qualityID,
+                          sizeID: newLot.sizeID
                         });
     pageData.totalWeight += newLot.totalWeight;
     saveDelivery(); 
@@ -173,7 +181,7 @@ exports.navigatedTo = function(args) {
     pageData.createdBy = "";
     pageData.totalWeight = 0;
     pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
-    pageData.deliveryID = 0;
+    pageData.deliveryID = mongoid();
     pageData.lots = new ObservableArray();
 
     console.log("Date",pageData.deliveryDate);
@@ -235,12 +243,35 @@ exports.goBack = function(args) {
 var saveDelivery = function() {
   pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
   pageData.customerName = nativeView.getText();
+  var cID = "";
+  pageData.customers.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    console.log("PNAME: ",pageData.customerName);
+
+    if(data.name == pageData.customerName) {
+      console.log("FOUND ID \n\n",data._id);
+      cID = data._id;
+    }
+  });
+  var itemID = "";
+   pageData.itemTypesObject.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    var item = pageData.itemTypes.getItem(pageData.itemIndex);
+    if(data.name == item) {
+      console.log("FOUND ID \n\n",data._id);
+      itemID = data._id;
+    }
+  });
 //   console.log("customerName:",pageData.customerName);
 //   console.log("data: ",pageData.deliveryDate );
   var delivery = {
         deliveryID : pageData.deliveryID,
         lots: pageData.lots,
         customerName: pageData.customerName,
+        customerID: cID,
+        itemID: itemID,
         createdBy: pageData.createdBy,
         totalWeight: pageData.totalWeight,
         deliveryDate: pageData.deliveryDate,
@@ -248,6 +279,29 @@ var saveDelivery = function() {
     };
     
    global.deliveryViewModel.saveDelivery(delivery);
+
+ var dispatch = {
+  _id: delivery.deliveryID,
+  soNumber: "M",
+  customer: delivery.customerID
+  }; 
+dispatch.items = [];
+for (var i=0; i<delivery.lots.length; i++) {
+  var l = delivery.lots.getItem(i); 
+  console.log(JSON.stringify(l.qualityID));
+
+  var lot = {
+    quality: l.qualityID,
+    size: l.sizeID,
+    item: delivery.itemID
+  };
+  lot.weights = [];
+  for (var j=0; j<l.items.length; j++) {
+    lot.weights.push(l.items.getItem(j).weight);
+  }
+  dispatch.items.push(lot);
+}
+global.apiModel.createDispatch(dispatch);
 }
 
 exports.saveDelivery = function(args) {
@@ -274,7 +328,9 @@ exports.saveDelivery = function(args) {
 //     };
     
 //    global.deliveryViewModel.saveDelivery(delivery);
-    saveDelivery(); 
+  saveDelivery();
+
+ 
   frames.topmost().navigate( {
     moduleName: "main-page/main-page",
     context: {

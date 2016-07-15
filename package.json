@@ -12,6 +12,7 @@
     "easy-report": "^0.4.3",
     "email-validator": "^1.0.4",
     "moment": "^2.13.0",
+    "mongoid-js": "^1.0.6",
     "nativescript-drop-down": "^1.2.5",
     "nativescript-grid-view": "^1.3.3",
     "nativescript-orientation": "^1.0.3",
@@ -20,6 +21,7 @@
     "nativescript-social-share": "^1.1.3",
     "nativescript-sqlite": "^1.0.8",
     "nativescript-toast": "^1.2.0",
-    "tns-core-modules": "1.7.1"
+    "tns-core-modules": "1.7.1",
+    "uuid": "^2.0.2"
   }
 }

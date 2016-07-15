@@ -1,0 +1,85 @@
+{
+  "_args": [
+    [
+      "mongoid-js",
+      "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp"
+    ]
+  ],
+  "_from": "mongoid-js@latest",
+  "_id": "mongoid-js@1.0.6",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/mongoid-js",
+  "_npmUser": {
+    "email": "andras@andrasq.com",
+    "name": "andrasq"
+  },
+  "_npmVersion": "1.4.28",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "mongoid-js",
+    "raw": "mongoid-js",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/mongoid-js/-/mongoid-js-1.0.6.tgz",
+  "_shasum": "a32249a6fd532f4c55ea025194d3e47634a10970",
+  "_shrinkwrap": null,
+  "_spec": "mongoid-js",
+  "_where": "/Users/aqibnisar/Desktop/v2/stockcountapp/DeliveryApp",
+  "author": {
+    "name": "Andras",
+    "url": "http://github.com/andrasq"
+  },
+  "bugs": {
+    "url": "https://github.com/andrasq/node-mongoid-js/issues"
+  },
+  "dependencies": {},
+  "description": "very fast mongoid compatible unique ids",
+  "devDependencies": {
+    "nodeunit": "0.9.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "a32249a6fd532f4c55ea025194d3e47634a10970",
+    "tarball": "https://registry.npmjs.org/mongoid-js/-/mongoid-js-1.0.6.tgz"
+  },
+  "engines": {
+    "node": ">=0.0.0"
+  },
+  "gitHead": "cdeb7ebfc0cd67a5cdbc1c16a55654389675b956",
+  "homepage": "https://github.com/andrasq/node-mongoid-js",
+  "keywords": [
+    "Andras",
+    "fast",
+    "globally",
+    "ids",
+    "mongoid",
+    "quick",
+    "unique"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "andrasq",
+      "email": "andras@andrasq.com"
+    }
+  ],
+  "name": "mongoid-js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrasq/node-mongoid-js.git"
+  },
+  "scripts": {
+    "test": "nodeunit"
+  },
+  "version": "1.0.6"
+}

@@ -81,7 +81,7 @@ viewModel.createQuality = function(qualityName) {
                 return response.json();
             })
             .then(function(data) {
-              console.log(JSON.stringify(data));
+            //   console.log(JSON.stringify(data));
               return data;
             });
         };
@@ -125,7 +125,27 @@ viewModel.createQuality = function(qualityName) {
             };
             
             
-            
+         viewModel.createCustomer = function(sizeName) {
+            return fetchModule.fetch(config.apiUrl + "customers", {
+                  method: "POST",
+                  body: JSON.stringify({
+                      name: sizeName
+                  }),
+                  headers: {
+                      "Content-Type": "application/json",
+                      "authorization": "Bearer "+global.user.userData.accessToken
+                  }
+              })
+              .then(handleErrors)
+              .then(function(response) {
+                  return response.json();
+              })
+              .then(function(data) {
+                console.log(JSON.stringify(data));
+                return data;
+              });
+          };
+ 
            viewModel.getCustomers = function() {
               return fetchModule.fetch(config.apiUrl + "customers", {
                     method: "GET",
@@ -138,14 +158,50 @@ viewModel.createQuality = function(qualityName) {
                     return response.json();
                 })
                 .then(function(data) {
-                 console.log(JSON.stringify(data));
+                //  console.log(JSON.stringify(data));
                   return data;
                 });
             }; 
+
+             viewModel.getDispatches = function(page,limit) {
+              return fetchModule.fetch(config.apiUrl + "dispatches?page="+page+"&limit="+limit, {
+                    method: "GET",
+                    headers: {
+                        "authorization": "Bearer "+global.user.userData.accessToken
+                    }
+                })
+                .then(handleErrors)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                //  console.log(JSON.stringify(data));
+                  return data;
+                });
+            }; 
+
+            viewModel.createDispatch = function(dispatch) {
+                console.log(JSON.stringify(dispatch));
+                return fetchModule.fetch(config.apiUrl + "dispatches", {
+                  method: "POST",
+                  body: JSON.stringify(dispatch),
+                  headers: {
+                      "Content-Type": "application/json",
+                      "authorization": "Bearer "+global.user.userData.accessToken
+                  }
+              })
+              .then(handleErrors)
+              .then(function(response) {
+                  return response.json();
+              })
+              .then(function(data) {
+             console.log(JSON.stringify(data));
+                return data;
+              });
+            }
             
           return viewModel;
 }
-
 function handleErrors(response) {
     if (!response.ok) {
         console.log(JSON.stringify(response));

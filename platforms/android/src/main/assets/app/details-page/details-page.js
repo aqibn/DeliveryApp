@@ -63,6 +63,7 @@ exports.loaded = function(args) {
           // database = db;
         //   db.resultType(Sqlite.RESULTSASOBJECT);
         //   global.deliveryViewModel = createViewModel(db);
+     
           pageData.listitemssize = new ObservableArray();
           pageData.listitemsquality = new ObservableArray();
           global.deliveryViewModel.loadQualities(pageData.listitemsquality);
@@ -76,12 +77,14 @@ exports.loaded = function(args) {
           page.bindingContext = pageData;
 
         // });
-    pageData.totalWeight = 0;
-    pageData.numItems = 0;
-    pageData.weightString = "";
-    pageData.weight = 0;
-    pageData.status = "";
-    dotPressed = false;
+    //          var id = mongoid();   
+    //      console.log("ID: ", id);
+    // pageData.totalWeight = 0;
+    // pageData.numItems = 0;
+    // pageData.weightString = "";
+    // pageData.weight = 0;
+    // pageData.status = "";
+    // dotPressed = false;
     // if (application.android) {
     //     application.android.on(application.AndroidApplication.activityBackPressedEvent, backEventa);
     // }
@@ -231,6 +234,30 @@ exports.addNew = function(args) {
   }
   lot.quality = nativeViewQuality.getText();
   lot.size = nativeViewSize.getText();
+
+
+    var qualityID = "";
+  pageData.listitemsquality.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    if(data.name == lot.quality) {
+      console.log("FOUND ID \n\n",data._id);
+      qualityID = data._id;
+    }
+  }); 
+
+   var sizeID = "";
+  pageData.listitemssize.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    if(data.name == lot.size) {
+      console.log("FOUND ID \n\n",data._id);
+      sizeID = data._id;
+    }
+  }); 
+
+  lot.qualityID = qualityID;
+  lot.sizeID = sizeID;
   lot.totalWeight = pageData.totalWeight;
   lot.numItems = pageData.numItems;
   pageData.selectedSize = "";
@@ -257,6 +284,29 @@ exports.saveBack = function(args) {
   }
   lot.quality = nativeViewQuality.getText();
   lot.size = nativeViewSize.getText();
+
+  var qualityID = "";
+  pageData.listitemsquality.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    if(data.name == lot.quality) {
+      console.log("FOUND ID \n\n",data._id);
+      qualityID = data._id;
+    }
+  }); 
+
+   var sizeID = "";
+  pageData.listitemssize.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    if(data.name == lot.size) {
+      console.log("FOUND ID \n\n",data._id);
+      sizeID = data._id;
+    }
+  }); 
+
+  lot.qualityID = qualityID;
+  lot.sizeID = sizeID;
   lot.totalWeight = pageData.totalWeight;
   lot.numItems = pageData.numItems;
   pageData.selectedSize = "";
@@ -331,6 +381,13 @@ exports.saveBack = function(args) {
         pageData.weight = 0;
       } else if (newpage.navigationContext.status === "newLot") {
         console.log("newLot");
+         
+        pageData.totalWeight = 0;
+        pageData.numItems = 0;
+        pageData.weightString = "";
+        pageData.weight = 0;
+        pageData.status = "";
+         dotPressed = false;
         pageData.status = newpage.navigationContext.status;
       }
 

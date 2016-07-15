@@ -76,8 +76,11 @@ exports.addItem = function(args) {
          });      
          
    } else if (pageData.settingType === "Customer") {
-      global.deliveryViewModel.addCustomer(name);   
-   } else if (pageData.settingType === "Item") {
+            // global.apiModel.createCustomer(r.text).then(function(custoer) {
+            // global.deliveryViewModel.addCustomer(customer); 
+            // loadItems();
+        //  });  
+          } else if (pageData.settingType === "Item") {
         global.apiModel.createItem(r.text).then(function(item) {
             global.deliveryViewModel.addItemType(item); 
             loadItems();
