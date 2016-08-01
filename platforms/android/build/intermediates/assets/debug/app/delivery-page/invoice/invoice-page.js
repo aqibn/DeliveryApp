@@ -42,8 +42,9 @@ exports.print = function(args){
   // // stackLayout.addChild(img);
   // //
   // socialShare.shareImage(imageSource);
-var context = application.android.context;  
-var printManager = app.android.foregroundActivity.getSystemService(context.PRINT_SERVICE);
+    var context = android.content.Context;  
+    console.log("Context",context);
+    var printManager = app.android.foregroundActivity.getSystemService(context.PRINT_SERVICE);
 
     // Get a print adapter instance
     var printAdapter = webView.android.createPrintDocumentAdapter();

@@ -7,6 +7,7 @@ var frames = require("ui/frame");
 var moment = require("moment");
 var pageModule = require('ui/page');
 var fs = require("file-system");
+var Toast = require("nativescript-toast");
 var socialShare = require("nativescript-social-share");
 var application = require('application');
 var Sqlite = require("nativescript-sqlite");
@@ -34,7 +35,8 @@ var pageData = new Observable({
     customers: new ObservableArray(),
     customerIndex:0,
     itemTypes: new ObservableArray(),
-    itemIndex: 0
+    itemIndex: 0,
+    soNumber: 0
 });
 //
 
@@ -139,7 +141,7 @@ exports.navigatedTo = function(args) {
                           sizeID: newLot.sizeID
                         });
     pageData.totalWeight += newLot.totalWeight;
-    saveDelivery(); 
+    saveDelivery(false); 
 
     if (newpage.navigationContext.addnew) {
       pageData.customerName = nativeView.getText();
@@ -157,6 +159,7 @@ exports.navigatedTo = function(args) {
     pageData.customerName = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
+    pageData.soNumber = 0;
     pageData.deliveryDate = "";
     var delivery = newpage.navigationContext.delivery;
     pageData.customerName = delivery.deliveryCustomerName;
@@ -164,7 +167,8 @@ exports.navigatedTo = function(args) {
     pageData.itemType = delivery.deliveryItem;
     pageData.createdBy = delivery.deliveryCreatedBy;
     pageData.deliveryDate = delivery.deliveryDate;
-    pageData.totalWeight = delivery.deliveryTotalWeight;
+    pageData.soNumber = delivery.soNumber;
+    pageData.totalWeight = Number(delivery.deliveryTotalWeight.toFixed(2));
     pageData.deliveryID = delivery.deliveryID;
     delivery.deliveryLots.forEach(function(data, index, a) {
       console.log(data);
@@ -176,15 +180,27 @@ exports.navigatedTo = function(args) {
   } else if (newpage.navigationContext.update === "new delivery") {
     console.log("new delivery");
     // pageData.deliveryDate = new Date();
+    
     pageData.customerName = "";
     pageData.itemType = "";
     pageData.createdBy = "";
     pageData.totalWeight = 0;
-    pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+    pageData.deliveryDate = moment().toISOString().toString();
     pageData.deliveryID = mongoid();
     pageData.lots = new ObservableArray();
+dialogsModule.prompt({
+    title: "SO Number",
+    message: "Enter SO Number",
+    cancelButtonText: "Cancel",
+    okButtonText: "Confirm",
+    inputType: dialogsModule.inputType.text
 
-    console.log("Date",pageData.deliveryDate);
+  }).then(function(r) {   
+    if (r.result && r.text !== "") {
+      pageData.soNumber = r.text;
+    }
+  });
+   console.log("Date",pageData.deliveryDate);
 }
 
   // nativeView.setText(pageData.customerName);
@@ -240,8 +256,13 @@ exports.goBack = function(args) {
 });
 }
 
-var saveDelivery = function() {
-  pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
+
+  var toastSuccessUploaded = Toast.makeText("Succesfully Uploaded");
+  var toastFailedUploaded = Toast.makeText("Failed to Upload");
+
+
+var saveDelivery = function(online) {
+  pageData.deliveryDate = moment().toISOString().toString();
   pageData.customerName = nativeView.getText();
   var cID = "";
   pageData.customers.forEach(function(data){
@@ -272,6 +293,7 @@ var saveDelivery = function() {
         customerName: pageData.customerName,
         customerID: cID,
         itemID: itemID,
+        soNumber: pageData.soNumber,
         createdBy: pageData.createdBy,
         totalWeight: pageData.totalWeight,
         deliveryDate: pageData.deliveryDate,
@@ -279,11 +301,12 @@ var saveDelivery = function() {
     };
     
    global.deliveryViewModel.saveDelivery(delivery);
-
+if (online) {
  var dispatch = {
   _id: delivery.deliveryID,
-  soNumber: "M",
-  customer: delivery.customerID
+  soNumber: pageData.soNumber,
+  customer: delivery.customerID,
+  date: pageData.deliveryDate
   }; 
 dispatch.items = [];
 for (var i=0; i<delivery.lots.length; i++) {
@@ -301,7 +324,16 @@ for (var i=0; i<delivery.lots.length; i++) {
   }
   dispatch.items.push(lot);
 }
-global.apiModel.createDispatch(dispatch);
+
+console.log(JSON.stringify(dispatch));
+global.apiModel.createDispatch(dispatch).catch(function(){
+toastFailedUploaded.show();
+ return Promise.reject();
+
+}).then(function(data){
+  toastSuccessUploaded.show();
+});
+}
 }
 
 exports.saveDelivery = function(args) {
@@ -328,7 +360,7 @@ exports.saveDelivery = function(args) {
 //     };
     
 //    global.deliveryViewModel.saveDelivery(delivery);
-  saveDelivery();
+  saveDelivery(true);
 
  
   frames.topmost().navigate( {
@@ -382,7 +414,7 @@ console.log("dispatch items", dispatchItems);
 dialogsModule.action("Print", "Cancel", ["Summary","Details"]
 ).then(function(result){
 
-  var invoiceNum = pageData.deliveryID;
+  var invoiceNum = pageData.soNumber;
   var deliveryDate = pageData.deliveryDate;
   var printDate = moment().format('MM-DD-YYYY, h a');
   var company = "Customer";
@@ -392,15 +424,24 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
   var dispatchDetails = "";
   var totalItems = 0;
   var totalWeight = 0;
-  if (result === "Summary") {
+  // if (result === "Summary") {
   for (var count=0; count<pageData.lots.length;count++) {
     var data = pageData.lots.getItem(count);
     console.log(data);
     var con = '<tr class="item"> <td> '+data.lotQuality+'</td><td> '+data.lotSize+'</td> <td align="right"> '+data.lotNumItems+'</td><td align="right">'+data.lotTotalWeight+'</td> </tr>';
     // dispatchItems.concat(con);
+    var items = "";
+    if (result === "Details") {
+    for (var i = 0; i<data.items.length; i++) {
+    var it = data.items.getItem(i);
+    var list = '<tr class="item"> <td> </td><td> </td> <td align="right"> </td><td align="right">'+it.weight+'</td> </tr>';
+    items = items + list;
+    }
+    }
     totalItems += data.lotNumItems;
     totalWeight += data.lotTotalWeight;
-    dispatchItems = dispatchItems + con;
+    dispatchItems = dispatchItems + con+ items;
+
   }
   console.log("dispatch items", dispatchItems);
   var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
@@ -426,27 +467,27 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
           //// Failed to write to the file.
       });
 
-} else if (result === "Details") {
+// } else if (result === "Details") {
 console.log(result);
-var items = "";
-for (var count = 0; count<pageData.lots.length; count++) {
-    var lot = pageData.lots.getItem(count);
-    var con = "Quality: "+lot.lotQuality + " Size: " + lot.lotSize + " \n";
-    items = items + con;
+// var items = "";
+// for (var count = 0; count<pageData.lots.length; count++) {
+//     var lot = pageData.lots.getItem(count);
+//     var con = "Quality: "+lot.lotQuality + " Size: " + lot.lotSize + " \n";
+//     items = items + con;
 
-    for (var i = 0; i<lot.items.length; i++) {
-    var it = lot.items.getItem(i);
+//     for (var i = 0; i<lot.items.length; i++) {
+//     var it = lot.items.getItem(i);
 
-    items = items + it.weight + "\n";
+//     items = items + it.weight + "\n";
     // console.log(items);
 
-    }
-}
+    
 
-dispatchDetails = "Item: " + JSON.stringify(itemType) + "\n" + items;
-console.log(dispatchDetails);
-socialShare.shareText(dispatchDetails);
-}
+
+// dispatchDetails = "Item: " + JSON.stringify(itemType) + "\n" + items;
+// console.log(dispatchDetails);
+// socialShare.shareText(dispatchDetails);
+// }
 });
 
 

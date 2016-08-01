@@ -30,7 +30,23 @@ viewModel.createQuality = function(qualityName) {
         return data;
       });
   };
-
+  viewModel.deleteAPI = function(name, id) {
+    return fetchModule.fetch(config.apiUrl + name+"/"+id, {
+          method: "DELETE",
+          headers: {
+              "authorization": "Bearer "+global.user.userData.accessToken
+          }
+      })
+      .then(handleErrors)
+      .then(function(response) {
+          return response.json();
+      })
+      .then(function(data) {
+        console.log(JSON.stringify(data));
+        // toastSuccessAdded.show();
+        return data;
+      });
+  };
   viewModel.getQualities = function() {
       return fetchModule.fetch(config.apiUrl + "qualities", {
             method: "GET",
@@ -125,11 +141,16 @@ viewModel.createQuality = function(qualityName) {
             };
             
             
-         viewModel.createCustomer = function(sizeName) {
+         viewModel.createCustomer = function(name) {
             return fetchModule.fetch(config.apiUrl + "customers", {
                   method: "POST",
                   body: JSON.stringify({
-                      name: sizeName
+                      firstName: name,
+                      lastName: "test",
+                      email: name+"@xyz.com",
+                      address: "test",
+                      primaryContact: "603-198-9806"
+
                   }),
                   headers: {
                       "Content-Type": "application/json",

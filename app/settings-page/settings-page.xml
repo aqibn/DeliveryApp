@@ -1,6 +1,6 @@
 <Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd"  style="background-color: gray;">
   <Page.actionBar>
-  <ActionBar title="{{ settingType }}">
+  <ActionBar title="{{ settingType }}" class="action-bar-positive">
         <ActionItem text="Done" tap="goBack"/>
 
       <!-- <ActionItem text="Save" tap="saveFile"/> -->
@@ -9,7 +9,7 @@
   </Page.actionBar>
     <GridLayout rows="auto,auto,3*">
         <GridLayout row="0" columns="*,*">
-        <Button col="0" text="Add" tap="addItem"/>
+        <Button col="0" colspan="2" class="button button-balanced"  text="Add" tap="addItem"/>
         </GridLayout>
         <GridLayout row="2"  rows="auto,*" columns="*,*,*,2*,*,*,auto" cssClass="list">
          

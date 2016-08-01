@@ -29,7 +29,7 @@ function User(info) {
             return response.json();
         })
         .then(function(data) {
-        //   console.log(JSON.stringify(data));
+          console.log(JSON.stringify(data));
             viewModel.userData = data;
             config.token = data.accessToken;
             return data;
@@ -94,7 +94,7 @@ function User(info) {
 
 function handleErrors(response) {
     if (!response.ok) {
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
         throw Error(response.statusText);
     }
     return response;

@@ -7,6 +7,7 @@ var viewModule = require("ui/core/view");
 var applicationSettings = require("application-settings");
 var Toast = require("nativescript-toast");
 
+var toastSuccessAdded = Toast.makeText("Succesfully Added");
 
 var page;
 var deliveryViewModel;
@@ -49,7 +50,16 @@ exports.navigatedTo = function(args) {
     
 }
 
+var handleError = function() {
+  dialogsModule.alert({
+             message: "Unfortunately we could not connect to server.",
+             okButtonText: "OK"
+         });
+         return Promise.reject();
+}
+
 exports.addItem = function(args) {
+ if (global.user.userData.role.name === "ADMIN") {
  dialogsModule.prompt({
     title: "Add " + pageData.settingType,
     message: "Enter "+pageData.settingType+" Name",
@@ -63,33 +73,47 @@ exports.addItem = function(args) {
     var name = r.text;  
       console.log(name); 
      if (pageData.settingType === "Quality") {
-       global.apiModel.createQuality(r.text).then(function(quality) {
+       global.apiModel.createQuality(r.text).catch(handleError).then(function(quality) {
         global.deliveryViewModel.addQuality(quality); 
         loadItems();
- 
+        toastSuccessAdded.show()
          });   
           
       } else if (pageData.settingType === "Size") {
-      global.apiModel.createSize(r.text).then(function(size) {
+      global.apiModel.createSize(r.text).catch(handleError).then(function(size) {
         global.deliveryViewModel.addSize(size); 
         loadItems();
+        toastSuccessAdded.show()
+
          });      
          
    } else if (pageData.settingType === "Customer") {
-            // global.apiModel.createCustomer(r.text).then(function(custoer) {
-            // global.deliveryViewModel.addCustomer(customer); 
-            // loadItems();
-        //  });  
+            console.log("Custoemr: ", r.text);
+            global.apiModel.createCustomer(r.text).catch(handleError).then(function(customer) {
+            global.deliveryViewModel.addCustomer(customer); 
+            loadItems();
+           toastSuccessAdded.show()
+         });  
           } else if (pageData.settingType === "Item") {
-        global.apiModel.createItem(r.text).then(function(item) {
+        global.apiModel.createItem(r.text).catch(handleError).then(function(item) {
             global.deliveryViewModel.addItemType(item); 
             loadItems();
+            toastSuccessAdded.show()
+
          });   
            }
    loadItems();  
 }
   }); 
+ } else {
+   dialogsModule.alert({
+    title: "Not Allowed",
+    message: "Only Admin can add new "+pageData.settingType,
+    okButtonText: "Confirm"
+  }).then(function(r) {
+ });
  
+}
 }
 
 exports.deleteListItem = function(args) {
@@ -101,13 +125,19 @@ exports.deleteListItem = function(args) {
       console.log(index);
     //   pageData.items.splice(index,1);
       if (pageData.settingType === "Quality") {
-        global.deliveryViewModel.deleteQuality(item.name);   
+        global.deliveryViewModel.deleteQuality(item.name); 
+        global.apiModel.deleteAPI("qualities",item._id);  
    } else if (pageData.settingType === "Size") {
-        global.deliveryViewModel.deleteSize(item.name);   
+        global.deliveryViewModel.deleteSize(item.name); 
+        global.apiModel.deleteAPI("sizes",item._id);  
    } else if (pageData.settingType === "Customer") {
-        global.deliveryViewModel.deleteCustomer(item.name);   
+        global.deliveryViewModel.deleteCustomer(item.name);  
+        global.apiModel.deleteAPI("customers",item._id);  
+ 
    } else if (pageData.settingType === "Item") {
-        global.deliveryViewModel.deleteItemType(item.name);   
+        global.deliveryViewModel.deleteItemType(item.name);
+        global.apiModel.deleteAPI("items",item._id);  
+   
    }
    loadItems()
  }

@@ -1,14 +1,15 @@
 <Page loaded="loaded">
   <Page.actionBar>
-    <ActionBar title="Sign in"></ActionBar>
+    <ActionBar title="Sign in" class="action-bar-positive"> </ActionBar>
 </Page.actionBar>
   <StackLayout orientation="vertical">
-          <Image src="res://logo" stretch="none" horizontalAlignment="center" />
+          <!--<Image src="res://logo" stretch="none" horizontalAlignment="center" />-->
+          <Label text="Delivery App" fontSize="40" horizontalAlignment="center"/>
           <TextField id="email" text="{{ email }}" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalizationType="none" />
           <TextField secure="true" text="{{ password }}" hint="Password" />
 
           <Button text="Sign in" tap="signIn"/>
-          <Button text="Sign up for Groceries" class="link" tap="register" />
-
+          <Button text="Sign up" class="link" tap="register" />
+          <ActivityIndicator busy="{{ isLoading }}" />
       </StackLayout>
 </Page>

@@ -376,7 +376,7 @@ exports.saveBack = function(args) {
           pageData.lot.items.push(data);
         });
 
-        console.log(pageData.lot.items.getItem(0).weight);
+        // console.log(pageData.lot.items.getItem(0).weight);
         pageData.weightString = "";
         pageData.weight = 0;
       } else if (newpage.navigationContext.status === "newLot") {

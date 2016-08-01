@@ -1,0 +1,12 @@
+DeliveryAPP:
+    ☐ SO Number
+    ☐ Integrate date with dispatch API
+    ☐ Fix Invoice Print Format
+    ☐ Enable auto backup to cloud
+    ☐ Fix Authorisation Issue
+    ☐ Create Customer
+
+{"_id":"5786bfdae15f410001000001","soNumber":"1","customer":"57794b7ffbffab0300abb803","items":[{"quality":"57794b7ffbffab0300abb802","size":"57794b7efbffab0300abb801","item":"57794b7efbffab0300abb800","weights":[45]}]}
+{"_id":"579a24afc188910001000001","soNumber":"123","customer":"57794b7ffbffab0300abb803","items":[{"quality":"57794b7ffbffab0300abb802","size":"57794b7efbffab0300abb801","item":"57794b7efbffab0300abb800","weights":[10]}]}
+{"_id":"5786bfdae15f410001000001","soNumber":"123","customer":"57794b7ffbffab0300abb803","items":[{"quality":"57794b7ffbffab0300abb802","size":"57794b7efbffab0300abb801","item":"57794b7efbffab0300abb800","weights":[45]}]}
+{"_id":"579a24afc188910001000001","soNumber":"1","customer":"57794b7ffbffab0300abb803","items":[{"quality":"57794b7ffbffab0300abb802","size":"57794b7efbffab0300abb801","item":"57794b7efbffab0300abb800","weights":[10]}]}

@@ -21,7 +21,7 @@ var pageData = new Observable({
     user: null,
     qualities: new ObservableArray([{name: "Item 1"},{name: "Item 2"}])
 });
-var handleError = function() {
+var handleError = function(response) {
     console.log(error);
          dialogsModule.alert({
              message: "Unfortunately we could not connect to server.",
@@ -32,42 +32,67 @@ var handleError = function() {
 var syncData = function() {
      
 
-     global.apiModel.getDispatches(1,10).catch(handleError).then(function(data) {
-      var count = data.count; 
-       for (var a = 0; a < count; a++) {
-              var dispatch = data.dispatches[a];
-              console.log("ID: ",dispatch.customer._id);
-              var delivery = {
-                deliveryID: dispatch._id,
-                customerName: dispatch.customer.firstName,
-                customerID: dispatch.customer._id,
-                createdBy: dispatch.createdBy.firstName,
-                deliveryDate: dispatch.createdAt,
-                itemType: dispatch.items[0].item.name,
-                itemID: dispatch.items[0].item._id
-              };
-              delivery.lots = new ObservableArray();
-              for (var i = 0; i<dispatch.items.length; i++) {
-                var lot = dispatch.items[i];
-                // console.log(JSON.stringify(lot));
-                var lotA = {
-                  lotSize: lot.size.name,
-                  sizeID: lot.size._id,
-                  lotQuality: lot.quality.name,
-                  qualityID: lot.quality._id,
-                  items: new ObservableArray()
-                };
-                for (var k = 0; k < lot.weights.length; k++) {
-                  lotA.items.push({weight: lot.weights[k]});
-                }
-                delivery.lots.push(lotA);
-              }
-                global.deliveryViewModel.saveDelivery(delivery);
-               
-          } 
-       pageData.deliveries = new ObservableArray();
-       global.deliveryViewModel.loadDeliveries(pageData.deliveries);   
-     });
+    //  global.apiModel.getDispatches(1,10).catch(handleError).then(function(data) {
+    //   var count = data.count; 
+    //   console.log("count", count);
+    //   // console.log(JSON.stringify(data));
+    //    for (var a = 0; a < count; a++) {
+
+    //           var dispatch = data.dispatches[a];
+    //           console.log("ID: ",dispatch._id);
+    //           var delivery = {
+    //             deliveryID: dispatch._id,
+    //             customerName: dispatch.customer.firstName,
+    //             customerID: dispatch.customer._id,
+    //             createdBy: dispatch.createdBy.firstName,
+    //             deliveryDate: dispatch.createdAt,
+    //             itemType: dispatch.items[0].item.name,
+    //             itemID: dispatch.items[0].item._id
+    //           };
+
+    //           delivery.lots = new ObservableArray();
+
+    //           for (var i = 0; i<dispatch.items.length; i++) {
+
+    //             var lot = dispatch.items[i];
+    //             console.log(JSON.stringify(lot));
+    //             if (lot.size === undefined) {
+    //             var sizeName = "";
+    //             var sizeID = "";
+    //             } else {
+    //             var sizeName = lot.size.name;
+    //             var sizeID = lot.size._id;
+    //             }
+    //              if (lot.size === undefined) {
+    //             var qualityName = "";
+    //             var qualityID = "";
+    //             } else {
+    //             var qualityName = lot.quality.name;
+    //             var qualityID = lot.quality._id;
+    //             }
+
+    //             var lotA = {
+    //               lotSize: sizeName,
+    //               sizeID: sizeID,
+    //               lotQuality: qualityName,
+    //               qualityID: qualityID,
+    //               items: new ObservableArray()
+    //             };
+
+    //             for (var k = 0; k < lot.weights.length; k++) {
+    //               lotA.items.push({weight: lot.weights[k]});
+    //             }
+    //             delivery.lots.push(lotA);
+    //           }
+
+    //           global.deliveryViewModel.saveDelivery(delivery);
+              
+    //       } 
+       
+      
+    //  }).then(function() {
+         
+    //  });
 
      global.apiModel.getQualities().catch(handleError).then(function(data) {
      console.log("Succesfull Quality",data);
@@ -154,6 +179,7 @@ exports.deleteListItem = function(args) {
       console.log(index);
       pageData.deliveries.splice(index,1);
       global.deliveryViewModel.deleteDelivery(item);
+      global.apiModel.deleteAPI("dispatches",item.deliveryID);
     }
   });
 
@@ -362,25 +388,25 @@ exports.navigatedTo = function(args) {
 
       if (newpage.navigationContext.status === "login") {
         pageData.user = newpage.navigationContext.user;
-      if (!Sqlite.exists("populated.db")) {
-          console.log("ads");
-          Sqlite.copyDatabase("populated.db");
-      }
-      (new Sqlite("populated.db")).then(db => {
-          // database = db;
-          db.resultType(Sqlite.RESULTSASOBJECT);
-          global.deliveryViewModel = createViewModel(db);
+      // if (!Sqlite.exists("populated.db")) {
+      //     console.log("ads");
+      //     Sqlite.copyDatabase("populated.db");
+      // }
+      // (new Sqlite("populated.db")).then(db => {
+      //     // database = db;
+      //     db.resultType(Sqlite.RESULTSASOBJECT);
+      //     global.deliveryViewModel = createViewModel(db);
 
 
             pageData.deliveries = new ObservableArray();
             global.deliveryViewModel.loadDeliveries(pageData.deliveries);
 
-          // console.log("a",r);
+      //     // console.log("a",r);
 
 
-      }, error => {
-          console.log("OPEN DB ERROR", error);
-      });
+      // }, error => {
+      //     console.log("OPEN DB ERROR", error);
+      // });
     } else {
       console.log(newpage.navigationContext.delivery.totalWeight);
       var newDelivery = newpage.navigationContext.delivery;
@@ -409,14 +435,16 @@ exports.navigatedTo = function(args) {
 
 }
 exports.logout = function(args) {
-console.log("logging out");
-global.user.logout(pageData.user).catch(function(error) {
+dialogsModule.confirm("Do you want to Logout?").then(function (result) {
+if (result) {
+  global.user.logout(pageData.user).catch(function(error) {
     console.log(error);
-    dialogsModule.alert({
-        message: "Unfortunately we could not logout",
-        okButtonText: "OK"
-    });
-    return Promise.reject();
+    // dialogsModule.alert({
+    //     message: "Unfortunately we could not logout",
+    //     okButtonText: "OK"
+    // });
+
+    // return Promise.reject();
 })
 .then(function(data) {
 
@@ -427,12 +455,28 @@ frames.topmost().navigate({
 });
 });
 }
+});
+
+}
 
 exports.listViewItemTap = function(args) {
   var index = args.index;
   console.log(index);
   var delivery = pageData.deliveries.getItem(index);
-  pageData.deliveries.splice(index,1);
+  
+  if(global.user.userData.role.name !== "ADMIN") {
+    dialogsModule.prompt({
+    title: "Dispatch",
+    message: "View",
+    cancelButtonText: "Cancel",
+    okButtonText: "Confirm",
+
+    inputType: dialogsModule.inputType.text
+
+  }).then(function(r){
+
+  }); 
+  } else {
   frames.topmost().navigate({
         moduleName: "delivery-page/delivery-page",
         context: {update: "edit delivery",
@@ -440,4 +484,5 @@ exports.listViewItemTap = function(args) {
                   deliveryViewModel: global.deliveryViewModel
       }
 });
+  }
 }

@@ -1,6 +1,6 @@
 <Page loaded="loaded" navigatedTo="navigatedTo" xmlns="http://schemas.nativescript.org/tns.xsd"  style="background-color: gray;">
   <Page.actionBar>
-  <ActionBar title="Deliveries" >
+  <ActionBar title="Deliveries" class="action-bar-positive">
         <ActionItem text="{{ user.userName }}" tap="showUserSettings"/>
         <ActionItem text="Logout" tap="logout"/>
 
@@ -10,8 +10,8 @@
   </Page.actionBar>
     <GridLayout rows="auto,auto,auto,3*">
         <GridLayout row="0" columns="*,*">
-        <Button col="0" text="Add New Delivery" tap="add"/>
-        <Button col="1" text="Settings" tap="showSettings"/>
+        <Button col="0" colspan="2" text="Add New Delivery" class="button button-balanced" tap="add"/>
+        <!--<Button col="1" text="Settings" tap="showSettings"/>-->
 
         </GridLayout>
         <GridLayout row="3"  rows="auto,*" columns="*,*,*,2*,*,*,auto" cssClass="list">
@@ -27,10 +27,11 @@
               <ListView.itemTemplate>
 
 
-                  <GridLayout rows="auto,auto,auto" columns="*,auto,auto,auto">
+                  <GridLayout rows="auto,auto,auto,auto" columns="*,auto,auto,auto">
                   <Label text="{{ deliveryCustomerName }}" row="0" col="0" horizontalAlignment="left" verticalAlignment="center" fontSize="20px"/>
                   <Label text="{{ deliveryItem }}" row="1"  col="0" cssClass="it" horizontalAlignment="left" verticalAlignment="center" />
                   <Label text="{{ deliveryDate }}" col="0" row="2" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
+                  <Label text="{{ soNumber }}" col="0" row="3" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
 
                   <!-- <Label text="{{ deliveryID }}"  row="1" col="0" horizontalAlignment="center" verticalAlignment="center"/> -->
                   <!-- <Label text="{{ deliveryCreatedBy }}" col="4" row="1" horizontalAlignment="center" verticalAlignment="center"/> -->
@@ -45,10 +46,10 @@
 
         <GridLayout row="2" columns="*,*,*,*">
 
-        <Button col="0" text="Quality" tap="showSettingsPage"/>
-        <Button col="1" text="Size" tap="showSettingsPage"/>
-        <Button col="2" text="Item" tap="showSettingsPage"/>
-        <Button col="3" text="Customer" tap="showSettingsPage"/>
+        <Button col="0" class="button button-dark" text="Quality" tap="showSettingsPage"/>
+        <Button col="1" class="button button-dark" text="Size" tap="showSettingsPage"/>
+        <Button col="2" class="button button-dark" text="Item" tap="showSettingsPage"/>
+        <Button col="3" class="button button-dark" text="Customer" tap="showSettingsPage"/>
 
         </GridLayout>
     </GridLayout>

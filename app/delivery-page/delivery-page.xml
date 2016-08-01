@@ -1,6 +1,6 @@
 <Page navigatingFrom="onNavigatingFrom" navigatedTo="navigatedTo" loaded="loaded" style="background-color: gray;" xmlns:dd="nativescript-drop-down">
   <Page.actionBar>
-    <ActionBar title="{{ name }}">
+    <ActionBar title="{{ name }}" class="action-bar-positive">
       <ActionItem text="Print" tap="print"/>
       <ActionItem text="Cancel" tap="goBack"/>
 
@@ -11,11 +11,13 @@
 <GridLayout rows="auto,auto,auto,2*,*" id="gridView">
 <StackLayout row="0" orientation="vertical" cssClass="div" id="stack">
   <!-- <TextField text="{{ customerName }}" id="cName" hint="Customer Name"  autocorrect="false" autocapitalizationType="none" /> -->
-  <GridLayout columns="*,2*"><Label text="Customer Name: " col="0"/> <Placeholder creatingView="creatingView" col="1"/>
+  <GridLayout columns="*,2*"><Label class="input-label tns-ionicon-large" text="Customer Name: " col="0"/> <Placeholder creatingView="creatingView" col="1"/>
   </GridLayout>
-  <GridLayout columns="*,2*"><Label text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
+   <GridLayout columns="*,2*"><Label class="input-label tns-ionicon-large" text="SO Number: " col="0"/> <TextField text="{{ soNumber }}"  col="1"/>
   </GridLayout>
-  <GridLayout columns="*,2*"><Label text="Date: " col="0"/>  <Label text="{{ deliveryDate }}" col="1"/>
+  <GridLayout columns="*,2*"><Label class="input-label tns-ionicon-large" text="Item Type: " col="0"/>  <dd:DropDown items="{{ itemTypes }}" selectedIndex="{{ itemIndex }}"  col="1"/>
+  </GridLayout>
+  <GridLayout columns="*,2*"><Label  class="input-label tns-ionicon-large" text="Date: " col="0"/>  <Label text="{{ deliveryDate }}" col="1"/>
   </GridLayout>
 
 </StackLayout>
@@ -25,7 +27,7 @@
 </StackLayout>
 <GridLayout cssClass="divB" columns="3*,*" row="1" orientation="horizontal">
 <Label col="0"  text="Lots" verticalAlignment="center" horizontalAlignment="Left"/>
-<button text="Add Lot" tap="add" col="1"/>
+<button text="Add Lot" class="action-bar-assertive" tap="add" col="1"/>
 </GridLayout>
 
 <GridLayout row="2" columns="*,*,*,*,auto">

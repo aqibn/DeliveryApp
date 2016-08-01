@@ -10,11 +10,11 @@ function createViewModel(database) {
 
 
   delivery.deleteDelivery = function(sDelivery) {
-    database.execSQL("delete from items where deliveryid="+sDelivery.deliveryID).then(id => {
+    database.execSQL("delete from items where deliveryid=?",[sDelivery.deliveryID]).then(id => {
       console.log("Item Delete RESULT", id);
-      database.execSQL("delete from lots where deliveryid="+sDelivery.deliveryID).then(id => {
+      database.execSQL("delete from lots where deliveryid=?",[sDelivery.deliveryID]).then(id => {
         console.log("lot Delete RESULT", id);
-        database.execSQL("delete from deliveries where deliveryid="+sDelivery.deliveryID).then(id => {
+        database.execSQL("delete from deliveries where deliveryid=?",[sDelivery.deliveryID]).then(id => {
           console.log("delivery Delete RESULT", id);
 
         }, error => {
@@ -35,10 +35,10 @@ function createViewModel(database) {
 
   delivery.saveLot = function(sDelivery) {
     console.log("Deliverid",sDelivery.deliveryID);
-    database.execSQL("delete from lots where deliveryid='"+sDelivery.deliveryID+"'").then(id => {
+    database.execSQL("delete from lots where deliveryid=?",[sDelivery.deliveryID]).then(id => {
       sDelivery.lots.forEach(function(lot, index, a) {
         database.execSQL("INSERT INTO lots (deliveryid, lotid, size, sizeID, quality, qualityID, totalWeight) VALUES(?,?,?,?,?,?,?)",[sDelivery.deliveryID, (index+1), lot.lotSize,lot.sizeID,lot.lotQuality,lot.qualityID, lot.lotTotalWeight]).then(id => {
-          // console.log("LOT Update RESULT", id);
+          console.log("LOT Update RESULT", id);
           delivery.saveItems(sDelivery,(index+1));
         }, error => {
           console.log("LOT Update ERROR", error);
@@ -60,7 +60,7 @@ function createViewModel(database) {
       sDelivery.lots.getItem(lotid-1).items.forEach(function(item,index,a) {
         // console.log("itemid",index);
         database.execSQL("INSERT INTO items (deliveryid, lotid, itemid, weight) VALUES(?,?,?,?)",[sDelivery.deliveryID, lotid, (index+1),item.weight]).then(id => {
-          // console.log("ITEM Update RESULT", id);
+          console.log("ITEM Update RESULT", id);
         }, error => {
           console.log("ITEM Update ERROR", error);
 
@@ -80,30 +80,23 @@ function createViewModel(database) {
     if (sDelivery.deliveryID == 0) {
       console.log("New Delivery");
       database.execSQL("INSERT into deliveries (customername, customerID," +
-      "createdby, date, itemtype) VALUES(?,?,?,?,?)",
-      [sDelivery.customerName, sDelivery.customerID, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType]).then(id => {
+      "createdby, date, itemtype, soNumber) VALUES(?,?,?,?,?,?)",
+      [sDelivery.customerName, sDelivery.customerID, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType, sDelivery.soNumber]).then(id => {
         // console.log("Update INSERT RESULT", id);
         sDelivery.deliveryID = id;
         delivery.saveLot(sDelivery);
-        // deliveries.push({
-        //   deliveryID: sDelivery.deliveryID,
-        //   deliveryTotalWeight: sDelivery.totalWeight,
-        //   deliveryCustomerName: sDelivery.customerName,
-        //   deliveryCreatedBy: sDelivery.createdBy,
-        //   deliveryDate: sDelivery.deliveryDate,
-        //   deliveryLots: sDelivery.lots,
-        //   deliveryItem: sDelivery.itemType
-        // });
+        
       }, error => {
         console.log("Update ERROR", error);
       });
 
     } else {
       database.execSQL("REPLACE into deliveries (deliveryid,customername, customerID," +
-      "createdby, date,itemtype, itemID) VALUES(?,?,?,?,?,?,?)",
-      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.customerID, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType,sDelivery.itemID]).then(id => {
+      "createdby, date,itemtype, itemID, soNumber) VALUES(?,?,?,?,?,?,?,?)",
+      [sDelivery.deliveryID,sDelivery.customerName, sDelivery.customerID, sDelivery.createdBy,sDelivery.deliveryDate,sDelivery.itemType,sDelivery.itemID, sDelivery.soNumber]).then(id => {
         // console.log("Update REPLACE RESULT", id);
         delivery.saveLot(sDelivery);
+        // toastSuccessAdded.show();
         // deliveries.push({
         //   deliveryID: sDelivery.deliveryID,
         //   deliveryTotalWeight: sDelivery.totalWeight,
@@ -115,6 +108,7 @@ function createViewModel(database) {
         // });
       }, error => {
         console.log("Update ERROR", error);
+        toastAddFailed.show();
       });
 
     }
@@ -199,7 +193,7 @@ function createViewModel(database) {
   }
 
   delivery.deleteItemType = function(itemType) {
-    database.execSQL("delete from itemtypes where type=?",[itemType]).then(id => {
+    database.execSQL("delete from itemtypes where name=?",[itemType]).then(id => {
       console.log("Delete Success",id);
       toastSuccessDeleted.show();
     }, error => {
@@ -208,7 +202,7 @@ function createViewModel(database) {
     });
   }
   delivery.deleteSize = function(sizeType) {
-    database.execSQL("delete from sizetypes where type=?",[sizeType]).then(id => {
+    database.execSQL("delete from sizetypes where name=?",[sizeType]).then(id => {
       console.log("Delete Success",id);
       toastSuccessDeleted.show();
     }, error => {
@@ -261,12 +255,13 @@ function createViewModel(database) {
 
   delivery.loadDeliveries = function(deliveries) {
     database.each("SELECT * FROM deliveries",function(err,row) {
-      // console.log("RESULT", JSON.stringify(row));
+    //  console.log("RESULT", JSON.stringify(row));
       var new_delivery = {
         deliveryID: row.deliveryid,
         deliveryTotalWeight: 0,
         deliveryCustomerName: row.customername,
         customerID: row.customerID,
+        soNumber: row.soNumber,
         deliveryCreatedBy: row.createdby,
         deliveryDate: row.date,
         deliveryItem: row.itemtype,
@@ -274,7 +269,7 @@ function createViewModel(database) {
       };
       new_delivery.deliveryLots = new ObservableArray();
       database.each("SELECT * FROM lots where deliveryid=?",[row.deliveryid],function(err,lot) {
-        console.log("RESULT", JSON.stringify(lot));
+        // console.log("RESULT", JSON.stringify(lot));
 
         var new_lot = {
           lotID: lot.lotid,
