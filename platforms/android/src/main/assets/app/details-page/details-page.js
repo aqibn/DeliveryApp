@@ -234,8 +234,21 @@ exports.addNew = function(args) {
   }
   lot.quality = nativeViewQuality.getText();
   lot.size = nativeViewSize.getText();
-
-
+  console.log("Quality: ",lot.quality);
+  if (lot.quality == "") {
+    dialogsModule.alert({
+        message: "Please set the quality",
+        okButtonText: "OK"
+    });
+    return;
+  }
+  if (lot.size == "") {
+    dialogsModule.alert({
+        message: "Please set the size",
+        okButtonText: "OK"
+    });
+    return;
+  }
     var qualityID = "";
   pageData.listitemsquality.forEach(function(data){
      console.log(" ID \n\n",data._id);
@@ -285,6 +298,22 @@ exports.saveBack = function(args) {
   lot.quality = nativeViewQuality.getText();
   lot.size = nativeViewSize.getText();
 
+
+   if (lot.quality == "") {
+    dialogsModule.alert({
+        message: "Please set the quality",
+        okButtonText: "OK"
+    });
+    return;
+  }
+  if (lot.size == "") {
+    dialogsModule.alert({
+        message: "Please set the size",
+        okButtonText: "OK"
+    });
+    return;
+  }
+  
   var qualityID = "";
   pageData.listitemsquality.forEach(function(data){
      console.log(" ID \n\n",data._id);
@@ -305,6 +334,23 @@ exports.saveBack = function(args) {
     }
   }); 
 
+
+   if (qualityID == "") {
+    dialogsModule.alert({
+        message: "Invalid Quality",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+   if (sizeID == "") {
+    dialogsModule.alert({
+        message: "Invalid Size",
+        okButtonText: "OK"
+    });
+    return;
+  }
+  
   lot.qualityID = qualityID;
   lot.sizeID = sizeID;
   lot.totalWeight = pageData.totalWeight;

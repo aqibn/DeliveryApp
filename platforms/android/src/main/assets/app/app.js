@@ -4,7 +4,7 @@ var OnlineApiModel = require("./view-models/online-delivery-view-model");
 
 application.cssFile = "./app.css";
 global.user = new UserViewModel({
-  email: "admin@app-delivery.com",
+  email: "@app-delivery.com",
   password: "Abcd1234"
 });
 

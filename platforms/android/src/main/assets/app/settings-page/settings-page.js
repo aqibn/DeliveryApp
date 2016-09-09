@@ -89,11 +89,14 @@ exports.addItem = function(args) {
          
    } else if (pageData.settingType === "Customer") {
             console.log("Custoemr: ", r.text);
-            global.apiModel.createCustomer(r.text).catch(handleError).then(function(customer) {
-            global.deliveryViewModel.addCustomer(customer); 
+         
+            global.apiModel.createCustomer(r.text).catch(handleError).then(function(cust) {
+            global.deliveryViewModel.addCustomer(cust); 
             loadItems();
            toastSuccessAdded.show()
          });  
+              
+              
           } else if (pageData.settingType === "Item") {
         global.apiModel.createItem(r.text).catch(handleError).then(function(item) {
             global.deliveryViewModel.addItemType(item); 

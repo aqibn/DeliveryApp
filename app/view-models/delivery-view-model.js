@@ -38,7 +38,7 @@ function createViewModel(database) {
     database.execSQL("delete from lots where deliveryid=?",[sDelivery.deliveryID]).then(id => {
       sDelivery.lots.forEach(function(lot, index, a) {
         database.execSQL("INSERT INTO lots (deliveryid, lotid, size, sizeID, quality, qualityID, totalWeight) VALUES(?,?,?,?,?,?,?)",[sDelivery.deliveryID, (index+1), lot.lotSize,lot.sizeID,lot.lotQuality,lot.qualityID, lot.lotTotalWeight]).then(id => {
-          console.log("LOT Update RESULT", id);
+          // console.log("LOT Update RESULT", id);
           delivery.saveItems(sDelivery,(index+1));
         }, error => {
           console.log("LOT Update ERROR", error);
@@ -60,7 +60,7 @@ function createViewModel(database) {
       sDelivery.lots.getItem(lotid-1).items.forEach(function(item,index,a) {
         // console.log("itemid",index);
         database.execSQL("INSERT INTO items (deliveryid, lotid, itemid, weight) VALUES(?,?,?,?)",[sDelivery.deliveryID, lotid, (index+1),item.weight]).then(id => {
-          console.log("ITEM Update RESULT", id);
+          // console.log("ITEM Update RESULT", id);
         }, error => {
           console.log("ITEM Update ERROR", error);
 
@@ -213,7 +213,7 @@ function createViewModel(database) {
 
   delivery.search = function(table,attribute,param) {
     database.get("SELECT * FROM "+table+"where "+attribute+"=?",[param], function(err,row){
-      console.log("RESULT", JSON.stringify(row));
+      // console.log("RESULT", JSON.stringify(row));
       return row;
     });
   }
@@ -295,10 +295,11 @@ function createViewModel(database) {
           new_lot.items.push(new_item);
 
         });
-        new_delivery.deliveryTotalWeight += Number(new_lot.lotTotalWeight.toFixed(2));
+        new_delivery.deliveryTotalWeight += new_lot.lotTotalWeight;
+        new_lot.lotTotalWeight = Number(new_lot.lotTotalWeight.toFixed(2));
         new_delivery.deliveryLots.push(new_lot);
       });
-
+      new_delivery.deliveryTotalWeight = Number(new_delivery.deliveryTotalWeight.toFixed(2));
       deliveries.push(new_delivery);
     });
 

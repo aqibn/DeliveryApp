@@ -141,15 +141,14 @@ viewModel.createQuality = function(qualityName) {
             };
             
             
-         viewModel.createCustomer = function(name) {
+         viewModel.createCustomer = function(customer) {
             return fetchModule.fetch(config.apiUrl + "customers", {
                   method: "POST",
                   body: JSON.stringify({
-                      firstName: name,
+                      firstName: customer,
                       lastName: "test",
-                      email: name+"@xyz.com",
                       address: "test",
-                      primaryContact: "603-198-9806"
+                      primaryContact: "21312321"
 
                   }),
                   headers: {
@@ -185,7 +184,7 @@ viewModel.createQuality = function(qualityName) {
             }; 
 
              viewModel.getDispatches = function(page,limit) {
-              return fetchModule.fetch(config.apiUrl + "dispatches?page="+page+"&limit="+limit, {
+              return fetchModule.fetch(config.apiUrl + "dispatches?limit="+limit+"&page="+page, {
                     method: "GET",
                     headers: {
                         "authorization": "Bearer "+global.user.userData.accessToken

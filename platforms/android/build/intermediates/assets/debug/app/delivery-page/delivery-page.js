@@ -36,7 +36,9 @@ var pageData = new Observable({
     customerIndex:0,
     itemTypes: new ObservableArray(),
     itemIndex: 0,
-    soNumber: 0
+    soNumber: 0,
+    cID: "",
+    itemID: ""
 });
 //
 
@@ -160,6 +162,8 @@ exports.navigatedTo = function(args) {
     pageData.createdBy = "";
     pageData.totalWeight = 0;
     pageData.soNumber = 0;
+    pageData.cID = "";
+    pageData.itemID = "";
     pageData.deliveryDate = "";
     var delivery = newpage.navigationContext.delivery;
     pageData.customerName = delivery.deliveryCustomerName;
@@ -176,7 +180,9 @@ exports.navigatedTo = function(args) {
     });
   pageData.itemIndex = pageData.itemTypes.indexOf(delivery.deliveryItem);
   // pageData.customerIndex = pageData.customers.indexOf(delivery.CustomernName);
-
+  if (newpage.navigationContext.print !== undefined) {
+      exports.print("worker");
+  }
   } else if (newpage.navigationContext.update === "new delivery") {
     console.log("new delivery");
     // pageData.deliveryDate = new Date();
@@ -264,35 +270,61 @@ exports.goBack = function(args) {
 var saveDelivery = function(online) {
   pageData.deliveryDate = moment().toISOString().toString();
   pageData.customerName = nativeView.getText();
-  var cID = "";
-  pageData.customers.forEach(function(data){
-     console.log(" ID \n\n",data._id);
-     console.log("CNAME: ",data.name);
-    console.log("PNAME: ",pageData.customerName);
 
-    if(data.name == pageData.customerName) {
-      console.log("FOUND ID \n\n",data._id);
-      cID = data._id;
-    }
-  });
-  var itemID = "";
-   pageData.itemTypesObject.forEach(function(data){
-     console.log(" ID \n\n",data._id);
-     console.log("CNAME: ",data.name);
-    var item = pageData.itemTypes.getItem(pageData.itemIndex);
-    if(data.name == item) {
-      console.log("FOUND ID \n\n",data._id);
-      itemID = data._id;
-    }
-  });
-//   console.log("customerName:",pageData.customerName);
-//   console.log("data: ",pageData.deliveryDate );
+  if (pageData.customerName == "") {
+    dialogsModule.alert({
+        message: "Please enter Customer Name",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+
+//   pageData.cID = "";
+//   pageData.customers.forEach(function(data){
+//      console.log(" ID \n\n",data._id);
+//      console.log("CNAME: ",data.name);
+//     console.log("PNAME: ",pageData.customerName);
+
+//     if(data.name == pageData.customerName) {
+//       console.log("FOUND ID \n\n",data._id);
+//       pageData.cID = data._id;
+//     }
+//   });
+//   pageData.itemID = "";
+//    pageData.itemTypesObject.forEach(function(data){
+//      console.log(" ID \n\n",data._id);
+//      console.log("CNAME: ",data.name);
+//     var item = pageData.itemTypes.getItem(pageData.itemIndex);
+//     if(data.name == item) {
+//       console.log("FOUND ID \n\n",data._id);
+//       pageData.itemID = data._id;
+//     }
+//   });
+// //   console.log("customerName:",pageData.customerName);
+// //   console.log("data: ",pageData.deliveryDate );
+//     console.log("CID: ", cID);
+//     if (cID == "") {
+//     dialogsModule.alert({
+//         message: "Invalid Customer Name",
+//         okButtonText: "OK"
+//     });
+//     return;
+//   }
+
+//    if (itemID == "") {
+//     dialogsModule.alert({
+//         message: "Invalid Item Name",
+//         okButtonText: "OK"
+//     });
+//     return;
+//   }
   var delivery = {
         deliveryID : pageData.deliveryID,
         lots: pageData.lots,
         customerName: pageData.customerName,
-        customerID: cID,
-        itemID: itemID,
+        customerID: pageData.cID,
+        itemID: pageData.itemID,
         soNumber: pageData.soNumber,
         createdBy: pageData.createdBy,
         totalWeight: pageData.totalWeight,
@@ -311,7 +343,7 @@ if (online) {
 dispatch.items = [];
 for (var i=0; i<delivery.lots.length; i++) {
   var l = delivery.lots.getItem(i); 
-  console.log(JSON.stringify(l.qualityID));
+  // console.log(JSON.stringify(l.qualityID));
 
   var lot = {
     quality: l.qualityID,
@@ -344,23 +376,72 @@ exports.saveDelivery = function(args) {
     });
     return;
   }
-  // pageData.deliveryDate = new Date();
-//   pageData.deliveryDate = moment().format('MM-DD-YYYY, h a');
-//   pageData.customerName = nativeView.getText();
-// //   console.log("customerName:",pageData.customerName);
-// //   console.log("data: ",pageData.deliveryDate );
-//   var delivery = {
-//         deliveryID : pageData.deliveryID,
-//         lots: pageData.lots,
-//         customerName: pageData.customerName,
-//         createdBy: pageData.createdBy,
-//         totalWeight: pageData.totalWeight,
-//         deliveryDate: pageData.deliveryDate,
-//         itemType: pageData.itemTypes.getItem(pageData.itemIndex)
-//     };
-    
-//    global.deliveryViewModel.saveDelivery(delivery);
-  saveDelivery(true);
+
+  if (pageData.soNumber == 0) {
+    dialogsModule.alert({
+        message: "Please enter soNumber",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+  pageData.customerName = nativeView.getText();
+
+  if (pageData.customerName == "") {
+    dialogsModule.alert({
+        message: "Please enter Customer Name",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+
+
+  pageData.cID = "";
+  pageData.customers.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    console.log("PNAME: ",pageData.customerName);
+
+    if(data.name == pageData.customerName) {
+      console.log("FOUND ID \n\n",data._id);
+      pageData.cID = data._id;
+    }
+  });
+  pageData.itemID = "";
+   pageData.itemTypesObject.forEach(function(data){
+     console.log(" ID \n\n",data._id);
+     console.log("CNAME: ",data.name);
+    var item = pageData.itemTypes.getItem(pageData.itemIndex);
+    if(data.name == item) {
+      console.log("FOUND ID \n\n",data._id);
+      pageData.itemID = data._id;
+    }
+  });
+//   console.log("customerName:",pageData.customerName);
+//   console.log("data: ",pageData.deliveryDate );
+    // console.log("CID: ", cID);
+    if (pageData.cID == "") {
+    dialogsModule.alert({
+        message: "Invalid Customer Name",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+   if (pageData.itemID == "") {
+    dialogsModule.alert({
+        message: "Invalid Item Name",
+        okButtonText: "OK"
+    });
+    return;
+  }
+
+dialogsModule.confirm("Confirm this Dispatch?").then(function (result) {
+  if (!result) {
+  return;
+  } else {
+   saveDelivery(true);
 
  
   frames.topmost().navigate( {
@@ -379,6 +460,10 @@ exports.saveDelivery = function(args) {
       }
     }
   });
+  }
+});
+
+  
 }
 
 
@@ -415,9 +500,10 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
 ).then(function(result){
 
   var invoiceNum = pageData.soNumber;
-  var deliveryDate = pageData.deliveryDate;
-  var printDate = moment().format('MM-DD-YYYY, h a');
+  var deliveryDate = moment(pageData.deliveryDate).format('DD-MM-YYYY, h a');
+  var printDate = moment().format('DD-MM-YYYY, h a');
   var company = "Customer";
+  var createdBy = global.user.userData.userName;
   var customerName = pageData.customerName;
   var itemType = pageData.itemTypes.getItem(pageData.itemIndex);
   var dispatchItems = "";
@@ -428,7 +514,7 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
   for (var count=0; count<pageData.lots.length;count++) {
     var data = pageData.lots.getItem(count);
     console.log(data);
-    var con = '<tr class="item"> <td> '+data.lotQuality+'</td><td> '+data.lotSize+'</td> <td align="right"> '+data.lotNumItems+'</td><td align="right">'+data.lotTotalWeight+'</td> </tr>';
+    var con = '<tr  class="item"> <td> '+data.lotQuality+'</td><td> '+data.lotSize+'</td> <td align="right"> '+data.lotNumItems+'</td><td align="right">'+data.lotTotalWeight+'</td> </tr>';
     // dispatchItems.concat(con);
     var items = "";
     if (result === "Details") {
@@ -444,13 +530,17 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
 
   }
   console.log("dispatch items", dispatchItems);
-  var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:20px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } </style> '
-  +'</head> <body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 style="width:100%; max-width:300px;">Pak Plast</h2><h4>PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4></td> <td> Invoice #:'+invoiceNum
-  +'<br> Printed:'+ printDate+'<br> Due: '+deliveryDate+'</td> </tr> </table> </td> </tr> <tr class="information"> <td colspan="4"> <table> <tr> <td> Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore </td> <td> '+company
-  +'<br> '+customerName+'<br></td> </tr> </table> </td> </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> '+itemType
-  +'</td> <td >  </td> </tr> <tr class="heading"> <td colspan="4"align="center"> Dispatch Summary </td>  </tr><tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
-  +dispatchItems+'<tr class="item"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table> </div> </body> </html>';
+  var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; } .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; margin: 2px; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:5px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 0.2em; padding: 0.2em 0; }</style> '
+  +'</head> <header><h1>Invoice</h1></header><body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 align="center" style="width:100%;">Pak Plast</h2><h4 align="center">PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4><h5 align="center" >Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore</h5></td> </tr> <tr><td><h2>'+customerName+'</h2><td></tr><tr><th>Invoice #: '+invoiceNum+'</th></tr>'+
+  '<tr><th>Delivery: '+deliveryDate+'</th></tr><tr><th>Printed: '+printDate+'</th></tr><tr><th>Created By: '+createdBy+'</th></tr></table> </td> </tr> <tr class="information"> <td colspan="4">  </td> </tr><tr class="heading"> <td colspan="4"align="center"> <h4>Dispatch Summary</h4> </td>  </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> <h3>'+itemType
+  +'</h3></td> <td >  </td> </tr> <tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
+  +dispatchItems+'<tr class="item" style="font-weight:bold;"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table><h4 align="center"><span >Additional Notes</span></h1> <p align="center">Any difference/discrepancy in this dispatch is to be notified within 3 days of receiving goods.</p><p align="center">Goods responsibility outside the premises of Novapack Pvt. Ltd is entirely on buyer.</p></div> </body> </html>';
   // console.log(invoiceHtml);
+  var goToMain = false;
+  if (args === "worker") {
+    console.log("print worker");
+    goToMain = true;
+  }
   var documents = fs.knownFolders.currentApp();
   var file = documents.getFile("invoice.html");
   file.writeText(invoiceHtml)
@@ -460,7 +550,10 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
           pageData.itemType = pageData.itemTypes.getItem(pageData.itemIndex);
 
           frames.topmost().navigate({
-                moduleName: "delivery-page/invoice/invoice-page"
+                moduleName: "delivery-page/invoice/invoice-page",
+                context: {
+                  goToMain: goToMain
+                }
 
               });
       }, function (error) {

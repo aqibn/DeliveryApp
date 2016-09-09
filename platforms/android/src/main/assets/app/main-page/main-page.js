@@ -387,15 +387,8 @@ exports.navigatedTo = function(args) {
 
 
       if (newpage.navigationContext.status === "login") {
-        pageData.user = newpage.navigationContext.user;
-      // if (!Sqlite.exists("populated.db")) {
-      //     console.log("ads");
-      //     Sqlite.copyDatabase("populated.db");
-      // }
-      // (new Sqlite("populated.db")).then(db => {
-      //     // database = db;
-      //     db.resultType(Sqlite.RESULTSASOBJECT);
-      //     global.deliveryViewModel = createViewModel(db);
+        pageData.user = global.user.userData;
+      
 
 
             pageData.deliveries = new ObservableArray();
@@ -465,17 +458,19 @@ exports.listViewItemTap = function(args) {
   var delivery = pageData.deliveries.getItem(index);
   
   if(global.user.userData.role.name !== "ADMIN") {
-    dialogsModule.prompt({
-    title: "Dispatch",
-    message: "View",
-    cancelButtonText: "Cancel",
-    okButtonText: "Confirm",
-
-    inputType: dialogsModule.inputType.text
-
-  }).then(function(r){
-
-  }); 
+    dialogsModule.action(delivery.deliveryCustomerName + "-" + delivery.deliveryItem, "Cancel", ["View"])
+  .then(function(result){
+   if (result === "View") {
+      frames.topmost().navigate({
+        moduleName: "delivery-page/delivery-page",
+        context: {update: "edit delivery",
+                  print: "Summary",
+                  delivery: delivery,
+                  deliveryViewModel: global.deliveryViewModel
+      }
+}); 
+   } 
+  });
   } else {
   frames.topmost().navigate({
         moduleName: "delivery-page/delivery-page",

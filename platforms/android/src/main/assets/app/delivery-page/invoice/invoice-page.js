@@ -4,11 +4,15 @@ var socialShare = require("nativescript-social-share");
 var app = require("application");
 var fs = require("file-system");
 var frames = require("ui/frame");
+var Observable = require("data/observable").Observable
 
 var webView;
 var page;
 var stackLayout;
 var img;
+var pageData = new Observable({
+toMain: false
+});
 exports.webViewLoaded = function(args){
   webView = args.object
 }
@@ -17,13 +21,26 @@ exports.webViewLoaded = function(args){
 
 exports.loaded = function(args) {
 page = args.object;
-// page.bindingContext = source;
+page.bindingContext = pageData;
 }
 
+exports.navigatedTo = function(args) {
+    var newpage = args.object;
+    pageData.toMain = newpage.navigationContext.goToMain;
+    console.log("toMain: ", pageData.toMain);
+}
 exports.back = function(args) {
+      console.log("toMain: ", pageData.toMain);
+
+  if (pageData.toMain == true) {
+     frames.topmost().navigate({
+        moduleName: "main-page/main-page"
+      });
+  } else {
   frames.topmost().navigate({
         moduleName: "delivery-page/delivery-page"
       });
+  }
 }
 exports.stackLoaded = function(args) {
 console.log("Loaded");

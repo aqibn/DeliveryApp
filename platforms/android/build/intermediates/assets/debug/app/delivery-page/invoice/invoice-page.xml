@@ -1,4 +1,4 @@
-<Page loaded="loaded">
+<Page loaded="loaded" navigatedTo="navigatedTo">
   <ActionBar title="Invoice" class="action-bar-positive">
     <ActionItem text="Print" tap="print"/>
     <ActionItem text="Done" tap="back"/>

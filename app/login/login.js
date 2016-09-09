@@ -15,7 +15,23 @@ var pageData = new Observable({
 });
 
 var fetch = function() {
-  global.apiModel.getDispatches(1,10).then(function(disp) {
+  global.apiModel.getDispatches(1,10).catch(function(error) {
+    console.log(JSON.stringify(error));
+    dialogsModule.alert({
+             message: "Unfortunately we could not connect to server.",
+             okButtonText: "OK"
+         });
+          global.user.set("isLoading", false);
+
+    frameModule.topmost().navigate({
+      moduleName: "main-page/main-page",
+      context: {
+        status: "login",
+        user: user
+      }
+               });
+         return Promise.reject();
+  }).then(function(disp) {
       var count = disp.count; 
       console.log("count", count);
        for (var a = 0; a < count; a++) {
@@ -125,6 +141,7 @@ exports.loaded = function(args) {
 
     var user = JSON.parse(stringUser);
     global.user.userData = user;
+    console.log("here");
     fetch();
     
   
@@ -148,12 +165,13 @@ exports.signIn = function() {
      .then(function(data) {
           console.log("Success");
     global.apiModel.getDispatches(1,10).then(function(disp) {
-      var count = disp.count; 
+      var count = disp.dispatches.length; 
+      console.log("Dispatch: \n\n", JSON.stringify(disp));
       console.log("count", count);
        for (var a = 0; a < count; a++) {
 
               var dispatch = disp.dispatches[a];
-              console.log(JSON.stringify(dispatch));
+              // console.log(JSON.stringify(dispatch));
               console.log("SO: ",dispatch.soNumber);
               var name = "";
               var id = "";
@@ -171,7 +189,6 @@ exports.signIn = function() {
                 itemID: dispatch.items[0].item._id,
                 soNumber: dispatch.soNumber
               };
-              console.log("SO: ",dispatch.soNumber);
 
               delivery.lots = new ObservableArray();
 
@@ -193,7 +210,6 @@ exports.signIn = function() {
                 var qualityName = lot.quality.name;
                 var qualityID = lot.quality._id;
                 }
-                              console.log("SO: ",dispatch.soNumber);
 
                 var lotA = {
                   lotSize: sizeName,
