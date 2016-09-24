@@ -114,6 +114,11 @@ exports.creatingViewSize = function(args) {
     // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
     nativeViewSize.setText(pageData.selectedSize);
     nativeViewSize.setAdapter(adapterSize);
+    nativeViewSize.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+      onItemClick: function() {
+        dismissKeyboard();
+      }
+  }));
     args.view = nativeViewSize;
 }
 
@@ -128,6 +133,11 @@ exports.creatingViewQuality = function(args) {
     // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
     nativeViewQuality.setText(pageData.selectedQuality);
     nativeViewQuality.setAdapter(adapterQuality);
+     nativeViewQuality.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+      onItemClick: function() {
+        dismissKeyboard();
+      }
+  }));
     args.view = nativeViewQuality;
 }
 // function backEventa(args) {

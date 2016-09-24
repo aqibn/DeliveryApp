@@ -128,6 +128,11 @@ exports.creatingView = function(args) {
     // nativeView.setEllipsize(android.text.TextUtils.TruncateAt.END);
     nativeView.setText(pageData.customerName);
     nativeView.setAdapter(adapter);
+    nativeView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener({
+      onItemClick: function() {
+        dismissKeyboard();
+      }
+  }));
     args.view = nativeView;
 }
 
