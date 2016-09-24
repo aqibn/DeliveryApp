@@ -32,12 +32,13 @@ var fetch = function() {
                });
          return Promise.reject();
   }).then(function(disp) {
-      var count = disp.count; 
+var count = disp.dispatches.length; 
+      console.log("Dispatch: \n\n", JSON.stringify(disp));
       console.log("count", count);
        for (var a = 0; a < count; a++) {
 
               var dispatch = disp.dispatches[a];
-              console.log(JSON.stringify(dispatch));
+              // console.log(JSON.stringify(dispatch));
               console.log("SO: ",dispatch.soNumber);
               var name = "";
               var id = "";
@@ -55,7 +56,6 @@ var fetch = function() {
                 itemID: dispatch.items[0].item._id,
                 soNumber: dispatch.soNumber
               };
-              console.log("SO: ",dispatch.soNumber);
 
               delivery.lots = new ObservableArray();
 
@@ -77,7 +77,6 @@ var fetch = function() {
                 var qualityName = lot.quality.name;
                 var qualityID = lot.quality._id;
                 }
-                              console.log("SO: ",dispatch.soNumber);
 
                 var lotA = {
                   lotSize: sizeName,
@@ -95,7 +94,8 @@ var fetch = function() {
 
 
               global.deliveryViewModel.saveDelivery(delivery);
-  }
+              
+          } 
 
   }).then(function(){
    global.user.set("isLoading", false);

@@ -26,6 +26,7 @@ page.bindingContext = pageData;
 
 exports.navigatedTo = function(args) {
     var newpage = args.object;
+    console.log("navigatedto");
     pageData.toMain = newpage.navigationContext.goToMain;
     console.log("toMain: ", pageData.toMain);
 }
@@ -45,20 +46,14 @@ exports.back = function(args) {
 exports.stackLoaded = function(args) {
 console.log("Loaded");
 stackLayout = args.object;
+print();
 }
 
 exports.final = function(args) {
 }
 
-exports.print = function(args){
 
-  // img = new image.Image();
-  // var imageSource = plugin.getImage(webView);
-  // img.imageSource = imageSource;
-  // console.log(img);
-  // // stackLayout.addChild(img);
-  // //
-  // socialShare.shareImage(imageSource);
+var print = function() {
     var context = android.content.Context;  
     console.log("Context",context);
     var printManager = app.android.foregroundActivity.getSystemService(context.PRINT_SERVICE);
@@ -70,7 +65,17 @@ exports.print = function(args){
     var jobName = " Document";
     var printJob = printManager.print(jobName, printAdapter, new android.print.PrintAttributes.Builder().build());
 
-    // Save the job object for later status checking
-    // mPrintJobs.add(printJob);
+}
+
+exports.print = function(args){
+
+  // img = new image.Image();
+  // var imageSource = plugin.getImage(webView);
+  // img.imageSource = imageSource;
+  // console.log(img);
+  // // stackLayout.addChild(img);
+  // //
+  // socialShare.shareImage(imageSource);
+    print();
  
 }

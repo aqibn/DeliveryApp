@@ -21,7 +21,7 @@ var adapter;
 var list1;
 var deliveryViewModel;
 var mongoid = require('mongoid-js');
-           
+var gestures = require("ui/gestures");
 
 var pageData = new Observable({
     lots: new ObservableArray(),
@@ -75,14 +75,25 @@ exports.loaded = function(args) {
           console.log(data);
 
         });
-
+        
         if (application.android) {
             application.android.on(application.AndroidApplication.activityBackPressedEvent, backEvent);
         }
         page.bindingContext = pageData;
-    //   });
+      var tab1 = viewModule.getViewById(page, "page");
+    tab1.observe(gestures.GestureTypes.tap, function (args) {
+        dismissKeyboard();
+});
 
 };
+function dismissKeyboard(args) {
+  var context = android.content.Context;  
+  var imm = application.android.foregroundActivity.getSystemService(context.INPUT_METHOD_SERVICE);
+  if(imm.isAcceptingText()) { // verify if the soft keyboard is open                      
+        imm.hideSoftInputFromWindow(application.android.foregroundActivity.getCurrentFocus().getWindowToken(), 0);
+    }
+}
+
 
 function backEvent(args) {
   args.cancel = true;
@@ -91,7 +102,7 @@ exports.add = function(args) {
 
   pageData.customerName = nativeView.getText();
   pageData.itemType = pageData.itemTypes.getItem(pageData.itemIndex);
-
+  dismissKeyboard();
   frames.topmost().navigate({
         moduleName: "details-page/details-page",
         context: {status: "newLot",
@@ -531,10 +542,9 @@ dialogsModule.action("Print", "Cancel", ["Summary","Details"]
   }
   console.log("dispatch items", dispatchItems);
   var invoiceHtml = '<!doctype html> <html> <head> <meta charset="utf-8"> <title>A simple, clean, and responsive HTML invoice template</title> <style>  h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; } .invoice-box table{ width:100%; line-height:inherit; text-align:left; } .invoice-box table td{  vertical-align:top; } .invoice-box table tr td:nth-child(2){ text-align:right; } .invoice-box table tr.top table td{  } .invoice-box table tr.top table td.title{ color:#333; } .invoice-box table tr.information table td{} .invoice-box table tr.heading td{ background:#eee; margin: 2px; border-bottom:1px solid #ddd; font-weight:bold; } .invoice-box table tr.details td{ padding-bottom:5px; } .invoice-box table tr.item td{ border-bottom:1px solid #eee; align:center} .invoice-box table tr.item.last td{ border-bottom:none; } .invoice-box table tr.total td:nth-child(4){ border-top:2px solid #eee; font-weight:bold; } @media only screen and (max-width: 600px) { .invoice-box table tr.top table td{ width:100%; display:block; text-align:center; } .invoice-box table tr.information table td{ width:100%; display:block; text-align:center; } } header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 0.2em; padding: 0.2em 0; }</style> '
-  +'</head> <header><h1>Invoice</h1></header><body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 align="center" style="width:100%;">Pak Plast</h2><h4 align="center">PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h4><h5 align="center" >Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore</h5></td> </tr> <tr><td><h2>'+customerName+'</h2><td></tr><tr><th>Invoice #: '+invoiceNum+'</th></tr>'+
-  '<tr><th>Delivery: '+deliveryDate+'</th></tr><tr><th>Printed: '+printDate+'</th></tr><tr><th>Created By: '+createdBy+'</th></tr></table> </td> </tr> <tr class="information"> <td colspan="4">  </td> </tr><tr class="heading"> <td colspan="4"align="center"> <h4>Dispatch Summary</h4> </td>  </tr> <tr class="heading"> <td colspan="4"> Item Type </td>  </tr> <tr class="details"> <td> <h3>'+itemType
-  +'</h3></td> <td >  </td> </tr> <tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
-  +dispatchItems+'<tr class="item" style="font-weight:bold;"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table><h4 align="center"><span >Additional Notes</span></h1> <p align="center">Any difference/discrepancy in this dispatch is to be notified within 3 days of receiving goods.</p><p align="center">Goods responsibility outside the premises of Novapack Pvt. Ltd is entirely on buyer.</p></div> </body> </html>';
+  +'</head> <header><h1>Dispatch</h1></header><body> <div class="invoice-box"> <table cellpadding="0" cellspacing="0"> <tr class="top"> <td colspan="4"> <table> <tr> <td class="title"> <h2 align="center" style="width:100%;">Pak Plast</h2><h5 align="center">PE ROLLS - POLYBAGS - TUNNEL <br> & MULCH FILM</h5><h4 align="center" >Novapack Pvt, Ltd.<br> Sheikupura Road<br> Lahore</h4></td> </tr> <tr><td><h2 style="margin-top:0px; maring-bottom:0px;">'+customerName+'</h2><td></tr><tr><th>S.O #: '+invoiceNum+'</th></tr>'+
+  '<tr><th>Date: '+deliveryDate+'</th></tr><tr><th>Printed: '+printDate+'</th></tr><tr><th>Created By: '+createdBy+'</th></tr></table> </td> </tr> <tr class="information"> <td colspan="4">  </td> </tr><tr class="heading"> <td colspan="4"align="center"> <h4>Dispatch Summary</h4> </td>  </tr> <tr class="heading"> <td colspan="4"> Item Type: '+itemType+' </td>   <tr class="heading"> <td > Quality </td><td > Size </td><td align="right" > Num Items </td><td align="right"> Weight (Kgs) </td>  </tr>'
+  +dispatchItems+'<tr class="item" style="font-weight:bold; border-top: 1px solid #FFF;"> <td colspan="2"></td> <td> Total: '+totalItems+' </td> <td align="right">'+totalWeight+'</td></tr></table><h4 align="center"><span >Additional Notes</span></h1> <p align="center">Any difference/discrepancy in this dispatch is to be notified within 3 days of receiving goods.</p><p align="center">Goods responsibility outside the premises of Novapack Pvt. Ltd is entirely on buyer.</p></div> </body> </html>';
   // console.log(invoiceHtml);
   var goToMain = false;
   if (args === "worker") {

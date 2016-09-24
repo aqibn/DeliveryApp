@@ -30,7 +30,7 @@
                   <GridLayout rows="auto,auto,auto,auto" columns="*,auto,auto,auto">
                   <Label text="{{ deliveryCustomerName }}" row="0" col="0" horizontalAlignment="left" verticalAlignment="center" fontSize="20px"/>
                   <Label text="{{ deliveryItem }}" row="1"  col="0" cssClass="it" horizontalAlignment="left" verticalAlignment="center" />
-                  <Label text="{{ deliveryDate }}" col="0" row="2" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
+                  <Label text="{{ visibleDate }}" col="0" row="2" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
                   <Label text="{{ soNumber }}" col="0" row="3" cssClass="it" horizontalAlignment="left" verticalAlignment="center"/>
 
                   <!-- <Label text="{{ deliveryID }}"  row="1" col="0" horizontalAlignment="center" verticalAlignment="center"/> -->

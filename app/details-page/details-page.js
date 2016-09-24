@@ -9,6 +9,7 @@ var page;
 var application = require('application');
 var Sqlite = require("nativescript-sqlite");
 var createViewModel = require("../view-models/delivery-view-model").createViewModel;
+var gestures = require("ui/gestures");
 
 var dotPressed;
 var lot =  {
@@ -45,7 +46,13 @@ var pageData = new Observable({
 //
 
 // var deliveryViewModel;
-
+function dismissKeyboard(args) {
+  var context = android.content.Context;  
+  var imm = application.android.foregroundActivity.getSystemService(context.INPUT_METHOD_SERVICE);
+  if(imm.isAcceptingText()) { // verify if the soft keyboard is open                      
+        imm.hideSoftInputFromWindow(application.android.foregroundActivity.getCurrentFocus().getWindowToken(), 0);
+    }
+}
 exports.loaded = function(args) {
     page = args.object;
     pageData.lot.items = new ObservableArray();
@@ -73,6 +80,12 @@ exports.loaded = function(args) {
           });
           pageData.listitemsquality.forEach(function(data) {
             listQuality.add(data.name);
+          });
+
+
+          var tab1 = viewModule.getViewById(page, "page");
+              tab1.observe(gestures.GestureTypes.tap, function (args) {
+                  dismissKeyboard();
           });
           page.bindingContext = pageData;
 

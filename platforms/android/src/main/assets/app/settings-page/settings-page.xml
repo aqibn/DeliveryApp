@@ -19,7 +19,9 @@
 
                   <GridLayout rows="auto,auto,auto" columns="*,auto,auto,auto">
                   <Label text="{{ name }}" row="0" col="0" horizontalAlignment="left" verticalAlignment="center" fontSize="20px"/>
-                 
+                  <Label text="{{ address }}" cssClass="it" row="1" col="0" horizontalAlignment="left" verticalAlignment="center" />
+                  <Label text="{{ number }}" cssClass="it" row="2" col="0" horizontalAlignment="left" verticalAlignment="center" />
+
 
                   <Image src="res://ic_menu_delete" col="3" row="1" ios:visibility="collapsed" tap="deleteListItem" />
                 </GridLayout>

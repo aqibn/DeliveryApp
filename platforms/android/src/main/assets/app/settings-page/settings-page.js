@@ -88,13 +88,45 @@ exports.addItem = function(args) {
          });      
          
    } else if (pageData.settingType === "Customer") {
-            console.log("Custoemr: ", r.text);
-         
-            global.apiModel.createCustomer(r.text).catch(handleError).then(function(cust) {
+            var customer = {
+              name: name,
+              address: "",
+              number: ""
+            };
+            dialogsModule.prompt({
+                title: "Add " + pageData.settingType,
+                message: "Enter "+pageData.settingType+" address",
+                cancelButtonText: "Cancel",
+                okButtonText: "Confirm",
+
+                inputType: dialogsModule.inputType.text
+
+              }).then(function(r) {
+            if (r.result && r.text !== "") {       
+            customer.address = r.text; 
+            dialogsModule.prompt({
+                title: "Add " + pageData.settingType,
+                message: "Enter "+pageData.settingType+" number",
+                cancelButtonText: "Cancel",
+                okButtonText: "Confirm",
+
+                inputType: dialogsModule.inputType.text
+
+              }).then(function(r) {
+                      if (r.result && r.text !== "") {       
+                
+             customer.number = r.text;
+
+            global.apiModel.createCustomer(customer).catch(handleError).then(function(cust) {
             global.deliveryViewModel.addCustomer(cust); 
             loadItems();
-           toastSuccessAdded.show()
-         });  
+            toastSuccessAdded.show()
+            });
+           
+                      }
+                     }); 
+            } 
+      });  
               
               
           } else if (pageData.settingType === "Item") {

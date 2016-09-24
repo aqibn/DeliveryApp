@@ -1,4 +1,4 @@
-<Page unloaded="pageUnloaded" navigatedTo="navigatedTo" navigatedFrom="onNavigatingFrom" loaded="loaded" style="background-color: gray;">
+<Page unloaded="pageUnloaded" id="page" navigatedTo="navigatedTo" navigatedFrom="onNavigatingFrom" loaded="loaded" style="background-color: gray;">
   <Page.actionBar>
     <ActionBar title="{{ name }}" class="action-bar-positive">
       <ActionBar.actionItems>

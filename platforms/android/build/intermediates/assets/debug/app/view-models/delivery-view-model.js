@@ -1,6 +1,7 @@
 var Observable = require("data/observable").Observable;
 var ObservableArray = require("data/observable-array").ObservableArray;
 var Toast = require("nativescript-toast");
+var moment = require("moment");
 
 var Sqlite = require("nativescript-sqlite");
 
@@ -144,7 +145,7 @@ function createViewModel(database) {
   }
 
   delivery.addCustomer = function(customer) {
-    database.execSQL("INSERT into customers (name,_id) VALUES(?,?)",[customer.firstName, customer._id]).then(id => {
+    database.execSQL("INSERT into customers (name,_id,address,number) VALUES(?,?,?,?)",[customer.firstName, customer._id, customer.address,customer.primaryContact]).then(id => {
       // console.log("INSERT Success",id);
     //   toastSuccessAdded.show();
     }, error => {
@@ -228,7 +229,7 @@ function createViewModel(database) {
 
   delivery.loadCustomers = function(listcustomers) {
     database.each("SELECT * FROM customers", function(err,customer){
-      // console.log("RESULT", JSON.stringify(customer));
+      console.log("RESULT", JSON.stringify(customer));
       listcustomers.push(customer);
     });
   }
@@ -254,7 +255,7 @@ function createViewModel(database) {
 
 
   delivery.loadDeliveries = function(deliveries) {
-    database.each("SELECT * FROM deliveries",function(err,row) {
+    database.each("SELECT * FROM deliveries ORDER BY date(date) DESC",function(err,row) {
     //  console.log("RESULT", JSON.stringify(row));
       var new_delivery = {
         deliveryID: row.deliveryid,
@@ -264,6 +265,7 @@ function createViewModel(database) {
         soNumber: row.soNumber,
         deliveryCreatedBy: row.createdby,
         deliveryDate: row.date,
+        visibleDate: moment(row.date).format('DD-MM-YYYY, h A'),
         deliveryItem: row.itemtype,
         itemID: row.itemID
       };

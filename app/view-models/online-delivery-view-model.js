@@ -145,10 +145,11 @@ viewModel.createQuality = function(qualityName) {
             return fetchModule.fetch(config.apiUrl + "customers", {
                   method: "POST",
                   body: JSON.stringify({
-                      firstName: customer,
+                      firstName: customer.name,
+                      email: customer.name+"@test.com",
                       lastName: "test",
-                      address: "test",
-                      primaryContact: "21312321"
+                      address: customer.address,
+                      primaryContact: customer.number
 
                   }),
                   headers: {
